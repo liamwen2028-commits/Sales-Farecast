@@ -588,6 +588,13 @@
       stroke: currentColor;
     }
 
+    .preview-header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-left: auto;
+    }
+
     .preview-carousel {
       display: flex;
       width: 100%;
@@ -625,10 +632,9 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 12px;
-      height: 48px;
-      border-top: 1px solid #dce3ea;
-      background: #ffffff;
+      gap: 8px;
+      height: 34px;
+      background: transparent;
     }
 
     .preview-nav {
@@ -1346,7 +1352,7 @@
       </div>
 
       <div class="right-column">
-        <article class="card panel system-preview-panel">
+        <article class="card panel system-preview-panel" data-preview-carousel>
           <div class="card-header">
             <div class="title-row">
               <span class="icon-box" aria-hidden="true">
@@ -1359,16 +1365,32 @@
             </span>
             <h2 class="card-title">Test系统预览</h2>
           </div>
-          <a class="preview-access-link" href="https://mmt-forecast.test.wangoon.cn/SaleForecast/manualForecast/customize?mode=new" target="_blank" rel="noreferrer" aria-label="访问 Test 系统预览">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M7 17 17 7"></path>
-              <path d="M8 7h9v9"></path>
-            </svg>
-          </a>
+          <div class="preview-header-actions">
+            <div class="preview-controls" aria-label="系统预览轮播控制">
+              <button class="preview-nav" type="button" aria-label="上一张" data-preview-prev>
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg>
+              </button>
+              <div class="preview-dots" aria-label="轮播分页">
+                <button class="preview-dot is-active" type="button" aria-label="查看第1张" data-preview-dot></button>
+                <button class="preview-dot" type="button" aria-label="查看第2张" data-preview-dot></button>
+                <button class="preview-dot" type="button" aria-label="查看第3张" data-preview-dot></button>
+                <button class="preview-dot" type="button" aria-label="查看第4张" data-preview-dot></button>
+              </div>
+              <button class="preview-nav" type="button" aria-label="下一张" data-preview-next>
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg>
+              </button>
+            </div>
+            <a class="preview-access-link" href="https://mmt-forecast.test.wangoon.cn/SaleForecast/manualForecast/customize?mode=new" target="_blank" rel="noreferrer" aria-label="访问 Test 系统预览">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M7 17 17 7"></path>
+                <path d="M8 7h9v9"></path>
+              </svg>
+            </a>
+          </div>
         </div>
 
         <div class="system-preview" aria-label="Test系统预览">
-          <div class="preview-carousel" data-preview-carousel>
+          <div class="preview-carousel">
             <div class="preview-track">
               <article class="preview-slide is-active" data-preview-slide aria-label="系统预览截图 1">
                 <img class="preview-image" src="assets/system-preview-1.jpg" alt="SaleForecast 定制模板页面原图">
@@ -1385,21 +1407,6 @@
               <article class="preview-slide" data-preview-slide aria-label="系统预览截图 4">
                 <img class="preview-image" src="assets/system-preview-4.jpg" alt="SaleForecast 数据明细页面原图">
               </article>
-            </div>
-
-            <div class="preview-controls" aria-label="系统预览轮播控制">
-              <button class="preview-nav" type="button" aria-label="上一张" data-preview-prev>
-                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg>
-              </button>
-              <div class="preview-dots" aria-label="轮播分页">
-                <button class="preview-dot is-active" type="button" aria-label="查看第1张" data-preview-dot></button>
-                <button class="preview-dot" type="button" aria-label="查看第2张" data-preview-dot></button>
-                <button class="preview-dot" type="button" aria-label="查看第3张" data-preview-dot></button>
-                <button class="preview-dot" type="button" aria-label="查看第4张" data-preview-dot></button>
-              </div>
-              <button class="preview-nav" type="button" aria-label="下一张" data-preview-next>
-                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg>
-              </button>
             </div>
           </div>
         </div>
