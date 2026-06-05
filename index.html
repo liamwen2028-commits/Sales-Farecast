@@ -101,6 +101,14 @@
       gap: 24px;
     }
 
+    .left-column {
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr);
+      gap: 18px;
+      min-width: 0;
+      min-height: 0;
+    }
+
     .bottom-grid {
       display: grid;
       grid-template-columns: 1fr 1.45fr;
@@ -301,13 +309,12 @@
     }
 
     .right-column {
-      display: grid;
-      grid-template-rows: auto minmax(0, 1fr);
-      gap: 18px;
+      display: flex;
       min-height: 0;
     }
 
     .right-column .system-preview-panel {
+      flex: 1;
       min-height: 0;
       height: 100%;
     }
@@ -470,7 +477,7 @@
 
     .insight-grid {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       align-items: stretch;
       gap: 14px;
     }
@@ -658,6 +665,7 @@
       width: 100%;
       height: 100%;
       object-fit: contain;
+      object-position: top center;
       border-radius: 8px;
       background: #ffffff;
       box-shadow: 0 12px 28px rgba(34, 43, 55, 0.08);
@@ -1000,7 +1008,7 @@
       }
 
       .right-column {
-        grid-template-rows: auto auto;
+        display: block;
       }
 
       .right-column .system-preview-panel {
@@ -1207,7 +1215,42 @@
     </section>
 
     <section class="content-grid">
-      <article class="card panel">
+      <div class="left-column">
+        <section class="insight-grid" aria-label="需求进度补充信息">
+          <article class="card insight-card">
+            <div class="insight-title-row">
+              <span class="insight-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 21v-2a4 4 0 0 0-8 0v2"></path>
+                  <circle cx="12" cy="7" r="4"></circle>
+                  <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+              </span>
+              <h2 class="insight-title">专家团</h2>
+            </div>
+            <div class="insight-body">
+              <p class="insight-text">由运营中台组织成立21人的专家团</p>
+            </div>
+          </article>
+
+          <article class="card insight-card">
+            <div class="insight-title-row">
+              <span class="insight-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M9 11l3 3L22 4"></path>
+                  <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                </svg>
+              </span>
+              <h2 class="insight-title">需求调研</h2>
+            </div>
+            <div class="insight-body">
+              <p class="insight-text">已完成Tiktok、官网的销售预测访谈 <a class="insight-link" href="https://pg6xd0yqgm.feishu.cn/wiki/N0mqwGJzaiqigXk6kukcQ70rngh" target="_blank" rel="noreferrer">查看</a></p>
+            </div>
+          </article>
+        </section>
+
+        <article class="card panel">
         <div class="card-header">
           <div class="title-row">
             <span class="icon-box" aria-hidden="true">
@@ -1299,60 +1342,10 @@
             <div class="requirement-bar" style="--current: 10%; --plan-extra: 40%; --current-min: 10px; --bar-start: #4896fe; --bar-end: #16c8c7;"><div class="progress-track stacked"><span class="progress-fill current"></span><span class="progress-fill planned"></span></div><span class="progress-value">50%</span></div>
           </div>
         </div>
-      </article>
+        </article>
+      </div>
 
       <div class="right-column">
-        <section class="insight-grid" aria-label="需求进度补充信息">
-          <article class="card insight-card">
-            <div class="insight-title-row">
-              <span class="insight-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M16 21v-2a4 4 0 0 0-8 0v2"></path>
-                  <circle cx="12" cy="7" r="4"></circle>
-                  <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
-                  <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                </svg>
-              </span>
-              <h2 class="insight-title">专家团</h2>
-            </div>
-            <div class="insight-body">
-              <p class="insight-text">由运营中台组织成立21人的专家团</p>
-            </div>
-          </article>
-
-          <article class="card insight-card">
-            <div class="insight-title-row">
-              <span class="insight-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M9 11l3 3L22 4"></path>
-                  <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
-                </svg>
-              </span>
-              <h2 class="insight-title">需求调研</h2>
-            </div>
-            <div class="insight-body">
-              <p class="insight-text">已完成Tiktok、官网的销售预测访谈</p>
-            </div>
-          </article>
-
-          <article class="card insight-card record-card">
-            <div class="insight-title-row">
-              <span class="insight-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                  <path d="M14 2v6h6"></path>
-                  <path d="M8 13h8"></path>
-                  <path d="M8 17h6"></path>
-                </svg>
-              </span>
-              <h2 class="insight-title">访谈记录</h2>
-            </div>
-            <div class="insight-body">
-              <p class="insight-text"><a class="insight-link" href="https://pg6xd0yqgm.feishu.cn/wiki/N0mqwGJzaiqigXk6kukcQ70rngh" target="_blank" rel="noreferrer">二期销售预测调研</a></p>
-            </div>
-          </article>
-        </section>
-
         <article class="card panel system-preview-panel">
           <div class="card-header">
             <div class="title-row">
