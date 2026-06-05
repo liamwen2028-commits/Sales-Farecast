@@ -543,8 +543,7 @@
     }
 
     .system-preview {
-      display: grid;
-      place-items: center;
+      position: relative;
       flex: 1;
       min-height: 430px;
       margin-top: 24px;
@@ -554,66 +553,414 @@
       background: #f7f9fb;
     }
 
-    .preview-link-card {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      min-width: min(360px, 86%);
-      min-height: 76px;
-      padding: 18px 22px;
-      border: 1px solid rgba(83, 71, 206, 0.16);
-      border-radius: 8px;
-      background: #ffffff;
-      color: #111827;
-      text-decoration: none;
-      box-shadow: 0 14px 30px rgba(34, 43, 55, 0.08);
-    }
-
-    .preview-link-card:hover {
-      border-color: rgba(83, 71, 206, 0.34);
-      color: var(--purple);
-    }
-
-    .preview-link-icon {
+    .preview-access-link,
+    .preview-nav {
       display: grid;
       place-items: center;
-      width: 38px;
-      height: 38px;
-      border-radius: 8px;
+      width: 34px;
+      height: 34px;
+      border: 1px solid rgba(83, 71, 206, 0.14);
+      border-radius: 7px;
       background: rgba(83, 71, 206, 0.1);
       color: var(--purple);
+      text-decoration: none;
       flex: 0 0 auto;
     }
 
-    .preview-link-icon svg {
+    .preview-access-link:hover,
+    .preview-nav:hover {
+      border-color: rgba(83, 71, 206, 0.3);
+      background: rgba(83, 71, 206, 0.14);
+    }
+
+    .preview-access-link svg,
+    .preview-nav svg {
       display: block;
       width: 18px;
       height: 18px;
       stroke: currentColor;
     }
 
-    .preview-link-text {
+    .preview-carousel {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      min-height: inherit;
+      flex-direction: column;
+      background: #f7f9fb;
+    }
+
+    .preview-track {
+      position: relative;
+      flex: 1;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    .preview-slide {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      padding: 12px;
+      opacity: 0;
+      transform: translateX(16px);
+      transition: opacity 280ms ease, transform 280ms ease;
+      pointer-events: none;
+    }
+
+    .preview-slide.is-active {
+      opacity: 1;
+      transform: translateX(0);
+      pointer-events: auto;
+    }
+
+    .preview-controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      height: 48px;
+      border-top: 1px solid #dce3ea;
+      background: #ffffff;
+    }
+
+    .preview-nav {
+      width: 30px;
+      height: 30px;
+      border: 0;
+      cursor: pointer;
+    }
+
+    .preview-dots {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .preview-dot {
+      width: 7px;
+      height: 7px;
+      border: 0;
+      border-radius: 50%;
+      background: #c7d1df;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .preview-dot.is-active {
+      width: 18px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--purple), var(--violet));
+    }
+
+    .mock-screen {
       display: grid;
-      gap: 5px;
+      width: 100%;
+      height: 100%;
+      grid-template-columns: 13% 1fr;
+      overflow: hidden;
+      border: 1px solid #dde4ee;
+      border-radius: 8px;
+      background: #ffffff;
+      box-shadow: 0 12px 28px rgba(34, 43, 55, 0.08);
+    }
+
+    .mock-sidebar {
+      padding: 13px 8px;
+      background: #1e2c40;
+      color: #ffffff;
+      font-size: 8px;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+
+    .mock-brand {
+      margin-bottom: 16px;
+      font-size: 9px;
+    }
+
+    .mock-nav {
+      display: grid;
+      gap: 6px;
+    }
+
+    .mock-nav span {
+      height: 18px;
+      border-radius: 4px;
+      background: rgba(72, 150, 254, 0.26);
+    }
+
+    .mock-main {
+      display: flex;
+      min-width: 0;
+      flex-direction: column;
+      background: #f5f7fb;
+    }
+
+    .mock-topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 31px;
+      padding: 0 13px;
+      border-bottom: 1px solid #dde4ee;
+      background: #ffffff;
+      color: #536078;
+      font-size: 8px;
+      font-weight: 800;
+    }
+
+    .mock-user {
+      width: 54px;
+      height: 12px;
+      border-radius: 999px;
+      background: #e6ebf2;
+    }
+
+    .mock-content {
+      flex: 1;
+      min-height: 0;
+      padding: 13px;
+      overflow: hidden;
+    }
+
+    .mock-title-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .mock-title {
+      color: #1f2937;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .mock-actions,
+    .mock-filters,
+    .mock-tabs,
+    .mock-tools {
+      display: flex;
+      align-items: center;
+      gap: 6px;
       min-width: 0;
     }
 
-    .preview-link-title {
-      font-size: 16px;
-      font-weight: 800;
-      line-height: 1.2;
-      white-space: nowrap;
+    .mock-button {
+      min-width: 42px;
+      height: 20px;
+      border-radius: 4px;
+      background: #3b82f6;
     }
 
-    .preview-link-url {
-      overflow: hidden;
-      color: var(--muted);
-      font-size: 12px;
-      font-weight: 650;
-      line-height: 1.2;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+    .mock-button.light {
+      background: #ffffff;
+      border: 1px solid #d8e0ec;
+    }
+
+    .mock-filters {
+      flex-wrap: wrap;
+      margin-bottom: 9px;
+    }
+
+    .mock-field {
+      height: 18px;
+      min-width: 108px;
+      border: 1px solid #d8e0ec;
+      border-radius: 4px;
+      background: #eef3f8;
+    }
+
+    .mock-tabs {
+      padding: 7px 0;
+      border-top: 1px solid #dfe6ef;
+      border-bottom: 1px solid #dfe6ef;
+    }
+
+    .mock-tab {
+      width: 58px;
+      height: 22px;
+      border-radius: 4px;
+      background: #eef2f7;
+    }
+
+    .mock-tab.active {
+      border: 1px solid #3b82f6;
+      background: #ffffff;
+    }
+
+    .mock-tools {
+      padding: 7px 0;
+    }
+
+    .mock-table {
+      display: grid;
+      min-height: 152px;
+      border: 1px solid #dfe6ef;
+      background: #ffffff;
+      grid-template-rows: 26px 30px 44px 44px 44px;
+    }
+
+    .mock-row {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr 0.8fr 1.2fr 1.2fr 1.8fr 0.8fr 1fr;
+      border-bottom: 1px solid #e8edf4;
+    }
+
+    .mock-row:last-child {
+      border-bottom: 0;
+    }
+
+    .mock-cell {
+      border-right: 1px solid #e8edf4;
+      background: #ffffff;
+    }
+
+    .mock-row.header .mock-cell {
+      background: #f6f7f9;
+    }
+
+    .mock-row.group .mock-cell {
+      background: #f0e2ff;
+    }
+
+    .mock-row.dim .mock-cell {
+      background: #fbfcfe;
+    }
+
+    .mock-template-page {
+      display: block;
+      padding: 14px 10%;
+      background: #f5f7fb;
+    }
+
+    .mock-center-heading {
+      margin: 0 0 22px;
+      color: #6b6dff;
+      font-size: 16px;
+      font-weight: 900;
+      text-align: center;
+    }
+
+    .mock-filter-card {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      height: 38px;
+      margin-bottom: 18px;
+      padding: 8px;
+      border: 1px solid #dfe6ef;
+      border-radius: 7px;
+      background: #ffffff;
+    }
+
+    .mock-template-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .mock-template-card {
+      min-height: 82px;
+      border: 1px solid #e0c6ff;
+      border-radius: 7px;
+      background: #ffffff;
+      box-shadow: 0 8px 18px rgba(127, 72, 254, 0.06);
+    }
+
+    .mock-template-card.large {
+      border-style: dashed;
+      background: #f7f8fc;
+    }
+
+    .mock-overlay-screen {
+      position: relative;
+    }
+
+    .mock-dim {
+      position: absolute;
+      inset: 0;
+      background: rgba(18, 24, 34, 0.44);
+    }
+
+    .mock-modal {
+      position: absolute;
+      left: 19%;
+      top: 22%;
+      width: 48%;
+      height: 52%;
+      border-radius: 8px;
+      background: #ffffff;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
+    }
+
+    .mock-modal.wide {
+      left: 8%;
+      top: 12%;
+      width: 84%;
+      height: 72%;
+    }
+
+    .mock-modal-title {
+      height: 34px;
+      padding: 11px 14px;
+      border-bottom: 1px solid #e5ebf3;
+      color: #1f2937;
+      font-size: 10px;
+      font-weight: 900;
+    }
+
+    .mock-formula-body,
+    .mock-detail-body {
+      display: grid;
+      height: calc(100% - 34px);
+      padding: 12px;
+      gap: 10px;
+    }
+
+    .mock-formula-body {
+      grid-template-columns: 1.1fr 1fr;
+    }
+
+    .mock-editor {
+      border: 1px solid #4b85ff;
+      border-radius: 6px;
+      background: #f8fbff;
+    }
+
+    .mock-token-line,
+    .mock-table-line {
+      height: 18px;
+      border-radius: 4px;
+      background: #dfeaff;
+    }
+
+    .mock-token-line:nth-child(2n),
+    .mock-table-line:nth-child(2n) {
+      background: #f4f7fb;
+    }
+
+    .mock-detail-body {
+      grid-template-rows: 24px 1fr;
+    }
+
+    .mock-detail-tabs {
+      display: flex;
+      gap: 18px;
+    }
+
+    .mock-detail-tabs span {
+      width: 88px;
+      height: 13px;
+      border-radius: 999px;
+      background: #dfeaff;
+    }
+
+    .mock-detail-table {
+      display: grid;
+      gap: 7px;
     }
 
     .right-column .system-preview {
@@ -1032,11 +1379,6 @@
         min-width: 620px;
       }
 
-      .preview-link-card {
-        min-width: 0;
-        width: 100%;
-      }
-
       .table-scroll {
         width: 100%;
         overflow-x: auto;
@@ -1321,25 +1663,140 @@
                   <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
                   <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
                 </svg>
-              </span>
-              <h2 class="card-title">Test系统预览</h2>
+            </span>
+            <h2 class="card-title">Test系统预览</h2>
+          </div>
+          <a class="preview-access-link" href="https://mmt-forecast.test.wangoon.cn/SaleForecast/manualForecast/customize?mode=new" target="_blank" rel="noreferrer" aria-label="访问 Test 系统预览">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M7 17 17 7"></path>
+              <path d="M8 7h9v9"></path>
+            </svg>
+          </a>
+        </div>
+
+        <div class="system-preview" aria-label="Test系统预览">
+          <div class="preview-carousel" data-preview-carousel>
+            <div class="preview-track">
+              <article class="preview-slide is-active" data-preview-slide aria-label="系统预览截图 1">
+                <div class="mock-screen">
+                  <aside class="mock-sidebar">
+                    <div class="mock-brand">SaleForecast</div>
+                    <div class="mock-nav"><span></span><span></span></div>
+                  </aside>
+                  <div class="mock-main">
+                    <div class="mock-topbar"><span>人工预测 / 定制模板</span><span class="mock-user"></span></div>
+                    <div class="mock-content">
+                      <div class="mock-title-row">
+                        <span class="mock-title">未命名</span>
+                        <span class="mock-actions"><i class="mock-button"></i><i class="mock-button light"></i><i class="mock-button light"></i></span>
+                      </div>
+                      <div class="mock-filters">
+                        <span class="mock-field"></span><span class="mock-field"></span><span class="mock-field"></span><span class="mock-field"></span>
+                        <span class="mock-field"></span><span class="mock-field"></span><span class="mock-field"></span>
+                      </div>
+                      <div class="mock-tabs">
+                        <span class="mock-tab active"></span><span class="mock-tab"></span><span class="mock-tab"></span><span class="mock-tab"></span><span class="mock-tab"></span><span class="mock-tab"></span>
+                      </div>
+                      <div class="mock-tools"><span class="mock-button light"></span><span class="mock-button light"></span><span class="mock-button light"></span><span class="mock-button light"></span></div>
+                      <div class="mock-table">
+                        <div class="mock-row header"><span class="mock-cell"></span><span class="mock-cell"></span><span class="mock-cell"></span><span class="mock-cell"></span><span class="mock-cell"></span><span class="mock-cell"></span><span class="mock-cell"></span><span class="mock-cell"></span></div>
+                        <div class="mock-row group"><span class="mock-cell"></span><span class="mock-cell"></span><span class="mock-cell"></span><span class="mock-cell"></span><span class="mock-cell"></span><span class="mock-cell"></span><span class="mock-cell"></span><span class="mock-cell"></span></div>
+                        <div class="mock-row"><span class="mock-cell"></span><span class="mock-cell"></span><span class="mock-cell"></span><span class="mock-cell"></span><span class="mock-cell"></span><span class="mock-cell"></span><span class="mock-cell"></span><span class="mock-cell"></span></div>
+                        <div class="mock-row dim"><span class="mock-cell"></span><span class="mock-cell"></span><span class="mock-cell"></span><span class="mock-cell"></span><span class="mock-cell"></span><span class="mock-cell"></span><span class="mock-cell"></span><span class="mock-cell"></span></div>
+                        <div class="mock-row"><span class="mock-cell"></span><span class="mock-cell"></span><span class="mock-cell"></span><span class="mock-cell"></span><span class="mock-cell"></span><span class="mock-cell"></span><span class="mock-cell"></span><span class="mock-cell"></span></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </article>
+
+              <article class="preview-slide" data-preview-slide aria-label="系统预览截图 2">
+                <div class="mock-screen">
+                  <aside class="mock-sidebar">
+                    <div class="mock-brand">SaleForecast</div>
+                    <div class="mock-nav"><span></span><span></span></div>
+                  </aside>
+                  <div class="mock-main">
+                    <div class="mock-topbar"><span>销售预测 / 人工预测</span><span class="mock-user"></span></div>
+                    <div class="mock-content mock-template-page">
+                      <h3 class="mock-center-heading">优秀预测模板</h3>
+                      <div class="mock-filter-card"><span class="mock-field"></span><span class="mock-field"></span><span class="mock-field"></span><span class="mock-field"></span></div>
+                      <div class="mock-template-grid">
+                        <div class="mock-template-card large"></div>
+                        <div class="mock-template-card"></div>
+                        <div class="mock-template-card"></div>
+                        <div class="mock-template-card"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </article>
+
+              <article class="preview-slide" data-preview-slide aria-label="系统预览截图 3">
+                <div class="mock-screen mock-overlay-screen">
+                  <aside class="mock-sidebar">
+                    <div class="mock-brand">SaleForecast</div>
+                    <div class="mock-nav"><span></span><span></span></div>
+                  </aside>
+                  <div class="mock-main">
+                    <div class="mock-topbar"><span>人工预测 / 定制模板</span><span class="mock-user"></span></div>
+                    <div class="mock-content">
+                      <div class="mock-filters"><span class="mock-field"></span><span class="mock-field"></span><span class="mock-field"></span></div>
+                      <div class="mock-table"><div class="mock-row group"><span class="mock-cell"></span><span class="mock-cell"></span><span class="mock-cell"></span><span class="mock-cell"></span><span class="mock-cell"></span><span class="mock-cell"></span><span class="mock-cell"></span><span class="mock-cell"></span></div></div>
+                    </div>
+                  </div>
+                  <div class="mock-dim"></div>
+                  <div class="mock-modal">
+                    <div class="mock-modal-title">公式编辑器 - 2026年8月</div>
+                    <div class="mock-formula-body">
+                      <div class="mock-editor"></div>
+                      <div class="mock-detail-table"><span class="mock-token-line"></span><span class="mock-token-line"></span><span class="mock-token-line"></span><span class="mock-token-line"></span><span class="mock-token-line"></span></div>
+                    </div>
+                  </div>
+                </div>
+              </article>
+
+              <article class="preview-slide" data-preview-slide aria-label="系统预览截图 4">
+                <div class="mock-screen mock-overlay-screen">
+                  <aside class="mock-sidebar">
+                    <div class="mock-brand">SaleForecast</div>
+                    <div class="mock-nav"><span></span><span></span></div>
+                  </aside>
+                  <div class="mock-main">
+                    <div class="mock-topbar"><span>人工预测 / 定制模板</span><span class="mock-user"></span></div>
+                    <div class="mock-content">
+                      <div class="mock-filters"><span class="mock-field"></span><span class="mock-field"></span><span class="mock-field"></span></div>
+                      <div class="mock-table"><div class="mock-row group"><span class="mock-cell"></span><span class="mock-cell"></span><span class="mock-cell"></span><span class="mock-cell"></span><span class="mock-cell"></span><span class="mock-cell"></span><span class="mock-cell"></span><span class="mock-cell"></span></div></div>
+                    </div>
+                  </div>
+                  <div class="mock-dim"></div>
+                  <div class="mock-modal wide">
+                    <div class="mock-modal-title">数据明细</div>
+                    <div class="mock-detail-body">
+                      <div class="mock-detail-tabs"><span></span><span></span><span></span></div>
+                      <div class="mock-detail-table"><span class="mock-table-line"></span><span class="mock-table-line"></span><span class="mock-table-line"></span><span class="mock-table-line"></span><span class="mock-table-line"></span><span class="mock-table-line"></span></div>
+                    </div>
+                  </div>
+                </div>
+              </article>
+            </div>
+
+            <div class="preview-controls" aria-label="系统预览轮播控制">
+              <button class="preview-nav" type="button" aria-label="上一张" data-preview-prev>
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg>
+              </button>
+              <div class="preview-dots" aria-label="轮播分页">
+                <button class="preview-dot is-active" type="button" aria-label="查看第1张" data-preview-dot></button>
+                <button class="preview-dot" type="button" aria-label="查看第2张" data-preview-dot></button>
+                <button class="preview-dot" type="button" aria-label="查看第3张" data-preview-dot></button>
+                <button class="preview-dot" type="button" aria-label="查看第4张" data-preview-dot></button>
+              </div>
+              <button class="preview-nav" type="button" aria-label="下一张" data-preview-next>
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg>
+              </button>
             </div>
           </div>
-
-          <div class="system-preview" aria-label="Test系统预览">
-            <a class="preview-link-card" href="https://mmt-forecast.test.wangoon.cn/SaleForecast/manualForecast/customize?mode=new" target="_blank" rel="noreferrer">
-              <span class="preview-link-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M7 17 17 7"></path>
-                  <path d="M8 7h9v9"></path>
-                </svg>
-              </span>
-              <span class="preview-link-text">
-                <span class="preview-link-title">打开 Test 系统预览</span>
-                <span class="preview-link-url">mmt-forecast.test.wangoon.cn</span>
-              </span>
-            </a>
-          </div>
+        </div>
         </article>
       </div>
     </section>
@@ -1508,6 +1965,51 @@
         nextButton.focus();
       });
     });
+
+    const previewCarousel = document.querySelector("[data-preview-carousel]");
+
+    if (previewCarousel) {
+      const previewSlides = Array.from(previewCarousel.querySelectorAll("[data-preview-slide]"));
+      const previewDots = Array.from(previewCarousel.querySelectorAll("[data-preview-dot]"));
+      const previewPrev = previewCarousel.querySelector("[data-preview-prev]");
+      const previewNext = previewCarousel.querySelector("[data-preview-next]");
+      let previewIndex = 0;
+      let previewTimer = window.setInterval(() => showPreview(previewIndex + 1), 4200);
+
+      function showPreview(nextIndex) {
+        previewIndex = (nextIndex + previewSlides.length) % previewSlides.length;
+
+        previewSlides.forEach((slide, index) => {
+          slide.classList.toggle("is-active", index === previewIndex);
+        });
+
+        previewDots.forEach((dot, index) => {
+          dot.classList.toggle("is-active", index === previewIndex);
+        });
+      }
+
+      function restartPreviewTimer() {
+        window.clearInterval(previewTimer);
+        previewTimer = window.setInterval(() => showPreview(previewIndex + 1), 4200);
+      }
+
+      previewPrev?.addEventListener("click", () => {
+        showPreview(previewIndex - 1);
+        restartPreviewTimer();
+      });
+
+      previewNext?.addEventListener("click", () => {
+        showPreview(previewIndex + 1);
+        restartPreviewTimer();
+      });
+
+      previewDots.forEach((dot, index) => {
+        dot.addEventListener("click", () => {
+          showPreview(index);
+          restartPreviewTimer();
+        });
+      });
+    }
   </script>
 </body>
 </html>
