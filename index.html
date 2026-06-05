@@ -1,0 +1,1449 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>202606Project Report</title>
+  <style>
+    :root {
+      --bg: #e9eef3;
+      --surface: #ffffff;
+      --line: #dce3ea;
+      --text: #0d1220;
+      --muted: #5f6874;
+      --subtle: #eef3f7;
+      --purple: #5347ce;
+      --violet: #887cfd;
+      --blue: #4896fe;
+      --cyan: #16c8c7;
+      --mint: #62dedc;
+      --danger: #c93d62;
+      --shadow: 0 18px 46px rgba(34, 43, 55, 0.06);
+      --radius: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "SF Pro Display", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      letter-spacing: 0;
+    }
+
+    button,
+    select {
+      font: inherit;
+    }
+
+    .page-shell {
+      width: 92vw;
+      min-width: 1040px;
+      max-width: none;
+      margin: 0 auto;
+      padding: 36px 0 72px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 24px;
+      margin-bottom: 28px;
+    }
+
+    .eyebrow {
+      margin: 0 0 8px;
+      color: var(--purple);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 34px;
+      line-height: 1;
+      font-weight: 800;
+    }
+
+    .logo-lockup {
+      display: none;
+      align-items: center;
+      min-height: 80px;
+    }
+
+    .site-logo {
+      display: block;
+      width: clamp(230px, 21vw, 320px);
+      height: auto;
+      object-fit: contain;
+    }
+
+    .header-copy {
+      text-align: left;
+    }
+
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: 0.8fr 1.62fr;
+      align-items: stretch;
+      gap: 24px;
+    }
+
+    .bottom-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.45fr;
+      gap: 24px;
+      margin-top: 24px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid rgba(195, 205, 216, 0.75);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .metric-card {
+      min-height: 112px;
+      padding: 20px 24px;
+    }
+
+    .section-heading {
+      margin: 0 0 14px;
+      color: #111827;
+      font-size: 18px;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+
+    .section-heading.secondary {
+      margin-top: 24px;
+    }
+
+    .section-heading.secondary + .bottom-grid {
+      margin-top: 0;
+    }
+
+    .report-tabs {
+      margin-top: 0;
+    }
+
+    .tab-list {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin-bottom: 24px;
+      padding: 4px;
+      border: 1px solid rgba(195, 205, 216, 0.8);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.62);
+    }
+
+    .tab-button {
+      height: 36px;
+      border: 0;
+      border-radius: 6px;
+      background: transparent;
+      color: #4f5965;
+      cursor: pointer;
+      padding: 0 18px;
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+
+    .tab-button.is-active {
+      color: #ffffff;
+      background: linear-gradient(90deg, var(--purple), var(--violet));
+      box-shadow: 0 8px 18px rgba(83, 71, 206, 0.18);
+    }
+
+    .tab-button:focus-visible {
+      outline: 2px solid rgba(72, 150, 254, 0.75);
+      outline-offset: 2px;
+    }
+
+    .tab-panel[hidden] {
+      display: none;
+    }
+
+    .tab-panel .bottom-grid {
+      margin-top: 0;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .title-row {
+      display: flex;
+      align-items: center;
+      min-width: 0;
+      gap: 12px;
+    }
+
+    .icon-box {
+      display: grid;
+      place-items: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      background: #f5f7fa;
+      color: #43505f;
+      flex: 0 0 auto;
+    }
+
+    .icon-box svg,
+    .icon-button svg,
+    .info-icon svg {
+      display: block;
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+    }
+
+    .card-title {
+      margin: 0;
+      font-size: 16px;
+      line-height: 1.2;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .info-icon {
+      display: grid;
+      place-items: center;
+      width: 20px;
+      height: 20px;
+      color: #7b8490;
+      flex: 0 0 auto;
+    }
+
+    .metric-card .info-icon {
+      display: none;
+    }
+
+    .metric-value {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-top: 14px;
+      font-size: 32px;
+      line-height: 1;
+      font-weight: 700;
+    }
+
+    .metric-value.risk-text {
+      display: block;
+      color: #2f3947;
+      font-size: 14px;
+      font-weight: 650;
+      line-height: 1.45;
+    }
+
+    .metric-value.launch-date {
+      font-size: 28px;
+    }
+
+    .currency {
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 24px;
+      padding: 0 9px;
+      border-radius: 6px;
+      font-size: 13px;
+      line-height: 1;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .badge.up {
+      color: #079f9f;
+      background: rgba(22, 200, 199, 0.15);
+      border: 1px solid rgba(22, 200, 199, 0.18);
+    }
+
+    .badge.down {
+      color: var(--danger);
+      background: rgba(201, 61, 98, 0.11);
+      border: 1px solid rgba(201, 61, 98, 0.12);
+    }
+
+    .panel {
+      min-height: 500px;
+      padding: 24px 28px;
+    }
+
+    .system-preview-panel {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .right-column {
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr);
+      gap: 18px;
+      min-height: 0;
+    }
+
+    .right-column .system-preview-panel {
+      min-height: 0;
+      height: 100%;
+    }
+
+    .panel.compact {
+      min-height: 380px;
+    }
+
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .icon-button,
+    .select-button,
+    .text-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 38px;
+      border: 1px solid #d9e0e8;
+      border-radius: 8px;
+      background: #ffffff;
+      color: #4f5965;
+      box-shadow: 0 5px 14px rgba(31, 38, 48, 0.05);
+    }
+
+    .icon-button {
+      width: 38px;
+    }
+
+    .select-button,
+    .text-button {
+      gap: 8px;
+      padding: 0 14px;
+      font-size: 14px;
+      white-space: nowrap;
+    }
+
+    .see-all {
+      border: 0;
+      background: transparent;
+      color: var(--purple);
+      font-size: 14px;
+      font-weight: 700;
+      padding: 0;
+    }
+
+    .section-value {
+      margin: 18px 0 0;
+      font-size: 32px;
+      line-height: 1;
+      font-weight: 700;
+    }
+
+    .note-line {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .requirement-chart {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      margin-top: 24px;
+    }
+
+    .requirement-chart-head,
+    .requirement-item {
+      display: grid;
+      grid-template-columns: minmax(140px, 0.9fr) minmax(180px, 1.4fr);
+      align-items: center;
+      gap: 14px;
+    }
+
+    .requirement-chart-head {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .requirement-item {
+      min-width: 0;
+    }
+
+    .requirement-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .requirement-name {
+      min-width: 0;
+      overflow: hidden;
+      color: #2f3947;
+      font-size: 14px;
+      font-weight: 650;
+      line-height: 1.25;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .requirement-bar {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 44px;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .progress-value {
+      color: #111827;
+      font-size: 12px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .progress-track {
+      position: relative;
+      width: 100%;
+      height: 12px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #eef2f7;
+    }
+
+    .progress-fill {
+      display: block;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--bar-start), var(--bar-end));
+    }
+
+    .progress-track.stacked .progress-fill {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+    }
+
+    .progress-fill.current {
+      left: 0;
+      width: var(--current);
+      min-width: var(--current-min, 0);
+    }
+
+    .progress-fill.planned {
+      left: var(--current);
+      width: var(--plan-extra);
+      min-width: var(--plan-min, 0);
+      opacity: 0.18;
+      box-shadow: inset 0 0 0 1px rgba(17, 24, 39, 0.04);
+    }
+
+    .insight-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      align-items: stretch;
+      gap: 14px;
+    }
+
+    .insight-card {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      min-height: 0;
+      overflow: hidden;
+      padding: 14px 16px;
+    }
+
+    .insight-title-row {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      min-width: 0;
+    }
+
+    .insight-icon {
+      display: grid;
+      place-items: center;
+      width: 26px;
+      height: 26px;
+      border-radius: 6px;
+      background: #f5f7fa;
+      color: var(--purple);
+      flex: 0 0 auto;
+    }
+
+    .insight-icon svg {
+      display: block;
+      width: 15px;
+      height: 15px;
+      stroke: currentColor;
+    }
+
+    .insight-title {
+      margin: 0;
+      color: #2f3947;
+      font-size: 16px;
+      font-weight: 800;
+      line-height: 1.2;
+      white-space: nowrap;
+    }
+
+    .insight-body {
+      display: block;
+      min-height: 0;
+      color: #4f5965;
+      font-size: 14px;
+      font-weight: 650;
+      line-height: 1.45;
+    }
+
+    .insight-text {
+      margin: 0;
+    }
+
+    .insight-link {
+      color: var(--purple);
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    .insight-link:hover {
+      color: var(--violet);
+      text-decoration: underline;
+    }
+
+    .system-preview {
+      flex: 1;
+      min-height: 430px;
+      margin-top: 24px;
+      overflow: hidden;
+      border: 1px solid #dce3ea;
+      border-radius: 8px;
+      background: #f7f9fb;
+    }
+
+    .system-preview iframe {
+      display: block;
+      width: 125%;
+      height: 125%;
+      border: 0;
+      background: #ffffff;
+      transform: scale(0.8);
+      transform-origin: top left;
+    }
+
+    .right-column .system-preview {
+      min-height: 0;
+    }
+
+    .subscriber-chart {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      align-items: end;
+      gap: 20px;
+      height: 258px;
+      margin-top: 54px;
+      padding: 0 4px;
+    }
+
+    .day {
+      display: flex;
+      min-width: 0;
+      height: 100%;
+      flex-direction: column;
+      align-items: center;
+      justify-content: end;
+      gap: 16px;
+    }
+
+    .bar-wrap {
+      position: relative;
+      display: flex;
+      align-items: end;
+      justify-content: center;
+      width: 100%;
+      height: 190px;
+    }
+
+    .bar-value {
+      position: absolute;
+      bottom: calc(var(--height) + 12px);
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 14px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .bar {
+      width: min(100%, 52px);
+      height: var(--height);
+      border-radius: 8px;
+      background: #eef2f7;
+    }
+
+    .bar.active {
+      background: linear-gradient(180deg, var(--purple) 0%, var(--violet) 48%, rgba(136, 124, 253, 0.3) 100%);
+    }
+
+    .day-label {
+      color: #515a66;
+      font-size: 14px;
+      white-space: nowrap;
+    }
+
+    .day.active .day-label {
+      color: #0b0f19;
+      font-weight: 800;
+    }
+
+    .distribution-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-top: 36px;
+    }
+
+    .distribution-metric {
+      min-width: 0;
+      padding-left: 14px;
+      border-left: 3px solid var(--purple);
+    }
+
+    .distribution-metric:nth-child(2) {
+      border-color: var(--cyan);
+    }
+
+    .distribution-metric:nth-child(3) {
+      border-color: #d5dce4;
+    }
+
+    .metric-label {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .metric-amount {
+      margin-top: 8px;
+      font-size: 22px;
+      line-height: 1;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .gauge {
+      position: relative;
+      width: min(360px, 88%);
+      aspect-ratio: 2 / 1;
+      margin: 34px auto 0;
+      overflow: hidden;
+    }
+
+    .gauge::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 999px 999px 0 0;
+      background:
+        repeating-conic-gradient(from 270deg, rgba(210, 218, 227, 0.68) 0deg 1deg, transparent 1deg 3.2deg),
+        conic-gradient(from 270deg, var(--purple) 0 52deg, #ffffff 52deg 56deg, var(--cyan) 56deg 112deg, transparent 112deg 180deg);
+    }
+
+    .gauge::after {
+      content: "";
+      position: absolute;
+      left: 15%;
+      right: 15%;
+      bottom: 0;
+      height: 70%;
+      border-radius: 999px 999px 0 0;
+      background: #ffffff;
+    }
+
+    .table-panel {
+      min-height: 380px;
+      padding: 24px 28px 20px;
+    }
+
+    .integration-table {
+      width: 100%;
+      margin-top: 24px;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+
+    .integration-table th {
+      height: 44px;
+      color: #616b77;
+      background: #f7f9fb;
+      font-size: 12px;
+      font-weight: 800;
+      text-align: left;
+      text-transform: uppercase;
+    }
+
+    .integration-table th,
+    .integration-table td {
+      border-bottom: 1px solid #e8edf2;
+      padding: 12px 10px;
+      vertical-align: middle;
+    }
+
+    .integration-table th:first-child,
+    .integration-table td:first-child {
+      width: 42px;
+      padding-left: 0;
+    }
+
+    .integration-table th:nth-child(2) {
+      width: 32%;
+    }
+
+    .integration-table th:nth-child(3) {
+      width: 26%;
+    }
+
+    .integration-table th:nth-child(4) {
+      width: 24%;
+    }
+
+    .checkbox {
+      width: 18px;
+      height: 18px;
+      border: 1px solid #c6cfd9;
+      border-radius: 5px;
+    }
+
+    .app-cell {
+      display: flex;
+      align-items: center;
+      min-width: 0;
+      gap: 12px;
+      font-weight: 700;
+    }
+
+    .app-logo {
+      display: grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border: 1px solid #e0e6ee;
+      border-radius: 7px;
+      background: #ffffff;
+      font-size: 18px;
+      font-weight: 900;
+    }
+
+    .stripe { color: var(--purple); }
+    .zapier { color: #ff5b00; }
+    .shopify { color: #76b82a; }
+    .zoom { color: var(--blue); }
+
+    .type,
+    .profit {
+      color: #4f5965;
+      font-size: 14px;
+    }
+
+    .rate-cell {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      color: #4f5965;
+      font-size: 14px;
+    }
+
+    .rate-line {
+      position: relative;
+      width: 70px;
+      height: 4px;
+      border-radius: 999px;
+      background: #edf1f5;
+      overflow: hidden;
+    }
+
+    .rate-line::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: var(--rate);
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--purple), var(--violet));
+    }
+
+    .color-footer {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 28px;
+      align-items: end;
+      margin-top: 28px;
+      color: var(--muted);
+    }
+
+    .scheme {
+      display: flex;
+      gap: 14px;
+    }
+
+    .chip {
+      width: 86px;
+      overflow: hidden;
+      border-radius: 5px;
+      background: #ffffff;
+      box-shadow: 0 10px 24px rgba(28, 38, 51, 0.08);
+    }
+
+    .chip-color {
+      height: 44px;
+      background: var(--chip);
+    }
+
+    .chip-code {
+      padding: 8px;
+      color: #141926;
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    .footer-copy {
+      font-size: 12px;
+    }
+
+    @media (max-width: 1180px) {
+      .page-shell {
+        width: 92vw;
+        min-width: 0;
+      }
+
+      .metric-grid,
+      .bottom-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .content-grid {
+        grid-template-columns: minmax(300px, 0.8fr) minmax(0, 1.62fr);
+        gap: 18px;
+      }
+
+      .content-grid .panel {
+        padding: 20px;
+      }
+
+      .requirement-chart-head,
+      .requirement-item {
+        grid-template-columns: minmax(86px, 0.8fr) minmax(122px, 1.6fr);
+        gap: 10px;
+      }
+
+      .requirement-name {
+        font-size: 12.5px;
+      }
+
+      .requirement-bar {
+        grid-template-columns: minmax(0, 1fr) 38px;
+        gap: 8px;
+      }
+
+      .insight-grid {
+        gap: 12px;
+      }
+
+      .insight-card {
+        padding: 12px 14px;
+      }
+
+      .insight-icon {
+        width: 24px;
+        height: 24px;
+      }
+
+      .subscriber-chart {
+        max-width: 620px;
+        margin-inline: auto;
+      }
+    }
+
+    @media (max-width: 960px) {
+      .content-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .right-column {
+        grid-template-rows: auto auto;
+      }
+
+      .right-column .system-preview-panel {
+        min-height: 500px;
+      }
+
+      .right-column .system-preview {
+        min-height: 430px;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .page-shell {
+        width: 92vw;
+        padding: 28px 0 44px;
+      }
+
+      .topbar,
+      .card-header,
+      .color-footer {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .metric-card,
+      .panel,
+      .table-panel {
+        padding: 20px;
+      }
+
+      .header-copy {
+        text-align: left;
+      }
+
+      .site-logo {
+        width: min(260px, 78vw);
+      }
+
+      .controls,
+      .distribution-metrics,
+      .scheme {
+        flex-wrap: wrap;
+      }
+
+      .distribution-metrics {
+        grid-template-columns: 1fr;
+      }
+
+      .insight-grid {
+        grid-template-columns: 1fr;
+        min-height: 0;
+      }
+
+      .subscriber-chart {
+        gap: 10px;
+      }
+
+      .requirement-chart {
+        grid-template-columns: 1fr;
+      }
+
+      .requirement-chart-head {
+        display: none;
+      }
+
+      .requirement-item {
+        grid-template-columns: 1fr;
+        gap: 9px;
+      }
+
+      .bar {
+        width: 36px;
+      }
+
+      .integration-table {
+        min-width: 620px;
+      }
+
+      .table-scroll {
+        width: 100%;
+        overflow-x: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page-shell">
+    <header class="topbar">
+      <div class="logo-lockup" aria-label="IMMT brand">
+        <img class="site-logo" src="assets/immt-logo.png?v=2" alt="IMMT">
+      </div>
+      <div class="header-copy">
+        <p class="eyebrow">Sales Forecast</p>
+        <h1>202606Project Report</h1>
+      </div>
+    </header>
+
+    <section class="report-tabs" aria-label="预测模块切换">
+      <div class="tab-list" role="tablist" aria-label="预测模块">
+        <button class="tab-button is-active" type="button" role="tab" id="tab-manual" aria-selected="true" aria-controls="manual-panel" data-tab-target="manual-panel">人工辅助预测</button>
+        <button class="tab-button" type="button" role="tab" id="tab-smart" aria-selected="false" aria-controls="smart-panel" data-tab-target="smart-panel" tabindex="-1">智能预测</button>
+      </div>
+
+      <section class="tab-panel" id="manual-panel" role="tabpanel" aria-labelledby="tab-manual">
+    <section class="metric-grid" aria-label="Key metrics">
+      <article class="card metric-card">
+        <div class="card-header">
+          <div class="title-row">
+            <span class="icon-box" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6z"></path>
+                <circle cx="12" cy="12" r="2.8"></circle>
+              </svg>
+            </span>
+            <h2 class="card-title">最新进度</h2>
+          </div>
+          <span class="info-icon" aria-label="最新进度信息">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="9"></circle>
+              <path d="M12 11v5"></path>
+              <path d="M12 8h.01"></path>
+            </svg>
+          </span>
+        </div>
+        <div class="metric-value">69% <span class="badge up">16% ↗</span></div>
+      </article>
+
+      <article class="card metric-card">
+        <div class="card-header">
+          <div class="title-row">
+            <span class="icon-box" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <ellipse cx="12" cy="5" rx="7" ry="3"></ellipse>
+                <path d="M5 5v10c0 1.7 3.1 3 7 3s7-1.3 7-3V5"></path>
+                <path d="M5 10c0 1.7 3.1 3 7 3s7-1.3 7-3"></path>
+              </svg>
+            </span>
+            <h2 class="card-title">下周计划</h2>
+          </div>
+          <span class="info-icon" aria-label="下周计划信息">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="9"></circle>
+              <path d="M12 11v5"></path>
+              <path d="M12 8h.01"></path>
+            </svg>
+          </span>
+        </div>
+        <div class="metric-value">81% <span class="badge up">12% ↗</span></div>
+      </article>
+
+      <article class="card metric-card">
+        <div class="card-header">
+          <div class="title-row">
+            <span class="icon-box" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M8 2v4"></path>
+                <path d="M16 2v4"></path>
+                <rect x="3" y="4" width="18" height="18" rx="3"></rect>
+                <path d="M3 10h18"></path>
+                <path d="M8 15h.01"></path>
+                <path d="M12 15h.01"></path>
+                <path d="M16 15h.01"></path>
+              </svg>
+            </span>
+            <h2 class="card-title">上线日期</h2>
+          </div>
+          <span class="info-icon" aria-label="上线日期信息">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="9"></circle>
+              <path d="M12 11v5"></path>
+              <path d="M12 8h.01"></path>
+            </svg>
+          </span>
+        </div>
+        <div class="metric-value launch-date">2026-06-30</div>
+      </article>
+
+      <article class="card metric-card">
+        <div class="card-header">
+          <div class="title-row">
+            <span class="icon-box" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 3v3"></path>
+                <path d="M18.4 5.6l-2.1 2.1"></path>
+                <path d="M21 12h-3"></path>
+                <path d="M6 12H3"></path>
+                <path d="M7.7 7.7 5.6 5.6"></path>
+                <path d="M12 12l4-2"></path>
+                <path d="M18.2 16.5A7 7 0 1 1 19 12"></path>
+              </svg>
+            </span>
+            <h2 class="card-title">风险说明</h2>
+          </div>
+          <span class="info-icon" aria-label="风险说明信息">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="9"></circle>
+              <path d="M12 11v5"></path>
+              <path d="M12 8h.01"></path>
+            </svg>
+          </span>
+        </div>
+        <div class="metric-value risk-text">6月下旬备战大促，业务无法测试与验收，系统630如期上线，业务验收顺延至7月。</div>
+      </article>
+    </section>
+
+    <section class="content-grid">
+      <article class="card panel">
+        <div class="card-header">
+          <div class="title-row">
+            <span class="icon-box" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6 20V10"></path>
+                <path d="M12 20V4"></path>
+                <path d="M18 20v-7"></path>
+              </svg>
+            </span>
+            <h2 class="card-title">需求进度</h2>
+          </div>
+        </div>
+
+        <div class="requirement-chart" aria-label="需求最新进度和下周计划合并条形图">
+          <div class="requirement-chart-head" aria-hidden="true">
+            <span>需求</span>
+            <span>最新进度 + 下周计划</span>
+          </div>
+          <div class="requirement-item">
+            <span class="requirement-name" title="人工预测-基础数据公共模块">人工预测-基础数据公共模块</span>
+            <div class="requirement-bar" style="--current: 100%; --plan-extra: 0%; --bar-start: #5347ce; --bar-end: #887cfd;"><div class="progress-track stacked"><span class="progress-fill current"></span><span class="progress-fill planned"></span></div><span class="progress-value">100%</span></div>
+          </div>
+          <div class="requirement-item">
+            <span class="requirement-name" title="人工预测数据erp计划数据交互">人工预测数据erp计划数据交互</span>
+            <div class="requirement-bar" style="--current: 50%; --plan-extra: 0%; --bar-start: #4896fe; --bar-end: #16c8c7;"><div class="progress-track stacked"><span class="progress-fill current"></span><span class="progress-fill planned"></span></div><span class="progress-value">50%</span></div>
+          </div>
+          <div class="requirement-item">
+            <span class="requirement-name" title="模版列表">模版列表</span>
+            <div class="requirement-bar" style="--current: 99%; --plan-extra: 0%; --bar-start: #4896fe; --bar-end: #16c8c7;"><div class="progress-track stacked"><span class="progress-fill current"></span><span class="progress-fill planned"></span></div><span class="progress-value">99%</span></div>
+          </div>
+          <div class="requirement-item">
+            <span class="requirement-name" title="历史销量标签页">历史销量标签页</span>
+            <div class="requirement-bar" style="--current: 100%; --plan-extra: 0%; --bar-start: #5347ce; --bar-end: #887cfd;"><div class="progress-track stacked"><span class="progress-fill current"></span><span class="progress-fill planned"></span></div><span class="progress-value">100%</span></div>
+          </div>
+          <div class="requirement-item">
+            <span class="requirement-name" title="损益报表标签页">损益报表标签页</span>
+            <div class="requirement-bar" style="--current: 100%; --plan-extra: 0%; --bar-start: #5347ce; --bar-end: #887cfd;"><div class="progress-track stacked"><span class="progress-fill current"></span><span class="progress-fill planned"></span></div><span class="progress-value">100%</span></div>
+          </div>
+          <div class="requirement-item">
+            <span class="requirement-name" title="类目流量标签页">类目流量标签页</span>
+            <div class="requirement-bar" style="--current: 100%; --plan-extra: 0%; --bar-start: #5347ce; --bar-end: #887cfd;"><div class="progress-track stacked"><span class="progress-fill current"></span><span class="progress-fill planned"></span></div><span class="progress-value">100%</span></div>
+          </div>
+          <div class="requirement-item">
+            <span class="requirement-name" title="类目销量标签页">类目销量标签页</span>
+            <div class="requirement-bar" style="--current: 100%; --plan-extra: 0%; --bar-start: #5347ce; --bar-end: #887cfd;"><div class="progress-track stacked"><span class="progress-fill current"></span><span class="progress-fill planned"></span></div><span class="progress-value">100%</span></div>
+          </div>
+          <div class="requirement-item">
+            <span class="requirement-name" title="基点流量标签页">基点流量标签页</span>
+            <div class="requirement-bar" style="--current: 100%; --plan-extra: 0%; --bar-start: #5347ce; --bar-end: #887cfd;"><div class="progress-track stacked"><span class="progress-fill current"></span><span class="progress-fill planned"></span></div><span class="progress-value">100%</span></div>
+          </div>
+          <div class="requirement-item">
+            <span class="requirement-name" title="基点销量标签页">基点销量标签页</span>
+            <div class="requirement-bar" style="--current: 100%; --plan-extra: 0%; --bar-start: #5347ce; --bar-end: #887cfd;"><div class="progress-track stacked"><span class="progress-fill current"></span><span class="progress-fill planned"></span></div><span class="progress-value">100%</span></div>
+          </div>
+          <div class="requirement-item">
+            <span class="requirement-name" title="库存页签">库存页签</span>
+            <div class="requirement-bar" style="--current: 10%; --plan-extra: 40%; --current-min: 10px; --bar-start: #4896fe; --bar-end: #16c8c7;"><div class="progress-track stacked"><span class="progress-fill current"></span><span class="progress-fill planned"></span></div><span class="progress-value">50%</span></div>
+          </div>
+          <div class="requirement-item">
+            <span class="requirement-name" title="气候页签">气候页签</span>
+            <div class="requirement-bar" style="--current: 0%; --plan-extra: 10%; --plan-min: 10px; --bar-start: #4896fe; --bar-end: #16c8c7;"><div class="progress-track stacked"><span class="progress-fill current"></span><span class="progress-fill planned"></span></div><span class="progress-value">10%</span></div>
+          </div>
+          <div class="requirement-item">
+            <span class="requirement-name" title="促销计划页签">促销计划页签</span>
+            <div class="requirement-bar" style="--current: 0%; --plan-extra: 50%; --bar-start: #4896fe; --bar-end: #16c8c7;"><div class="progress-track stacked"><span class="progress-fill current"></span><span class="progress-fill planned"></span></div><span class="progress-value">50%</span></div>
+          </div>
+          <div class="requirement-item">
+            <span class="requirement-name" title="公式公共组件">公式公共组件</span>
+            <div class="requirement-bar" style="--current: 90%; --plan-extra: 0%; --bar-start: #16c8c7; --bar-end: #62dedc;"><div class="progress-track stacked"><span class="progress-fill current"></span><span class="progress-fill planned"></span></div><span class="progress-value">90%</span></div>
+          </div>
+          <div class="requirement-item">
+            <span class="requirement-name" title="style计划">style计划</span>
+            <div class="requirement-bar" style="--current: 50%; --plan-extra: 40%; --bar-start: #4896fe; --bar-end: #16c8c7;"><div class="progress-track stacked"><span class="progress-fill current"></span><span class="progress-fill planned"></span></div><span class="progress-value">90%</span></div>
+          </div>
+          <div class="requirement-item">
+            <span class="requirement-name" title="颜色配比">颜色配比</span>
+            <div class="requirement-bar" style="--current: 50%; --plan-extra: 50%; --bar-start: #4896fe; --bar-end: #16c8c7;"><div class="progress-track stacked"><span class="progress-fill current"></span><span class="progress-fill planned"></span></div><span class="progress-value">100%</span></div>
+          </div>
+          <div class="requirement-item">
+            <span class="requirement-name" title="skc计划">skc计划</span>
+            <div class="requirement-bar" style="--current: 10%; --plan-extra: 40%; --current-min: 10px; --bar-start: #4896fe; --bar-end: #16c8c7;"><div class="progress-track stacked"><span class="progress-fill current"></span><span class="progress-fill planned"></span></div><span class="progress-value">50%</span></div>
+          </div>
+          <div class="requirement-item">
+            <span class="requirement-name" title="尺码配比">尺码配比</span>
+            <div class="requirement-bar" style="--current: 50%; --plan-extra: 40%; --bar-start: #4896fe; --bar-end: #16c8c7;"><div class="progress-track stacked"><span class="progress-fill current"></span><span class="progress-fill planned"></span></div><span class="progress-value">90%</span></div>
+          </div>
+          <div class="requirement-item">
+            <span class="requirement-name" title="sku计划">sku计划</span>
+            <div class="requirement-bar" style="--current: 10%; --plan-extra: 40%; --current-min: 10px; --bar-start: #4896fe; --bar-end: #16c8c7;"><div class="progress-track stacked"><span class="progress-fill current"></span><span class="progress-fill planned"></span></div><span class="progress-value">50%</span></div>
+          </div>
+        </div>
+      </article>
+
+      <div class="right-column">
+        <section class="insight-grid" aria-label="需求进度补充信息">
+          <article class="card insight-card">
+            <div class="insight-title-row">
+              <span class="insight-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 21v-2a4 4 0 0 0-8 0v2"></path>
+                  <circle cx="12" cy="7" r="4"></circle>
+                  <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+              </span>
+              <h2 class="insight-title">专家团</h2>
+            </div>
+            <div class="insight-body">
+              <p class="insight-text">由运营中台组织成立21人的专家团</p>
+            </div>
+          </article>
+
+          <article class="card insight-card">
+            <div class="insight-title-row">
+              <span class="insight-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M9 11l3 3L22 4"></path>
+                  <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                </svg>
+              </span>
+              <h2 class="insight-title">需求调研</h2>
+            </div>
+            <div class="insight-body">
+              <p class="insight-text">已完成Tiktok、官网的销售预测访谈</p>
+            </div>
+          </article>
+
+          <article class="card insight-card record-card">
+            <div class="insight-title-row">
+              <span class="insight-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                  <path d="M14 2v6h6"></path>
+                  <path d="M8 13h8"></path>
+                  <path d="M8 17h6"></path>
+                </svg>
+              </span>
+              <h2 class="insight-title">访谈记录</h2>
+            </div>
+            <div class="insight-body">
+              <p class="insight-text"><a class="insight-link" href="https://pg6xd0yqgm.feishu.cn/wiki/N0mqwGJzaiqigXk6kukcQ70rngh" target="_blank" rel="noreferrer">二期销售预测调研</a></p>
+            </div>
+          </article>
+        </section>
+
+        <article class="card panel system-preview-panel">
+          <div class="card-header">
+            <div class="title-row">
+              <span class="icon-box" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 21v-2a4 4 0 0 0-8 0v2"></path>
+                  <circle cx="12" cy="7" r="4"></circle>
+                  <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+              </span>
+              <h2 class="card-title">Test系统预览</h2>
+            </div>
+          </div>
+
+          <div class="system-preview" aria-label="Test系统预览">
+            <iframe
+              title="Test系统预览"
+              src="https://mmt-forecast.test.wangoon.cn/SaleForecast/manualForecast/customize?mode=new"
+              loading="lazy"
+              referrerpolicy="no-referrer"
+              allow="fullscreen; clipboard-read; clipboard-write"
+            ></iframe>
+          </div>
+        </article>
+      </div>
+    </section>
+
+      </section>
+
+      <section class="tab-panel" id="smart-panel" role="tabpanel" aria-labelledby="tab-smart" hidden>
+    <section class="bottom-grid">
+      <article class="card panel compact">
+        <div class="card-header">
+          <div class="title-row">
+            <span class="icon-box" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 10h16"></path>
+                <path d="M6 6h12l2 4v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8z"></path>
+                <path d="M8 15h8"></path>
+              </svg>
+            </span>
+            <h2 class="card-title">Sales Distribution</h2>
+          </div>
+          <button class="select-button" type="button" aria-label="Monthly range">
+            Monthly
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="m6 9 6 6 6-6"></path>
+            </svg>
+          </button>
+        </div>
+
+        <div class="distribution-metrics">
+          <div class="distribution-metric">
+            <div class="metric-label">Website</div>
+            <div class="metric-amount">$ 374.82</div>
+          </div>
+          <div class="distribution-metric">
+            <div class="metric-label">Mobile App</div>
+            <div class="metric-amount">$ 241.60</div>
+          </div>
+          <div class="distribution-metric">
+            <div class="metric-label">Other</div>
+            <div class="metric-amount">$ 213.42</div>
+          </div>
+        </div>
+
+        <div class="gauge" role="img" aria-label="Half donut sales distribution chart"></div>
+      </article>
+
+      <article class="card table-panel">
+        <div class="card-header">
+          <div class="title-row">
+            <span class="icon-box" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 7h10"></path>
+                <path d="M4 17h16"></path>
+                <circle cx="17" cy="7" r="3"></circle>
+                <circle cx="7" cy="17" r="3"></circle>
+              </svg>
+            </span>
+            <h2 class="card-title">List of Integration</h2>
+          </div>
+          <button class="see-all" type="button">See All</button>
+        </div>
+
+        <div class="table-scroll">
+          <table class="integration-table">
+            <thead>
+              <tr>
+                <th><div class="checkbox" aria-hidden="true"></div></th>
+                <th>Application</th>
+                <th>Type</th>
+                <th>Rate</th>
+                <th>Profit</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><div class="checkbox" aria-hidden="true"></div></td>
+                <td>
+                  <div class="app-cell"><span class="app-logo stripe">S</span>Stripe</div>
+                </td>
+                <td class="type">Finance</td>
+                <td>
+                  <div class="rate-cell"><span class="rate-line" style="--rate: 40%"></span>40%</div>
+                </td>
+                <td class="profit">$650.00</td>
+              </tr>
+              <tr>
+                <td><div class="checkbox" aria-hidden="true"></div></td>
+                <td>
+                  <div class="app-cell"><span class="app-logo zapier">✱</span>Zapier</div>
+                </td>
+                <td class="type">CRM</td>
+                <td>
+                  <div class="rate-cell"><span class="rate-line" style="--rate: 80%"></span>80%</div>
+                </td>
+                <td class="profit">$720.50</td>
+              </tr>
+              <tr>
+                <td><div class="checkbox" aria-hidden="true"></div></td>
+                <td>
+                  <div class="app-cell"><span class="app-logo shopify">S</span>Shopify</div>
+                </td>
+                <td class="type">Marketplace</td>
+                <td>
+                  <div class="rate-cell"><span class="rate-line" style="--rate: 20%"></span>20%</div>
+                </td>
+                <td class="profit">$432.25</td>
+              </tr>
+              <tr>
+                <td><div class="checkbox" aria-hidden="true"></div></td>
+                <td>
+                  <div class="app-cell"><span class="app-logo zoom">▣</span>Zoom</div>
+                </td>
+                <td class="type">Technology</td>
+                <td>
+                  <div class="rate-cell"><span class="rate-line" style="--rate: 60%"></span>60%</div>
+                </td>
+                <td class="profit">$650.00</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </article>
+    </section>
+
+    <footer class="color-footer">
+      <span class="footer-copy">Mini brand guide inspired palette</span>
+      <div class="scheme" aria-label="Color scheme">
+        <div class="chip"><div class="chip-color" style="--chip: #5347ce"></div><div class="chip-code">#5347CE</div></div>
+        <div class="chip"><div class="chip-color" style="--chip: #887cfd"></div><div class="chip-code">#887CFD</div></div>
+        <div class="chip"><div class="chip-color" style="--chip: #4896fe"></div><div class="chip-code">#4896FE</div></div>
+        <div class="chip"><div class="chip-color" style="--chip: #16c8c7"></div><div class="chip-code">#16C8C7</div></div>
+      </div>
+    </footer>
+      </section>
+    </section>
+  </main>
+  <script>
+    const tabButtons = document.querySelectorAll(".tab-button[data-tab-target]");
+    const tabPanels = document.querySelectorAll(".tab-panel");
+
+    function activateTab(activeButton) {
+      const activePanelId = activeButton.dataset.tabTarget;
+
+      tabButtons.forEach((button) => {
+        const isActive = button === activeButton;
+        button.classList.toggle("is-active", isActive);
+        button.setAttribute("aria-selected", String(isActive));
+        button.tabIndex = isActive ? 0 : -1;
+      });
+
+      tabPanels.forEach((panel) => {
+        panel.hidden = panel.id !== activePanelId;
+      });
+    }
+
+    tabButtons.forEach((button, index) => {
+      button.addEventListener("click", () => activateTab(button));
+      button.addEventListener("keydown", (event) => {
+        if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+
+        event.preventDefault();
+        const direction = event.key === "ArrowRight" ? 1 : -1;
+        const nextIndex = (index + direction + tabButtons.length) % tabButtons.length;
+        const nextButton = tabButtons[nextIndex];
+        activateTab(nextButton);
+        nextButton.focus();
+      });
+    });
+  </script>
+</body>
+</html>
