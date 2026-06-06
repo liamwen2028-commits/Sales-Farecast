@@ -793,6 +793,12 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
+      border: 0;
+      background: transparent;
+      color: inherit;
+      cursor: pointer;
+      font: inherit;
+      padding: 0;
     }
 
     .legend-swatch {
@@ -807,6 +813,16 @@
       height: 8px;
       border-radius: 2px;
       opacity: 0.72;
+    }
+
+    .legend-item.is-muted {
+      opacity: 0.36;
+    }
+
+    .legend-item:focus-visible {
+      outline: 2px solid rgba(72, 150, 254, 0.75);
+      outline-offset: 3px;
+      border-radius: 4px;
     }
 
     .forecast-chart-wrap {
@@ -1564,8 +1580,8 @@
             <h2 class="card-title">GRAND-01BLACK分析</h2>
           </div>
           <div class="forecast-legend" aria-label="图例">
-            <span class="legend-item"><span class="legend-swatch" style="--legend-color: #5347ce"></span>销量</span>
-            <span class="legend-item"><span class="legend-swatch" style="--legend-color: #16c8c7"></span>广销比</span>
+            <button class="legend-item" type="button" aria-pressed="true" data-grand-series="quantity"><span class="legend-swatch" style="--legend-color: #5347ce"></span>销量</button>
+            <button class="legend-item" type="button" aria-pressed="true" data-grand-series="ratio"><span class="legend-swatch" style="--legend-color: #16c8c7"></span>广销比</button>
           </div>
         </div>
 
@@ -1612,11 +1628,11 @@
             <h2 class="card-title">GRAND-01BLACK准确率分析</h2>
           </div>
           <div class="forecast-legend" aria-label="图例">
-            <span class="legend-item"><span class="legend-swatch" style="--legend-color: #5347ce"></span>实际销量</span>
-            <span class="legend-item"><span class="legend-swatch" style="--legend-color: #4896fe"></span>人工预测</span>
-            <span class="legend-item"><span class="legend-swatch" style="--legend-color: #16c8c7"></span>模型预测</span>
-            <span class="legend-item"><span class="legend-swatch bar" style="--legend-color: #887cfd"></span>人工预测准确率</span>
-            <span class="legend-item"><span class="legend-swatch bar" style="--legend-color: #f5a524"></span>模型预测准确率</span>
+            <button class="legend-item" type="button" aria-pressed="true" data-accuracy-series="actual"><span class="legend-swatch" style="--legend-color: #5347ce"></span>实际销量</button>
+            <button class="legend-item" type="button" aria-pressed="true" data-accuracy-series="manualForecast"><span class="legend-swatch" style="--legend-color: #4896fe"></span>人工预测</button>
+            <button class="legend-item" type="button" aria-pressed="true" data-accuracy-series="modelForecast"><span class="legend-swatch" style="--legend-color: #16c8c7"></span>模型预测</button>
+            <button class="legend-item" type="button" aria-pressed="true" data-accuracy-series="manualAccuracy"><span class="legend-swatch bar" style="--legend-color: #887cfd"></span>人工预测准确率</button>
+            <button class="legend-item" type="button" aria-pressed="true" data-accuracy-series="modelAccuracy"><span class="legend-swatch bar" style="--legend-color: #f5a524"></span>模型预测准确率</button>
           </div>
         </div>
 
@@ -1817,6 +1833,11 @@
       const svgNs = "http://www.w3.org/2000/svg";
       const quantityColor = "#5347ce";
       const ratioColor = "#16c8c7";
+      const grandVisibleSeries = {
+        quantity: true,
+        ratio: true
+      };
+      const grandLegendButtons = Array.from(document.querySelectorAll("[data-grand-series]"));
 
       const numberFormat = new Intl.NumberFormat("zh-CN");
       const percentFormat = new Intl.NumberFormat("zh-CN", {
@@ -1840,11 +1861,17 @@
       }
 
       function showGrandTooltip(point) {
-        chartTooltip.innerHTML = `
-          <div class="tooltip-title">${point.month}</div>
-          <div class="tooltip-row"><span>销量</span><strong>${numberFormat.format(point.quantity)}</strong></div>
-          <div class="tooltip-row"><span>广销比</span><strong>${percentFormat.format(point.ratio)}</strong></div>
-        `;
+        const rows = [
+          grandVisibleSeries.quantity ? `<div class="tooltip-row"><span>销量</span><strong>${numberFormat.format(point.quantity)}</strong></div>` : "",
+          grandVisibleSeries.ratio ? `<div class="tooltip-row"><span>广销比</span><strong>${percentFormat.format(point.ratio)}</strong></div>` : ""
+        ].join("");
+
+        if (!rows) {
+          hideGrandTooltip();
+          return;
+        }
+
+        chartTooltip.innerHTML = `<div class="tooltip-title">${point.month}</div>${rows}`;
         chartTooltip.style.left = `${point.tooltipX}px`;
         chartTooltip.style.top = `${point.tooltipY}px`;
         chartTooltip.classList.add("is-visible");
@@ -1967,22 +1994,27 @@
         }));
         const ratioPoints = quantityPoints.map((point) => ({ ...point, y: point.ratioY }));
 
-        chartSvg.appendChild(svgElement("path", {
-          d: linePath(quantityPoints),
-          fill: "none",
-          stroke: quantityColor,
-          "stroke-width": "2.6",
-          "stroke-linecap": "round",
-          "stroke-linejoin": "round"
-        }));
-        chartSvg.appendChild(svgElement("path", {
-          d: linePath(ratioPoints),
-          fill: "none",
-          stroke: ratioColor,
-          "stroke-width": "2.6",
-          "stroke-linecap": "round",
-          "stroke-linejoin": "round"
-        }));
+        if (grandVisibleSeries.quantity) {
+          chartSvg.appendChild(svgElement("path", {
+            d: linePath(quantityPoints),
+            fill: "none",
+            stroke: quantityColor,
+            "stroke-width": "2.6",
+            "stroke-linecap": "round",
+            "stroke-linejoin": "round"
+          }));
+        }
+
+        if (grandVisibleSeries.ratio) {
+          chartSvg.appendChild(svgElement("path", {
+            d: linePath(ratioPoints),
+            fill: "none",
+            stroke: ratioColor,
+            "stroke-width": "2.6",
+            "stroke-linecap": "round",
+            "stroke-linejoin": "round"
+          }));
+        }
 
         const monthLabelY = plotBottom + 48;
 
@@ -1999,22 +2031,27 @@
           label.textContent = point.month;
           chartSvg.appendChild(label);
 
-          chartSvg.appendChild(svgElement("circle", {
-            cx: point.x,
-            cy: point.y,
-            r: "3.4",
-            fill: "#ffffff",
-            stroke: quantityColor,
-            "stroke-width": "2"
-          }));
-          chartSvg.appendChild(svgElement("circle", {
-            cx: point.x,
-            cy: point.ratioY,
-            r: "3.4",
-            fill: "#ffffff",
-            stroke: ratioColor,
-            "stroke-width": "2"
-          }));
+          if (grandVisibleSeries.quantity) {
+            chartSvg.appendChild(svgElement("circle", {
+              cx: point.x,
+              cy: point.y,
+              r: "3.4",
+              fill: "#ffffff",
+              stroke: quantityColor,
+              "stroke-width": "2"
+            }));
+          }
+
+          if (grandVisibleSeries.ratio) {
+            chartSvg.appendChild(svgElement("circle", {
+              cx: point.x,
+              cy: point.ratioY,
+              r: "3.4",
+              fill: "#ffffff",
+              stroke: ratioColor,
+              "stroke-width": "2"
+            }));
+          }
 
           const hitArea = svgElement("rect", {
             x: point.x - xStep / 2,
@@ -2024,7 +2061,11 @@
             fill: "transparent"
           });
           const tooltipX = Math.min(Math.max(point.x, 82), width - 82);
-          const tooltipY = Math.max(70, Math.min(point.y, point.ratioY) - 8);
+          const visibleYValues = [
+            grandVisibleSeries.quantity ? point.y : null,
+            grandVisibleSeries.ratio ? point.ratioY : null
+          ].filter((value) => value !== null);
+          const tooltipY = visibleYValues.length ? Math.max(70, Math.min(...visibleYValues) - 8) : 70;
           hitArea.addEventListener("mouseenter", () => showGrandTooltip({ ...point, tooltipX, tooltipY }));
           hitArea.addEventListener("mousemove", () => showGrandTooltip({ ...point, tooltipX, tooltipY }));
           hitArea.addEventListener("mouseleave", hideGrandTooltip);
@@ -2033,6 +2074,15 @@
       };
 
       renderGrandChart();
+      grandLegendButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          const key = button.dataset.grandSeries;
+          grandVisibleSeries[key] = !grandVisibleSeries[key];
+          button.classList.toggle("is-muted", !grandVisibleSeries[key]);
+          button.setAttribute("aria-pressed", String(grandVisibleSeries[key]));
+          renderGrandChart();
+        });
+      });
       window.addEventListener("resize", () => window.requestAnimationFrame(renderGrandChart));
     }
 
@@ -2059,6 +2109,11 @@
       ];
       const accuracyLineSeries = accuracySeries.filter((series) => series.type !== "bar");
       const accuracyBarSeries = accuracySeries.filter((series) => series.type === "bar");
+      const accuracyVisibleSeries = accuracySeries.reduce((acc, series) => {
+        acc[series.key] = true;
+        return acc;
+      }, {});
+      const accuracyLegendButtons = Array.from(document.querySelectorAll("[data-accuracy-series]"));
 
       function svgElement(name, attrs = {}) {
         const element = document.createElementNS(svgNs, name);
@@ -2101,12 +2156,17 @@
 
       function showAccuracyTooltip(point) {
         const rows = accuracySeries
-          .filter((series) => point[series.key] !== null && point[series.key] !== undefined)
+          .filter((series) => accuracyVisibleSeries[series.key] && point[series.key] !== null && point[series.key] !== undefined)
           .map((series) => {
             const value = series.axis === "rate" ? percentFormat.format(point[series.key]) : numberFormat.format(point[series.key]);
             return `<div class="tooltip-row"><span>${series.label}</span><strong>${value}</strong></div>`;
           })
           .join("");
+
+        if (!rows) {
+          hideAccuracyTooltip();
+          return;
+        }
 
         chartTooltip.innerHTML = `<div class="tooltip-title">${point.month}</div>${rows}`;
         chartTooltip.style.left = `${point.tooltipX}px`;
@@ -2258,15 +2318,19 @@
         const zeroRateY = scaleRateY(0);
         const barGap = 2;
         const barWidth = Math.max(5, Math.min(12, xStep * 0.32));
-        const totalBarWidth = accuracyBarSeries.length * barWidth + (accuracyBarSeries.length - 1) * barGap;
 
-        accuracyBarSeries.forEach((series, seriesIndex) => {
+        const visibleBarSeries = accuracyBarSeries.filter((series) => accuracyVisibleSeries[series.key]);
+        const visibleTotalBarWidth = visibleBarSeries.length
+          ? visibleBarSeries.length * barWidth + (visibleBarSeries.length - 1) * barGap
+          : 0;
+
+        visibleBarSeries.forEach((series, seriesIndex) => {
           monthPoints.forEach((point) => {
             const value = point[series.key];
             const valueY = point[`${series.key}Y`];
             if (value === null || value === undefined || valueY === null || valueY === undefined) return;
 
-            const x = point.x - totalBarWidth / 2 + seriesIndex * (barWidth + barGap);
+            const x = point.x - visibleTotalBarWidth / 2 + seriesIndex * (barWidth + barGap);
             const y = Math.min(valueY, zeroRateY);
             const height = Math.abs(zeroRateY - valueY);
             chartSvg.appendChild(svgElement("rect", {
@@ -2282,7 +2346,7 @@
           });
         });
 
-        accuracyLineSeries.forEach((series) => {
+        accuracyLineSeries.filter((series) => accuracyVisibleSeries[series.key]).forEach((series) => {
           const points = monthPoints.map((point) => ({
             ...point,
             value: point[series.key],
@@ -2331,10 +2395,11 @@
           chartSvg.appendChild(label);
 
           const visibleYValues = accuracySeries
+            .filter((series) => accuracyVisibleSeries[series.key])
             .map((series) => point[`${series.key}Y`])
             .filter((value) => value !== null && value !== undefined);
           const tooltipX = Math.min(Math.max(point.x, 112), width - 112);
-          const tooltipY = Math.max(90, Math.min(...visibleYValues) - 8);
+          const tooltipY = visibleYValues.length ? Math.max(90, Math.min(...visibleYValues) - 8) : 90;
           const hitArea = svgElement("rect", {
             x: point.x - xStep / 2,
             y: margin.top,
@@ -2351,6 +2416,15 @@
       };
 
       renderAccuracyChart();
+      accuracyLegendButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          const key = button.dataset.accuracySeries;
+          accuracyVisibleSeries[key] = !accuracyVisibleSeries[key];
+          button.classList.toggle("is-muted", !accuracyVisibleSeries[key]);
+          button.setAttribute("aria-pressed", String(accuracyVisibleSeries[key]));
+          renderAccuracyChart();
+        });
+      });
       window.addEventListener("resize", () => window.requestAnimationFrame(renderAccuracyChart));
     }
 
