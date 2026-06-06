@@ -811,9 +811,10 @@
 
     .forecast-chart-wrap {
       position: relative;
+      z-index: 1;
       height: 398px;
       margin-top: 18px;
-      overflow: hidden;
+      overflow: visible;
       border: 1px solid #dce3ea;
       border-radius: 8px;
       background: #fbfcfe;
@@ -829,12 +830,12 @@
       position: absolute;
       left: 0;
       top: 0;
-      z-index: 3;
+      z-index: 20;
       min-width: 138px;
       padding: 9px 10px;
       border: 1px solid rgba(83, 71, 206, 0.16);
       border-radius: 8px;
-      background: rgba(255, 255, 255, 0.96);
+      background: #ffffff;
       box-shadow: 0 14px 30px rgba(34, 43, 55, 0.12);
       color: #111827;
       font-size: 12px;
