@@ -191,6 +191,10 @@
       margin-top: 0;
     }
 
+    #smart-panel .bottom-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
     .card-header {
       display: flex;
       align-items: center;
@@ -742,67 +746,87 @@
       font-weight: 800;
     }
 
-    .distribution-metrics {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
-      margin-top: 36px;
+    .forecast-analysis-card {
+      min-height: 500px;
     }
 
-    .distribution-metric {
-      min-width: 0;
-      padding-left: 14px;
-      border-left: 3px solid var(--purple);
-    }
-
-    .distribution-metric:nth-child(2) {
-      border-color: var(--cyan);
-    }
-
-    .distribution-metric:nth-child(3) {
-      border-color: #d5dce4;
-    }
-
-    .metric-label {
+    .forecast-legend {
+      display: flex;
+      align-items: center;
+      gap: 14px;
       color: var(--muted);
-      font-size: 14px;
-    }
-
-    .metric-amount {
-      margin-top: 8px;
-      font-size: 22px;
-      line-height: 1;
-      font-weight: 700;
+      font-size: 12px;
+      font-weight: 800;
       white-space: nowrap;
     }
 
-    .gauge {
+    .legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .legend-swatch {
+      width: 18px;
+      height: 3px;
+      border-radius: 999px;
+      background: var(--legend-color);
+    }
+
+    .forecast-chart-wrap {
       position: relative;
-      width: min(360px, 88%);
-      aspect-ratio: 2 / 1;
-      margin: 34px auto 0;
+      height: 398px;
+      margin-top: 18px;
       overflow: hidden;
+      border: 1px solid #dce3ea;
+      border-radius: 8px;
+      background: #fbfcfe;
     }
 
-    .gauge::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      border-radius: 999px 999px 0 0;
-      background:
-        repeating-conic-gradient(from 270deg, rgba(210, 218, 227, 0.68) 0deg 1deg, transparent 1deg 3.2deg),
-        conic-gradient(from 270deg, var(--purple) 0 52deg, #ffffff 52deg 56deg, var(--cyan) 56deg 112deg, transparent 112deg 180deg);
+    .forecast-chart {
+      display: block;
+      width: 100%;
+      height: 100%;
     }
 
-    .gauge::after {
-      content: "";
+    .forecast-tooltip {
       position: absolute;
-      left: 15%;
-      right: 15%;
-      bottom: 0;
-      height: 70%;
-      border-radius: 999px 999px 0 0;
-      background: #ffffff;
+      left: 0;
+      top: 0;
+      z-index: 3;
+      min-width: 138px;
+      padding: 9px 10px;
+      border: 1px solid rgba(83, 71, 206, 0.16);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.96);
+      box-shadow: 0 14px 30px rgba(34, 43, 55, 0.12);
+      color: #111827;
+      font-size: 12px;
+      line-height: 1.45;
+      opacity: 0;
+      pointer-events: none;
+      transform: translate(-50%, calc(-100% - 10px));
+      transition: opacity 120ms ease;
+    }
+
+    .forecast-tooltip.is-visible {
+      opacity: 1;
+    }
+
+    .tooltip-title {
+      margin-bottom: 4px;
+      color: #2f3947;
+      font-weight: 900;
+    }
+
+    .tooltip-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .tooltip-row span:first-child {
+      color: var(--muted);
     }
 
     .table-panel {
@@ -965,6 +989,10 @@
         grid-template-columns: 1fr;
       }
 
+      #smart-panel .bottom-grid {
+        grid-template-columns: 1fr;
+      }
+
       .content-grid {
         grid-template-columns: minmax(300px, 0.8fr) minmax(0, 1.62fr);
         gap: 14px;
@@ -1005,6 +1033,10 @@
       .subscriber-chart {
         max-width: 620px;
         margin-inline: auto;
+      }
+
+      .forecast-chart-wrap {
+        height: 390px;
       }
     }
 
@@ -1054,13 +1086,8 @@
       }
 
       .controls,
-      .distribution-metrics,
       .scheme {
         flex-wrap: wrap;
-      }
-
-      .distribution-metrics {
-        grid-template-columns: 1fr;
       }
 
       .insight-grid {
@@ -1418,7 +1445,7 @@
 
       <section class="tab-panel" id="smart-panel" role="tabpanel" aria-labelledby="tab-smart" hidden>
     <section class="bottom-grid">
-      <article class="card panel compact">
+      <article class="card panel compact forecast-analysis-card">
         <div class="card-header">
           <div class="title-row">
             <span class="icon-box" aria-hidden="true">
@@ -1428,32 +1455,18 @@
                 <path d="M8 15h8"></path>
               </svg>
             </span>
-            <h2 class="card-title">Sales Distribution</h2>
+            <h2 class="card-title">GRAND-01BLACK分析</h2>
           </div>
-          <button class="select-button" type="button" aria-label="Monthly range">
-            Monthly
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="m6 9 6 6 6-6"></path>
-            </svg>
-          </button>
-        </div>
-
-        <div class="distribution-metrics">
-          <div class="distribution-metric">
-            <div class="metric-label">Website</div>
-            <div class="metric-amount">$ 374.82</div>
-          </div>
-          <div class="distribution-metric">
-            <div class="metric-label">Mobile App</div>
-            <div class="metric-amount">$ 241.60</div>
-          </div>
-          <div class="distribution-metric">
-            <div class="metric-label">Other</div>
-            <div class="metric-amount">$ 213.42</div>
+          <div class="forecast-legend" aria-label="图例">
+            <span class="legend-item"><span class="legend-swatch" style="--legend-color: #5347ce"></span>销量</span>
+            <span class="legend-item"><span class="legend-swatch" style="--legend-color: #16c8c7"></span>广销比</span>
           </div>
         </div>
 
-        <div class="gauge" role="img" aria-label="Half donut sales distribution chart"></div>
+        <div class="forecast-chart-wrap" data-grand-chart>
+          <svg class="forecast-chart" role="img" aria-label="GRAND-01BLACK 202301至202604销量和广销比双轴曲线图"></svg>
+          <div class="forecast-tooltip" data-grand-tooltip></div>
+        </div>
       </article>
 
       <article class="card table-panel">
@@ -1549,6 +1562,7 @@
   <script>
     const tabButtons = document.querySelectorAll(".tab-button[data-tab-target]");
     const tabPanels = document.querySelectorAll(".tab-panel");
+    let renderGrandChart = () => {};
 
     function activateTab(activeButton) {
       const activePanelId = activeButton.dataset.tabTarget;
@@ -1563,6 +1577,10 @@
       tabPanels.forEach((panel) => {
         panel.hidden = panel.id !== activePanelId;
       });
+
+      if (activePanelId === "smart-panel") {
+        window.requestAnimationFrame(renderGrandChart);
+      }
     }
 
     tabButtons.forEach((button, index) => {
@@ -1622,6 +1640,234 @@
           restartPreviewTimer();
         });
       });
+    }
+
+    const grandForecastData = [{"month":"202301","quantity":1383,"ratio":0.021723},{"month":"202302","quantity":1165,"ratio":0.028612},{"month":"202303","quantity":2440,"ratio":0.021708},{"month":"202304","quantity":1530,"ratio":0.053368},{"month":"202305","quantity":2158,"ratio":0.082709},{"month":"202306","quantity":1632,"ratio":0.084928},{"month":"202307","quantity":2268,"ratio":0.079161},{"month":"202308","quantity":1727,"ratio":0.042492},{"month":"202309","quantity":1820,"ratio":0.077194},{"month":"202310","quantity":2991,"ratio":0.070375},{"month":"202311","quantity":3337,"ratio":0.058435},{"month":"202312","quantity":4067,"ratio":0.05824},{"month":"202401","quantity":1955,"ratio":0.096787},{"month":"202402","quantity":1615,"ratio":0.103541},{"month":"202403","quantity":2345,"ratio":0.103742},{"month":"202404","quantity":2839,"ratio":0.159801},{"month":"202405","quantity":4124,"ratio":0.159836},{"month":"202406","quantity":3700,"ratio":0.200623},{"month":"202407","quantity":4569,"ratio":0.226955},{"month":"202408","quantity":3434,"ratio":0.233412},{"month":"202409","quantity":3010,"ratio":0.195929},{"month":"202410","quantity":4100,"ratio":0.218356},{"month":"202411","quantity":5791,"ratio":0.099034},{"month":"202412","quantity":6452,"ratio":0.061407},{"month":"202501","quantity":2790,"ratio":0.109999},{"month":"202502","quantity":3848,"ratio":0.076982},{"month":"202503","quantity":4401,"ratio":0.069005},{"month":"202504","quantity":4102,"ratio":0.064438},{"month":"202505","quantity":3729,"ratio":0.072668},{"month":"202506","quantity":2929,"ratio":0.068155},{"month":"202507","quantity":4215,"ratio":0.082875},{"month":"202508","quantity":4176,"ratio":0.081557},{"month":"202509","quantity":5685,"ratio":0.079201},{"month":"202510","quantity":6847,"ratio":0.074227},{"month":"202511","quantity":6083,"ratio":0.089028},{"month":"202512","quantity":6156,"ratio":0.079195},{"month":"202601","quantity":5507,"ratio":0.101857},{"month":"202602","quantity":6324,"ratio":0.089013},{"month":"202603","quantity":6867,"ratio":0.087954},{"month":"202604","quantity":7361,"ratio":0.080891}];
+    const grandChartHost = document.querySelector("[data-grand-chart]");
+
+    if (grandChartHost) {
+      const chartSvg = grandChartHost.querySelector(".forecast-chart");
+      const chartTooltip = grandChartHost.querySelector("[data-grand-tooltip]");
+      const svgNs = "http://www.w3.org/2000/svg";
+      const quantityColor = "#5347ce";
+      const ratioColor = "#16c8c7";
+
+      const numberFormat = new Intl.NumberFormat("zh-CN");
+      const percentFormat = new Intl.NumberFormat("zh-CN", {
+        style: "percent",
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      });
+
+      function svgElement(name, attrs = {}) {
+        const element = document.createElementNS(svgNs, name);
+        Object.entries(attrs).forEach(([key, value]) => element.setAttribute(key, value));
+        return element;
+      }
+
+      function roundedMax(value, step) {
+        return Math.ceil(value / step) * step;
+      }
+
+      function linePath(points) {
+        return points.map((point, index) => `${index === 0 ? "M" : "L"} ${point.x.toFixed(2)} ${point.y.toFixed(2)}`).join(" ");
+      }
+
+      function showGrandTooltip(point) {
+        chartTooltip.innerHTML = `
+          <div class="tooltip-title">${point.month}</div>
+          <div class="tooltip-row"><span>销量</span><strong>${numberFormat.format(point.quantity)}</strong></div>
+          <div class="tooltip-row"><span>广销比</span><strong>${percentFormat.format(point.ratio)}</strong></div>
+        `;
+        chartTooltip.style.left = `${point.tooltipX}px`;
+        chartTooltip.style.top = `${point.tooltipY}px`;
+        chartTooltip.classList.add("is-visible");
+      }
+
+      function hideGrandTooltip() {
+        chartTooltip.classList.remove("is-visible");
+      }
+
+      renderGrandChart = () => {
+        const width = Math.max(Math.round(grandChartHost.clientWidth), 420);
+        const height = Math.max(Math.round(grandChartHost.clientHeight), 380);
+        const margin = { top: 34, right: 58, bottom: 86, left: 58 };
+        const plotWidth = width - margin.left - margin.right;
+        const plotHeight = height - margin.top - margin.bottom;
+        const plotBottom = margin.top + plotHeight;
+        const quantityMax = roundedMax(Math.max(...grandForecastData.map((item) => item.quantity)), 1000);
+        const ratioMax = roundedMax(Math.max(...grandForecastData.map((item) => item.ratio)), 0.01);
+        const xStep = plotWidth / (grandForecastData.length - 1);
+        const scaleQuantityY = (value) => margin.top + plotHeight - (value / quantityMax) * plotHeight;
+        const scaleRatioY = (value) => margin.top + plotHeight - (value / ratioMax) * plotHeight;
+
+        chartSvg.setAttribute("viewBox", `0 0 ${width} ${height}`);
+        chartSvg.setAttribute("width", width);
+        chartSvg.setAttribute("height", height);
+        chartSvg.innerHTML = "";
+        hideGrandTooltip();
+
+        const gridGroup = svgElement("g");
+        for (let index = 0; index <= 4; index += 1) {
+          const ratio = index / 4;
+          const y = margin.top + plotHeight * ratio;
+          const quantityValue = quantityMax * (1 - ratio);
+          const ratioValue = ratioMax * (1 - ratio);
+
+          gridGroup.appendChild(svgElement("line", {
+            x1: margin.left,
+            x2: width - margin.right,
+            y1: y,
+            y2: y,
+            stroke: "#e7edf4",
+            "stroke-width": "1"
+          }));
+
+          const leftLabel = svgElement("text", {
+            x: margin.left - 10,
+            y: y + 4,
+            "text-anchor": "end",
+            fill: "#5f6874",
+            "font-size": "10",
+            "font-weight": "700"
+          });
+          leftLabel.textContent = numberFormat.format(Math.round(quantityValue));
+          gridGroup.appendChild(leftLabel);
+
+          const rightLabel = svgElement("text", {
+            x: width - margin.right + 10,
+            y: y + 4,
+            "text-anchor": "start",
+            fill: "#5f6874",
+            "font-size": "10",
+            "font-weight": "700"
+          });
+          rightLabel.textContent = percentFormat.format(ratioValue);
+          gridGroup.appendChild(rightLabel);
+        }
+        chartSvg.appendChild(gridGroup);
+
+        chartSvg.appendChild(svgElement("line", {
+          x1: margin.left,
+          x2: margin.left,
+          y1: margin.top,
+          y2: plotBottom,
+          stroke: "#cfd8e3",
+          "stroke-width": "1"
+        }));
+        chartSvg.appendChild(svgElement("line", {
+          x1: width - margin.right,
+          x2: width - margin.right,
+          y1: margin.top,
+          y2: plotBottom,
+          stroke: "#cfd8e3",
+          "stroke-width": "1"
+        }));
+        chartSvg.appendChild(svgElement("line", {
+          x1: margin.left,
+          x2: width - margin.right,
+          y1: plotBottom,
+          y2: plotBottom,
+          stroke: "#cfd8e3",
+          "stroke-width": "1"
+        }));
+
+        const y1Title = svgElement("text", {
+          x: margin.left,
+          y: 18,
+          fill: "#2f3947",
+          "font-size": "12",
+          "font-weight": "900"
+        });
+        y1Title.textContent = "销量";
+        chartSvg.appendChild(y1Title);
+
+        const y2Title = svgElement("text", {
+          x: width - margin.right,
+          y: 18,
+          fill: "#2f3947",
+          "font-size": "12",
+          "font-weight": "900",
+          "text-anchor": "end"
+        });
+        y2Title.textContent = "广销比";
+        chartSvg.appendChild(y2Title);
+
+        const quantityPoints = grandForecastData.map((item, index) => ({
+          ...item,
+          x: margin.left + xStep * index,
+          y: scaleQuantityY(item.quantity),
+          ratioY: scaleRatioY(item.ratio)
+        }));
+        const ratioPoints = quantityPoints.map((point) => ({ ...point, y: point.ratioY }));
+
+        chartSvg.appendChild(svgElement("path", {
+          d: linePath(quantityPoints),
+          fill: "none",
+          stroke: quantityColor,
+          "stroke-width": "2.6",
+          "stroke-linecap": "round",
+          "stroke-linejoin": "round"
+        }));
+        chartSvg.appendChild(svgElement("path", {
+          d: linePath(ratioPoints),
+          fill: "none",
+          stroke: ratioColor,
+          "stroke-width": "2.6",
+          "stroke-linecap": "round",
+          "stroke-linejoin": "round"
+        }));
+
+        const monthLabelY = plotBottom + 48;
+
+        quantityPoints.forEach((point, index) => {
+          const label = svgElement("text", {
+            x: point.x,
+            y: monthLabelY,
+            transform: `rotate(-90 ${point.x} ${monthLabelY})`,
+            "text-anchor": "end",
+            fill: "#5f6874",
+            "font-size": "8",
+            "font-weight": "800"
+          });
+          label.textContent = point.month;
+          chartSvg.appendChild(label);
+
+          chartSvg.appendChild(svgElement("circle", {
+            cx: point.x,
+            cy: point.y,
+            r: "3.4",
+            fill: "#ffffff",
+            stroke: quantityColor,
+            "stroke-width": "2"
+          }));
+          chartSvg.appendChild(svgElement("circle", {
+            cx: point.x,
+            cy: point.ratioY,
+            r: "3.4",
+            fill: "#ffffff",
+            stroke: ratioColor,
+            "stroke-width": "2"
+          }));
+
+          const hitArea = svgElement("rect", {
+            x: point.x - xStep / 2,
+            y: margin.top,
+            width: index === 0 || index === quantityPoints.length - 1 ? xStep : xStep,
+            height: plotHeight,
+            fill: "transparent"
+          });
+          const tooltipX = Math.min(Math.max(point.x, 82), width - 82);
+          const tooltipY = Math.max(70, Math.min(point.y, point.ratioY) - 8);
+          hitArea.addEventListener("mouseenter", () => showGrandTooltip({ ...point, tooltipX, tooltipY }));
+          hitArea.addEventListener("mousemove", () => showGrandTooltip({ ...point, tooltipX, tooltipY }));
+          hitArea.addEventListener("mouseleave", hideGrandTooltip);
+          chartSvg.appendChild(hitArea);
+        });
+      };
+
+      renderGrandChart();
+      window.addEventListener("resize", () => window.requestAnimationFrame(renderGrandChart));
     }
   </script>
 </body>
