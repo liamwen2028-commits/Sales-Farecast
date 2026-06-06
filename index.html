@@ -1695,16 +1695,16 @@
             <h2 class="card-title">GRAND-01BLACK准确率分析</h2>
           </div>
           <div class="forecast-legend" aria-label="图例">
-            <button class="legend-item" type="button" aria-pressed="true" data-accuracy-series="actual"><span class="legend-swatch" style="--legend-color: #5347ce"></span>实际销量</button>
-            <button class="legend-item" type="button" aria-pressed="true" data-accuracy-series="manualForecast"><span class="legend-swatch" style="--legend-color: #4896fe"></span>人工预测</button>
-            <button class="legend-item" type="button" aria-pressed="true" data-accuracy-series="modelForecast"><span class="legend-swatch" style="--legend-color: #16c8c7"></span>模型预测</button>
-            <button class="legend-item" type="button" aria-pressed="true" data-accuracy-series="manualAccuracy"><span class="legend-swatch bar" style="--legend-color: #887cfd"></span>人工预测准确率</button>
-            <button class="legend-item" type="button" aria-pressed="true" data-accuracy-series="modelAccuracy"><span class="legend-swatch bar" style="--legend-color: #f5a524"></span>模型预测准确率</button>
+            <button class="legend-item is-muted" type="button" aria-pressed="false" data-accuracy-series="actual"><span class="legend-swatch" style="--legend-color: #5347ce"></span>实际销量</button>
+            <button class="legend-item is-muted" type="button" aria-pressed="false" data-accuracy-series="manualForecast"><span class="legend-swatch" style="--legend-color: #4896fe"></span>人工预测</button>
+            <button class="legend-item is-muted" type="button" aria-pressed="false" data-accuracy-series="modelForecast"><span class="legend-swatch" style="--legend-color: #16c8c7"></span>模型预测</button>
+            <button class="legend-item" type="button" aria-pressed="true" data-accuracy-series="manualAccuracy"><span class="legend-swatch" style="--legend-color: #887cfd"></span>人工预测准确率</button>
+            <button class="legend-item" type="button" aria-pressed="true" data-accuracy-series="modelAccuracy"><span class="legend-swatch" style="--legend-color: #f5a524"></span>模型预测准确率</button>
           </div>
         </div>
 
         <div class="forecast-chart-wrap" data-accuracy-chart>
-          <svg class="forecast-chart" role="img" aria-label="GRAND-01BLACK 202401至202604实际销量、人工预测、模型预测曲线，以及人工预测准确率和模型预测准确率柱状图"></svg>
+          <svg class="forecast-chart" role="img" aria-label="GRAND-01BLACK 202401至202604实际销量、人工预测、模型预测、人工预测准确率和模型预测准确率曲线图"></svg>
           <div class="forecast-tooltip" data-accuracy-tooltip></div>
         </div>
       </article>
@@ -2172,13 +2172,11 @@
         { key: "actual", label: "实际销量", axis: "quantity", color: "#5347ce" },
         { key: "manualForecast", label: "人工预测", axis: "quantity", color: "#4896fe" },
         { key: "modelForecast", label: "模型预测", axis: "quantity", color: "#16c8c7" },
-        { key: "manualAccuracy", label: "人工预测准确率", axis: "rate", type: "bar", color: "#887cfd" },
-        { key: "modelAccuracy", label: "模型预测准确率", axis: "rate", type: "bar", color: "#f5a524" }
+        { key: "manualAccuracy", label: "人工预测准确率", axis: "rate", color: "#887cfd" },
+        { key: "modelAccuracy", label: "模型预测准确率", axis: "rate", color: "#f5a524" }
       ];
-      const accuracyLineSeries = accuracySeries.filter((series) => series.type !== "bar");
-      const accuracyBarSeries = accuracySeries.filter((series) => series.type === "bar");
       const accuracyVisibleSeries = accuracySeries.reduce((acc, series) => {
-        acc[series.key] = true;
+        acc[series.key] = series.axis === "rate";
         return acc;
       }, {});
       const accuracyLegendButtons = Array.from(document.querySelectorAll("[data-accuracy-series]"));
@@ -2383,38 +2381,7 @@
           }));
         }
 
-        const zeroRateY = scaleRateY(0);
-        const barGap = 2;
-        const barWidth = Math.max(5, Math.min(12, xStep * 0.32));
-
-        const visibleBarSeries = accuracyBarSeries.filter((series) => accuracyVisibleSeries[series.key]);
-        const visibleTotalBarWidth = visibleBarSeries.length
-          ? visibleBarSeries.length * barWidth + (visibleBarSeries.length - 1) * barGap
-          : 0;
-
-        visibleBarSeries.forEach((series, seriesIndex) => {
-          monthPoints.forEach((point) => {
-            const value = point[series.key];
-            const valueY = point[`${series.key}Y`];
-            if (value === null || value === undefined || valueY === null || valueY === undefined) return;
-
-            const x = point.x - visibleTotalBarWidth / 2 + seriesIndex * (barWidth + barGap);
-            const y = Math.min(valueY, zeroRateY);
-            const height = Math.abs(zeroRateY - valueY);
-            chartSvg.appendChild(svgElement("rect", {
-              x: x.toFixed(2),
-              y: y.toFixed(2),
-              width: barWidth.toFixed(2),
-              height: Math.max(height, 1).toFixed(2),
-              rx: "2",
-              ry: "2",
-              fill: series.color,
-              opacity: "0.42"
-            }));
-          });
-        });
-
-        accuracyLineSeries.filter((series) => accuracyVisibleSeries[series.key]).forEach((series) => {
+        accuracySeries.filter((series) => accuracyVisibleSeries[series.key]).forEach((series) => {
           const points = monthPoints.map((point) => ({
             ...point,
             value: point[series.key],
