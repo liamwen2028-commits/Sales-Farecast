@@ -192,7 +192,19 @@
     }
 
     #smart-panel .bottom-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: repeat(10, minmax(0, 1fr));
+    }
+
+    #smart-panel .forecast-analysis-card {
+      grid-column: span 7;
+    }
+
+    #smart-panel .forecast-pie-card {
+      grid-column: span 3;
+    }
+
+    #smart-panel .smart-integration-card {
+      grid-column: 1 / -1;
     }
 
     .card-header {
@@ -750,6 +762,12 @@
       min-height: 500px;
     }
 
+    .forecast-pie-card {
+      display: flex;
+      flex-direction: column;
+      min-height: 500px;
+    }
+
     .forecast-legend {
       display: flex;
       align-items: center;
@@ -827,6 +845,68 @@
 
     .tooltip-row span:first-child {
       color: var(--muted);
+    }
+
+    .pie-chart-shell {
+      position: relative;
+      display: grid;
+      place-items: center;
+      min-height: 250px;
+      margin-top: 24px;
+      border: 1px solid #dce3ea;
+      border-radius: 8px;
+      background: #fbfcfe;
+    }
+
+    .forecast-pie-chart {
+      display: block;
+      width: min(238px, 88%);
+      aspect-ratio: 1;
+      overflow: visible;
+    }
+
+    .pie-total {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .pie-total strong {
+      display: block;
+      margin-top: 5px;
+      color: #111827;
+      font-size: 24px;
+      line-height: 1;
+    }
+
+    .pie-legend {
+      display: grid;
+      gap: 10px;
+      margin-top: auto;
+      padding-top: 18px;
+    }
+
+    .pie-legend-item {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 8px;
+      color: #4f5965;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .pie-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--pie-color);
+    }
+
+    .pie-legend-item strong {
+      color: #111827;
+      font-size: 12px;
     }
 
     .table-panel {
@@ -991,6 +1071,12 @@
 
       #smart-panel .bottom-grid {
         grid-template-columns: 1fr;
+      }
+
+      #smart-panel .forecast-analysis-card,
+      #smart-panel .forecast-pie-card,
+      #smart-panel .smart-integration-card {
+        grid-column: 1 / -1;
       }
 
       .content-grid {
@@ -1469,7 +1555,31 @@
         </div>
       </article>
 
-      <article class="card table-panel">
+      <article class="card panel compact forecast-pie-card">
+        <div class="card-header">
+          <div class="title-row">
+            <span class="icon-box" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 3v9h9"></path>
+                <path d="M21 12a9 9 0 1 1-9-9"></path>
+              </svg>
+            </span>
+            <h2 class="card-title">销量年度占比</h2>
+          </div>
+        </div>
+
+        <div class="pie-chart-shell" data-grand-pie>
+          <svg class="forecast-pie-chart" role="img" aria-label="GRAND-01BLACK按年份销量占比饼图"></svg>
+        </div>
+
+        <div class="pie-total">
+          总销量
+          <strong data-grand-pie-total></strong>
+        </div>
+        <div class="pie-legend" data-grand-pie-legend></div>
+      </article>
+
+      <article class="card table-panel smart-integration-card">
         <div class="card-header">
           <div class="title-row">
             <span class="icon-box" aria-hidden="true">
@@ -1563,6 +1673,7 @@
     const tabButtons = document.querySelectorAll(".tab-button[data-tab-target]");
     const tabPanels = document.querySelectorAll(".tab-panel");
     let renderGrandChart = () => {};
+    let renderGrandPieChart = () => {};
 
     function activateTab(activeButton) {
       const activePanelId = activeButton.dataset.tabTarget;
@@ -1579,7 +1690,10 @@
       });
 
       if (activePanelId === "smart-panel") {
-        window.requestAnimationFrame(renderGrandChart);
+        window.requestAnimationFrame(() => {
+          renderGrandChart();
+          renderGrandPieChart();
+        });
       }
     }
 
@@ -1644,6 +1758,7 @@
 
     const grandForecastData = [{"month":"202301","quantity":1383,"ratio":0.021723},{"month":"202302","quantity":1165,"ratio":0.028612},{"month":"202303","quantity":2440,"ratio":0.021708},{"month":"202304","quantity":1530,"ratio":0.053368},{"month":"202305","quantity":2158,"ratio":0.082709},{"month":"202306","quantity":1632,"ratio":0.084928},{"month":"202307","quantity":2268,"ratio":0.079161},{"month":"202308","quantity":1727,"ratio":0.042492},{"month":"202309","quantity":1820,"ratio":0.077194},{"month":"202310","quantity":2991,"ratio":0.070375},{"month":"202311","quantity":3337,"ratio":0.058435},{"month":"202312","quantity":4067,"ratio":0.05824},{"month":"202401","quantity":1955,"ratio":0.096787},{"month":"202402","quantity":1615,"ratio":0.103541},{"month":"202403","quantity":2345,"ratio":0.103742},{"month":"202404","quantity":2839,"ratio":0.159801},{"month":"202405","quantity":4124,"ratio":0.159836},{"month":"202406","quantity":3700,"ratio":0.200623},{"month":"202407","quantity":4569,"ratio":0.226955},{"month":"202408","quantity":3434,"ratio":0.233412},{"month":"202409","quantity":3010,"ratio":0.195929},{"month":"202410","quantity":4100,"ratio":0.218356},{"month":"202411","quantity":5791,"ratio":0.099034},{"month":"202412","quantity":6452,"ratio":0.061407},{"month":"202501","quantity":2790,"ratio":0.109999},{"month":"202502","quantity":3848,"ratio":0.076982},{"month":"202503","quantity":4401,"ratio":0.069005},{"month":"202504","quantity":4102,"ratio":0.064438},{"month":"202505","quantity":3729,"ratio":0.072668},{"month":"202506","quantity":2929,"ratio":0.068155},{"month":"202507","quantity":4215,"ratio":0.082875},{"month":"202508","quantity":4176,"ratio":0.081557},{"month":"202509","quantity":5685,"ratio":0.079201},{"month":"202510","quantity":6847,"ratio":0.074227},{"month":"202511","quantity":6083,"ratio":0.089028},{"month":"202512","quantity":6156,"ratio":0.079195},{"month":"202601","quantity":5507,"ratio":0.101857},{"month":"202602","quantity":6324,"ratio":0.089013},{"month":"202603","quantity":6867,"ratio":0.087954},{"month":"202604","quantity":7361,"ratio":0.080891}];
     const grandChartHost = document.querySelector("[data-grand-chart]");
+    const grandPieHost = document.querySelector("[data-grand-pie]");
 
     if (grandChartHost) {
       const chartSvg = grandChartHost.querySelector(".forecast-chart");
@@ -1868,6 +1983,103 @@
 
       renderGrandChart();
       window.addEventListener("resize", () => window.requestAnimationFrame(renderGrandChart));
+    }
+
+    if (grandPieHost) {
+      const pieSvg = grandPieHost.querySelector(".forecast-pie-chart");
+      const pieLegend = document.querySelector("[data-grand-pie-legend]");
+      const pieTotal = document.querySelector("[data-grand-pie-total]");
+      const svgNs = "http://www.w3.org/2000/svg";
+      const pieColors = ["#5347ce", "#16c8c7", "#4896fe", "#887cfd"];
+      const numberFormat = new Intl.NumberFormat("zh-CN");
+      const percentFormat = new Intl.NumberFormat("zh-CN", {
+        style: "percent",
+        minimumFractionDigits: 1,
+        maximumFractionDigits: 1
+      });
+
+      function svgElement(name, attrs = {}) {
+        const element = document.createElementNS(svgNs, name);
+        Object.entries(attrs).forEach(([key, value]) => element.setAttribute(key, value));
+        return element;
+      }
+
+      function polarPoint(center, radius, angle) {
+        const radians = (angle - 90) * Math.PI / 180;
+        return {
+          x: center + radius * Math.cos(radians),
+          y: center + radius * Math.sin(radians)
+        };
+      }
+
+      function piePath(center, radius, startAngle, endAngle) {
+        const start = polarPoint(center, radius, startAngle);
+        const end = polarPoint(center, radius, endAngle);
+        const largeArc = endAngle - startAngle > 180 ? 1 : 0;
+        return [
+          `M ${center} ${center}`,
+          `L ${start.x.toFixed(2)} ${start.y.toFixed(2)}`,
+          `A ${radius} ${radius} 0 ${largeArc} 1 ${end.x.toFixed(2)} ${end.y.toFixed(2)}`,
+          "Z"
+        ].join(" ");
+      }
+
+      function getYearlyQuantityShare() {
+        const totals = grandForecastData.reduce((acc, item) => {
+          const year = item.month.slice(0, 4);
+          acc[year] = (acc[year] || 0) + item.quantity;
+          return acc;
+        }, {});
+        const total = Object.values(totals).reduce((sum, value) => sum + value, 0);
+
+        return Object.entries(totals).map(([year, quantity], index) => ({
+          year,
+          quantity,
+          share: quantity / total,
+          color: pieColors[index % pieColors.length]
+        }));
+      }
+
+      renderGrandPieChart = () => {
+        const data = getYearlyQuantityShare();
+        const total = data.reduce((sum, item) => sum + item.quantity, 0);
+        const size = Math.max(220, Math.min(Math.round(grandPieHost.clientWidth * 0.88), 270));
+        const center = size / 2;
+        const radius = size * 0.42;
+        let startAngle = 0;
+
+        pieSvg.setAttribute("viewBox", `0 0 ${size} ${size}`);
+        pieSvg.setAttribute("width", size);
+        pieSvg.setAttribute("height", size);
+        pieSvg.innerHTML = "";
+
+        data.forEach((item) => {
+          const endAngle = startAngle + item.share * 360;
+          const path = svgElement("path", {
+            d: piePath(center, radius, startAngle, endAngle),
+            fill: item.color,
+            stroke: "#ffffff",
+            "stroke-width": "3"
+          });
+          const title = svgElement("title");
+          title.textContent = `${item.year}: ${numberFormat.format(item.quantity)} / ${percentFormat.format(item.share)}`;
+          path.appendChild(title);
+          pieSvg.appendChild(path);
+          startAngle = endAngle;
+        });
+
+        pieTotal.textContent = numberFormat.format(total);
+        pieLegend.innerHTML = data.map((item) => `
+          <div class="pie-legend-item">
+            <span class="pie-dot" style="--pie-color: ${item.color}"></span>
+            <span>${item.year}</span>
+            <strong>${percentFormat.format(item.share)}</strong>
+          </div>
+        `).join("");
+      };
+
+      renderGrandPieChart();
+      window.addEventListener("resize", () => window.requestAnimationFrame(renderGrandPieChart));
     }
   </script>
 </body>
