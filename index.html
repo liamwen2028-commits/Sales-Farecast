@@ -909,7 +909,8 @@
     }
 
     .bias-chart-shell {
-      --bias-grid: minmax(108px, 0.95fr) 58px minmax(118px, 1.05fr);
+      --bias-grid: minmax(82px, 0.95fr) 42px 48px minmax(92px, 1.05fr);
+      --bias-gap: 7px;
       display: grid;
       gap: 0;
       flex: 1;
@@ -926,7 +927,7 @@
       display: grid;
       grid-template-columns: var(--bias-grid);
       align-items: end;
-      gap: 8px;
+      gap: var(--bias-gap);
       padding: 0 0 7px;
       border-bottom: 1px solid #dde5ed;
       background: var(--surface);
@@ -937,6 +938,10 @@
     }
 
     .bias-table-head span:nth-child(2) {
+      text-align: left;
+    }
+
+    .bias-table-head span:nth-child(3) {
       text-align: right;
     }
 
@@ -944,21 +949,13 @@
       display: grid;
       grid-template-columns: var(--bias-grid);
       align-items: center;
-      gap: 6px;
+      gap: var(--bias-gap);
       min-height: 54px;
       padding: 7px 0;
       border-top: 1px solid #e8edf2;
     }
 
-    .bias-identity {
-      display: flex;
-      min-width: 0;
-      align-items: center;
-      gap: 5px;
-    }
-
     .bias-skc {
-      flex: 1;
       min-width: 0;
       overflow: hidden;
       color: #111827;
@@ -978,7 +975,7 @@
     }
 
     .bias-direction {
-      flex: none;
+      justify-self: start;
       height: 18px;
       padding: 0 5px;
       border-radius: 5px;
@@ -2721,10 +2718,8 @@
 
           return `
             <div class="bias-row" title="${item.skc} | ${item.direction} | 贡献 ${percentFormat.format(item.share)} | 行数 ${numberFormat.format(item.rows)}">
-              <div class="bias-identity">
-                <div class="bias-skc">${item.skc}</div>
-                <span class="bias-direction ${directionClass}">${item.direction}</span>
-              </div>
+              <div class="bias-skc">${item.skc}</div>
+              <span class="bias-direction ${directionClass}">${item.direction}</span>
               <div class="bias-share">${percentFormat.format(item.share)}</div>
               <div class="bias-bars">
                 <div class="bias-bar-line">
@@ -2744,7 +2739,8 @@
 
         biasTopHost.innerHTML = `
           <div class="bias-table-head" aria-hidden="true">
-            <span>SKC / 偏差类型</span>
+            <span>SKC</span>
+            <span>偏差类型</span>
             <span>偏差贡献占比</span>
             <span>实际销量 / 预测销量</span>
           </div>
