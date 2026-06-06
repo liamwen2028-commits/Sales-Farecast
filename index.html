@@ -801,7 +801,7 @@
 
     .model-accuracy-charts {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: 1fr;
       gap: 14px;
       flex: 1;
       min-height: 0;
@@ -826,7 +826,43 @@
 
     .quadrant-chart-panel .forecast-chart-wrap {
       flex: 1;
-      min-height: 238px;
+      min-height: 228px;
+    }
+
+    .model-accuracy-legends {
+      display: grid;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .model-accuracy-site-legend {
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      gap: 10px;
+      font-size: 12px;
+    }
+
+    .site-swatch {
+      width: 22px;
+      height: 3px;
+      border-radius: 999px;
+      background: #5f6874;
+    }
+
+    .site-swatch.dash-ca {
+      background: repeating-linear-gradient(90deg, #5f6874 0 6px, transparent 6px 10px);
+    }
+
+    .site-swatch.dash-mx {
+      background: repeating-linear-gradient(90deg, #5f6874 0 2px, transparent 2px 6px);
+    }
+
+    .site-swatch.dash-gb {
+      background: repeating-linear-gradient(90deg, #5f6874 0 10px, transparent 10px 14px, #5f6874 14px 16px, transparent 16px 20px);
+    }
+
+    .site-swatch.dash-eu {
+      background: repeating-linear-gradient(90deg, #5f6874 0 1px, transparent 1px 5px);
     }
 
     .model-progress-card {
@@ -921,6 +957,12 @@
       height: 8px;
       border-radius: 2px;
       opacity: 0.72;
+    }
+
+    .legend-caption {
+      color: #2f3947;
+      font-size: 12px;
+      font-weight: 900;
     }
 
     .legend-item.is-muted {
@@ -1875,6 +1917,17 @@
           </div>
         </div>
 
+        <div class="model-accuracy-legends">
+          <div class="forecast-legend model-accuracy-site-legend" aria-label="站点图例">
+            <span class="legend-caption">站点</span>
+            <button class="legend-item" type="button" aria-pressed="true" data-quadrant-site="US"><span class="site-swatch"></span>US</button>
+            <button class="legend-item is-muted" type="button" aria-pressed="false" data-quadrant-site="CA"><span class="site-swatch dash-ca"></span>CA</button>
+            <button class="legend-item is-muted" type="button" aria-pressed="false" data-quadrant-site="MX"><span class="site-swatch dash-mx"></span>MX</button>
+            <button class="legend-item is-muted" type="button" aria-pressed="false" data-quadrant-site="GB"><span class="site-swatch dash-gb"></span>GB</button>
+            <button class="legend-item is-muted" type="button" aria-pressed="false" data-quadrant-site="EU"><span class="site-swatch dash-eu"></span>EU</button>
+          </div>
+        </div>
+
         <div class="model-accuracy-charts">
           <div class="quadrant-chart-panel">
             <h3 class="quadrant-chart-title">象限1准确率曲线图</h3>
@@ -2152,7 +2205,7 @@
 
     const grandForecastData = [{"month":"202301","quantity":1383,"ratio":0.021723},{"month":"202302","quantity":1165,"ratio":0.028612},{"month":"202303","quantity":2440,"ratio":0.021708},{"month":"202304","quantity":1530,"ratio":0.053368},{"month":"202305","quantity":2158,"ratio":0.082709},{"month":"202306","quantity":1632,"ratio":0.084928},{"month":"202307","quantity":2268,"ratio":0.079161},{"month":"202308","quantity":1727,"ratio":0.042492},{"month":"202309","quantity":1820,"ratio":0.077194},{"month":"202310","quantity":2991,"ratio":0.070375},{"month":"202311","quantity":3337,"ratio":0.058435},{"month":"202312","quantity":4067,"ratio":0.05824},{"month":"202401","quantity":1955,"ratio":0.096787},{"month":"202402","quantity":1615,"ratio":0.103541},{"month":"202403","quantity":2345,"ratio":0.103742},{"month":"202404","quantity":2839,"ratio":0.159801},{"month":"202405","quantity":4124,"ratio":0.159836},{"month":"202406","quantity":3700,"ratio":0.200623},{"month":"202407","quantity":4569,"ratio":0.226955},{"month":"202408","quantity":3434,"ratio":0.233412},{"month":"202409","quantity":3010,"ratio":0.195929},{"month":"202410","quantity":4100,"ratio":0.218356},{"month":"202411","quantity":5791,"ratio":0.099034},{"month":"202412","quantity":6452,"ratio":0.061407},{"month":"202501","quantity":2790,"ratio":0.109999},{"month":"202502","quantity":3848,"ratio":0.076982},{"month":"202503","quantity":4401,"ratio":0.069005},{"month":"202504","quantity":4102,"ratio":0.064438},{"month":"202505","quantity":3729,"ratio":0.072668},{"month":"202506","quantity":2929,"ratio":0.068155},{"month":"202507","quantity":4215,"ratio":0.082875},{"month":"202508","quantity":4176,"ratio":0.081557},{"month":"202509","quantity":5685,"ratio":0.079201},{"month":"202510","quantity":6847,"ratio":0.074227},{"month":"202511","quantity":6083,"ratio":0.089028},{"month":"202512","quantity":6156,"ratio":0.079195},{"month":"202601","quantity":5507,"ratio":0.101857},{"month":"202602","quantity":6324,"ratio":0.089013},{"month":"202603","quantity":6867,"ratio":0.087954},{"month":"202604","quantity":7361,"ratio":0.080891}];
     const grandAccuracyData = [{"month":"202401","actual":1955,"manualForecast":null,"manualAccuracy":null,"modelForecast":1908.45,"modelAccuracy":0.975608},{"month":"202402","actual":1615,"manualForecast":null,"manualAccuracy":null,"modelForecast":1921.05,"modelAccuracy":0.840686},{"month":"202403","actual":2345,"manualForecast":null,"manualAccuracy":null,"modelForecast":2704.75,"modelAccuracy":0.866993},{"month":"202404","actual":2839,"manualForecast":null,"manualAccuracy":null,"modelForecast":2701.65,"modelAccuracy":0.949161},{"month":"202405","actual":4124,"manualForecast":null,"manualAccuracy":null,"modelForecast":3317.3,"modelAccuracy":0.75682},{"month":"202406","actual":3700,"manualForecast":null,"manualAccuracy":null,"modelForecast":3090.45,"modelAccuracy":0.802763},{"month":"202407","actual":4569,"manualForecast":null,"manualAccuracy":null,"modelForecast":3597.05,"modelAccuracy":0.729792},{"month":"202408","actual":3434,"manualForecast":null,"manualAccuracy":null,"modelForecast":2871.4,"modelAccuracy":0.804068},{"month":"202409","actual":3010,"manualForecast":null,"manualAccuracy":null,"modelForecast":3108.45,"modelAccuracy":0.968328},{"month":"202410","actual":4100,"manualForecast":null,"manualAccuracy":null,"modelForecast":3972.15,"modelAccuracy":0.967813},{"month":"202411","actual":5791,"manualForecast":null,"manualAccuracy":null,"modelForecast":4364.7,"modelAccuracy":0.673219},{"month":"202412","actual":6452,"manualForecast":null,"manualAccuracy":null,"modelForecast":4842.95,"modelAccuracy":0.667754},{"month":"202501","actual":2790,"manualForecast":2896,"manualAccuracy":0.963398,"modelForecast":2807.45,"modelAccuracy":0.993784},{"month":"202502","actual":3848,"manualForecast":2864.05,"manualAccuracy":0.656448,"modelForecast":2609.05,"modelAccuracy":0.525134},{"month":"202503","actual":4401,"manualForecast":3136,"manualAccuracy":0.59662,"modelForecast":3315.35,"modelAccuracy":0.672538},{"month":"202504","actual":4102,"manualForecast":2865.9,"manualAccuracy":0.568687,"modelForecast":3702.25,"modelAccuracy":0.892025},{"month":"202505","actual":3729,"manualForecast":3361,"manualAccuracy":0.890509,"modelForecast":4311.7,"modelAccuracy":0.864856},{"month":"202506","actual":2929,"manualForecast":3402.95,"manualAccuracy":0.860724,"modelForecast":4217.75,"modelAccuracy":0.694446},{"month":"202507","actual":4215,"manualForecast":3323.2,"manualAccuracy":0.731644,"modelForecast":4688.3,"modelAccuracy":0.899047},{"month":"202508","actual":4176,"manualForecast":2536.6,"manualAccuracy":0.353702,"modelForecast":4150.25,"modelAccuracy":0.993796},{"month":"202509","actual":5685,"manualForecast":2743.55,"manualAccuracy":-0.072133,"modelForecast":4045.45,"modelAccuracy":0.594718},{"month":"202510","actual":6847,"manualForecast":4181.35,"manualAccuracy":0.362491,"modelForecast":4649.45,"modelAccuracy":0.527353},{"month":"202511","actual":6083,"manualForecast":6071.35,"manualAccuracy":0.998081,"modelForecast":5086.4,"modelAccuracy":0.804066},{"month":"202512","actual":6156,"manualForecast":4811.2,"manualAccuracy":0.720486,"modelForecast":5099.65,"modelAccuracy":0.792858},{"month":"202601","actual":5507,"manualForecast":3539.85,"manualAccuracy":0.444284,"modelForecast":3720.15,"modelAccuracy":0.519683},{"month":"202602","actual":6324,"manualForecast":4080,"manualAccuracy":0.45,"modelForecast":4055.3,"modelAccuracy":0.440559},{"month":"202603","actual":6867,"manualForecast":5400,"manualAccuracy":0.728333,"modelForecast":4481.2,"modelAccuracy":0.467598},{"month":"202604","actual":7361,"manualForecast":5676.4,"manualAccuracy":0.703227,"modelForecast":4268.75,"modelAccuracy":0.275608}];
-    const quadrantAccuracyData = {"1":[{"month":"202504","manualAccuracy":0.61574,"lgbAccuracy":0.6244,"featureAccuracy":0.66456,"stackingAccuracy":0.661988},{"month":"202505","manualAccuracy":0.62114,"lgbAccuracy":0.6234,"featureAccuracy":0.57572,"stackingAccuracy":0.57828},{"month":"202506","manualAccuracy":0.64664,"lgbAccuracy":0.6287,"featureAccuracy":0.57944,"stackingAccuracy":0.580562},{"month":"202507","manualAccuracy":0.63308,"lgbAccuracy":0.6213,"featureAccuracy":0.61032,"stackingAccuracy":0.612785},{"month":"202508","manualAccuracy":0.60114,"lgbAccuracy":0.6283,"featureAccuracy":0.62736,"stackingAccuracy":0.627902},{"month":"202509","manualAccuracy":0.65384,"lgbAccuracy":0.584,"featureAccuracy":0.60238,"stackingAccuracy":0.605003},{"month":"202510","manualAccuracy":0.65084,"lgbAccuracy":0.5917,"featureAccuracy":0.6316,"stackingAccuracy":0.637447},{"month":"202511","manualAccuracy":0.64694,"lgbAccuracy":0.5947,"featureAccuracy":0.58734,"stackingAccuracy":0.603223},{"month":"202512","manualAccuracy":0.64836,"lgbAccuracy":0.5909,"featureAccuracy":0.58552,"stackingAccuracy":0.60199},{"month":"202601","manualAccuracy":0.62278,"lgbAccuracy":0.6092,"featureAccuracy":0.61434,"stackingAccuracy":0.62007},{"month":"202602","manualAccuracy":0.61738,"lgbAccuracy":0.6071,"featureAccuracy":0.60608,"stackingAccuracy":0.621407},{"month":"202603","manualAccuracy":0.6432,"lgbAccuracy":0.5129,"featureAccuracy":0.59864,"stackingAccuracy":0.637289},{"month":"202604","manualAccuracy":0.66496,"lgbAccuracy":0.5196,"featureAccuracy":0.61182,"stackingAccuracy":0.651493}],"2":[{"month":"202504","manualAccuracy":0.50962,"lgbAccuracy":0.6244,"featureAccuracy":0.56618,"stackingAccuracy":0.565655},{"month":"202505","manualAccuracy":0.54914,"lgbAccuracy":0.6234,"featureAccuracy":0.52442,"stackingAccuracy":0.524912},{"month":"202506","manualAccuracy":0.54404,"lgbAccuracy":0.6287,"featureAccuracy":0.53094,"stackingAccuracy":0.532683},{"month":"202507","manualAccuracy":0.537,"lgbAccuracy":0.6213,"featureAccuracy":0.53858,"stackingAccuracy":0.540175},{"month":"202508","manualAccuracy":0.52186,"lgbAccuracy":0.6283,"featureAccuracy":0.55182,"stackingAccuracy":0.553672},{"month":"202509","manualAccuracy":0.55154,"lgbAccuracy":0.584,"featureAccuracy":0.52054,"stackingAccuracy":0.52582},{"month":"202510","manualAccuracy":0.5561,"lgbAccuracy":0.5917,"featureAccuracy":0.53958,"stackingAccuracy":0.539543},{"month":"202511","manualAccuracy":0.54266,"lgbAccuracy":0.5947,"featureAccuracy":0.54498,"stackingAccuracy":0.546717},{"month":"202512","manualAccuracy":0.5557,"lgbAccuracy":0.5909,"featureAccuracy":0.52012,"stackingAccuracy":0.522741},{"month":"202601","manualAccuracy":0.53204,"lgbAccuracy":0.6092,"featureAccuracy":0.54238,"stackingAccuracy":0.545195},{"month":"202602","manualAccuracy":0.52204,"lgbAccuracy":0.6071,"featureAccuracy":0.54586,"stackingAccuracy":0.54948},{"month":"202603","manualAccuracy":0.55536,"lgbAccuracy":0.5129,"featureAccuracy":0.52742,"stackingAccuracy":0.545078},{"month":"202604","manualAccuracy":0.56964,"lgbAccuracy":0.5196,"featureAccuracy":0.52024,"stackingAccuracy":0.529461}]};
+    const quadrantAccuracyData = {"1":{"US":[{"month":"202504","manualAccuracy":0.7244,"lgbAccuracy":0.6244,"featureAccuracy":0.7638,"stackingAccuracy":0.7505},{"month":"202505","manualAccuracy":0.7471,"lgbAccuracy":0.6234,"featureAccuracy":0.7286,"stackingAccuracy":0.7422},{"month":"202506","manualAccuracy":0.7495,"lgbAccuracy":0.6287,"featureAccuracy":0.6963,"stackingAccuracy":0.6991},{"month":"202507","manualAccuracy":0.7255,"lgbAccuracy":0.6213,"featureAccuracy":0.6962,"stackingAccuracy":0.7058},{"month":"202508","manualAccuracy":0.6834,"lgbAccuracy":0.6283,"featureAccuracy":0.7591,"stackingAccuracy":0.7516},{"month":"202509","manualAccuracy":0.7588,"lgbAccuracy":0.584,"featureAccuracy":0.7311,"stackingAccuracy":0.7105},{"month":"202510","manualAccuracy":0.7571,"lgbAccuracy":0.5917,"featureAccuracy":0.7382,"stackingAccuracy":0.7161},{"month":"202511","manualAccuracy":0.7803,"lgbAccuracy":0.5947,"featureAccuracy":0.7113,"stackingAccuracy":0.7219},{"month":"202512","manualAccuracy":0.7088,"lgbAccuracy":0.5909,"featureAccuracy":0.7122,"stackingAccuracy":0.7174},{"month":"202601","manualAccuracy":0.7377,"lgbAccuracy":0.6092,"featureAccuracy":0.7504,"stackingAccuracy":0.751},{"month":"202602","manualAccuracy":0.754,"lgbAccuracy":0.6071,"featureAccuracy":0.7515,"stackingAccuracy":0.7669},{"month":"202603","manualAccuracy":0.7548,"lgbAccuracy":0.5129,"featureAccuracy":0.7084,"stackingAccuracy":0.7497},{"month":"202604","manualAccuracy":0.7575,"lgbAccuracy":0.5196,"featureAccuracy":0.6844,"stackingAccuracy":0.7194}],"CA":[{"month":"202504","manualAccuracy":0.6215,"lgbAccuracy":null,"featureAccuracy":0.6747,"stackingAccuracy":0.67416},{"month":"202505","manualAccuracy":0.6282,"lgbAccuracy":null,"featureAccuracy":0.6301,"stackingAccuracy":0.628545},{"month":"202506","manualAccuracy":0.6492,"lgbAccuracy":null,"featureAccuracy":0.6005,"stackingAccuracy":0.600513},{"month":"202507","manualAccuracy":0.7009,"lgbAccuracy":null,"featureAccuracy":0.6087,"stackingAccuracy":0.608587},{"month":"202508","manualAccuracy":0.6685,"lgbAccuracy":null,"featureAccuracy":0.6894,"stackingAccuracy":0.693688},{"month":"202509","manualAccuracy":0.7351,"lgbAccuracy":null,"featureAccuracy":0.6517,"stackingAccuracy":0.669925},{"month":"202510","manualAccuracy":0.7351,"lgbAccuracy":null,"featureAccuracy":0.6285,"stackingAccuracy":0.660812},{"month":"202511","manualAccuracy":0.6737,"lgbAccuracy":null,"featureAccuracy":0.5772,"stackingAccuracy":0.605193},{"month":"202512","manualAccuracy":0.6805,"lgbAccuracy":null,"featureAccuracy":0.5942,"stackingAccuracy":0.628084},{"month":"202601","manualAccuracy":0.6546,"lgbAccuracy":null,"featureAccuracy":0.639,"stackingAccuracy":0.642979},{"month":"202602","manualAccuracy":0.6833,"lgbAccuracy":null,"featureAccuracy":0.634,"stackingAccuracy":0.643846},{"month":"202603","manualAccuracy":0.6956,"lgbAccuracy":null,"featureAccuracy":0.6216,"stackingAccuracy":0.682332},{"month":"202604","manualAccuracy":0.7096,"lgbAccuracy":null,"featureAccuracy":0.6503,"stackingAccuracy":0.692769}],"MX":[{"month":"202504","manualAccuracy":0.5948,"lgbAccuracy":null,"featureAccuracy":0.6238,"stackingAccuracy":0.62517},{"month":"202505","manualAccuracy":0.5429,"lgbAccuracy":null,"featureAccuracy":0.5925,"stackingAccuracy":0.592952},{"month":"202506","manualAccuracy":0.6257,"lgbAccuracy":null,"featureAccuracy":0.6063,"stackingAccuracy":0.607354},{"month":"202507","manualAccuracy":0.5755,"lgbAccuracy":null,"featureAccuracy":0.5616,"stackingAccuracy":0.562784},{"month":"202508","manualAccuracy":0.5347,"lgbAccuracy":null,"featureAccuracy":0.5711,"stackingAccuracy":0.571755},{"month":"202509","manualAccuracy":0.5344,"lgbAccuracy":null,"featureAccuracy":0.5972,"stackingAccuracy":0.599138},{"month":"202510","manualAccuracy":0.5103,"lgbAccuracy":null,"featureAccuracy":0.6021,"stackingAccuracy":0.604019},{"month":"202511","manualAccuracy":0.5627,"lgbAccuracy":null,"featureAccuracy":0.5502,"stackingAccuracy":0.552528},{"month":"202512","manualAccuracy":0.6701,"lgbAccuracy":null,"featureAccuracy":0.5705,"stackingAccuracy":0.57251},{"month":"202601","manualAccuracy":0.5728,"lgbAccuracy":null,"featureAccuracy":0.5574,"stackingAccuracy":0.576725},{"month":"202602","manualAccuracy":0.5495,"lgbAccuracy":null,"featureAccuracy":0.5587,"stackingAccuracy":0.563522},{"month":"202603","manualAccuracy":0.542,"lgbAccuracy":null,"featureAccuracy":0.5613,"stackingAccuracy":0.569421},{"month":"202604","manualAccuracy":0.575,"lgbAccuracy":null,"featureAccuracy":0.5748,"stackingAccuracy":0.583279}],"GB":[{"month":"202504","manualAccuracy":0.5448,"lgbAccuracy":null,"featureAccuracy":0.6121,"stackingAccuracy":0.612133},{"month":"202505","manualAccuracy":0.5621,"lgbAccuracy":null,"featureAccuracy":0.5067,"stackingAccuracy":0.5067},{"month":"202506","manualAccuracy":0.6068,"lgbAccuracy":null,"featureAccuracy":0.5002,"stackingAccuracy":0.5002},{"month":"202507","manualAccuracy":0.5565,"lgbAccuracy":null,"featureAccuracy":0.5878,"stackingAccuracy":0.589012},{"month":"202508","manualAccuracy":0.5449,"lgbAccuracy":null,"featureAccuracy":0.5155,"stackingAccuracy":0.520106},{"month":"202509","manualAccuracy":0.577,"lgbAccuracy":null,"featureAccuracy":0.5167,"stackingAccuracy":0.524544},{"month":"202510","manualAccuracy":0.5867,"lgbAccuracy":null,"featureAccuracy":0.5616,"stackingAccuracy":0.574202},{"month":"202511","manualAccuracy":0.5788,"lgbAccuracy":null,"featureAccuracy":0.4537,"stackingAccuracy":0.496254},{"month":"202512","manualAccuracy":0.5416,"lgbAccuracy":null,"featureAccuracy":0.4214,"stackingAccuracy":0.462979},{"month":"202601","manualAccuracy":0.5536,"lgbAccuracy":null,"featureAccuracy":0.5056,"stackingAccuracy":0.511414},{"month":"202602","manualAccuracy":0.5635,"lgbAccuracy":null,"featureAccuracy":0.4873,"stackingAccuracy":0.524861},{"month":"202603","manualAccuracy":0.5985,"lgbAccuracy":null,"featureAccuracy":0.5056,"stackingAccuracy":0.593546},{"month":"202604","manualAccuracy":0.6231,"lgbAccuracy":null,"featureAccuracy":0.5175,"stackingAccuracy":0.619646}],"EU":[{"month":"202504","manualAccuracy":0.5932,"lgbAccuracy":null,"featureAccuracy":0.6484,"stackingAccuracy":0.647977},{"month":"202505","manualAccuracy":0.6254,"lgbAccuracy":null,"featureAccuracy":0.4207,"stackingAccuracy":0.421002},{"month":"202506","manualAccuracy":0.602,"lgbAccuracy":null,"featureAccuracy":0.4939,"stackingAccuracy":0.495645},{"month":"202507","manualAccuracy":0.607,"lgbAccuracy":null,"featureAccuracy":0.5973,"stackingAccuracy":0.597742},{"month":"202508","manualAccuracy":0.5742,"lgbAccuracy":null,"featureAccuracy":0.6017,"stackingAccuracy":0.60236},{"month":"202509","manualAccuracy":0.6639,"lgbAccuracy":null,"featureAccuracy":0.5152,"stackingAccuracy":0.520907},{"month":"202510","manualAccuracy":0.665,"lgbAccuracy":null,"featureAccuracy":0.6276,"stackingAccuracy":0.632102},{"month":"202511","manualAccuracy":0.6392,"lgbAccuracy":null,"featureAccuracy":0.6443,"stackingAccuracy":0.640241},{"month":"202512","manualAccuracy":0.6408,"lgbAccuracy":null,"featureAccuracy":0.6293,"stackingAccuracy":0.628975},{"month":"202601","manualAccuracy":0.5952,"lgbAccuracy":null,"featureAccuracy":0.6193,"stackingAccuracy":0.618231},{"month":"202602","manualAccuracy":0.5366,"lgbAccuracy":null,"featureAccuracy":0.5989,"stackingAccuracy":0.607906},{"month":"202603","manualAccuracy":0.6251,"lgbAccuracy":null,"featureAccuracy":0.5963,"stackingAccuracy":0.591445},{"month":"202604","manualAccuracy":0.6596,"lgbAccuracy":null,"featureAccuracy":0.6321,"stackingAccuracy":0.642372}]},"2":{"US":[{"month":"202504","manualAccuracy":0.5995,"lgbAccuracy":0.6244,"featureAccuracy":0.615,"stackingAccuracy":0.612329},{"month":"202505","manualAccuracy":0.6197,"lgbAccuracy":0.6234,"featureAccuracy":0.6126,"stackingAccuracy":0.615016},{"month":"202506","manualAccuracy":0.6061,"lgbAccuracy":0.6287,"featureAccuracy":0.59,"stackingAccuracy":0.598793},{"month":"202507","manualAccuracy":0.6175,"lgbAccuracy":0.6213,"featureAccuracy":0.5916,"stackingAccuracy":0.599139},{"month":"202508","manualAccuracy":0.6409,"lgbAccuracy":0.6283,"featureAccuracy":0.6124,"stackingAccuracy":0.618801},{"month":"202509","manualAccuracy":0.6606,"lgbAccuracy":0.584,"featureAccuracy":0.5927,"stackingAccuracy":0.613969},{"month":"202510","manualAccuracy":0.6699,"lgbAccuracy":0.5917,"featureAccuracy":0.6085,"stackingAccuracy":0.598109},{"month":"202511","manualAccuracy":0.6448,"lgbAccuracy":0.5947,"featureAccuracy":0.5934,"stackingAccuracy":0.59285},{"month":"202512","manualAccuracy":0.6614,"lgbAccuracy":0.5909,"featureAccuracy":0.5897,"stackingAccuracy":0.593745},{"month":"202601","manualAccuracy":0.6156,"lgbAccuracy":0.6092,"featureAccuracy":0.6095,"stackingAccuracy":0.610632},{"month":"202602","manualAccuracy":0.6418,"lgbAccuracy":0.6071,"featureAccuracy":0.6251,"stackingAccuracy":0.641925},{"month":"202603","manualAccuracy":0.6525,"lgbAccuracy":0.5129,"featureAccuracy":0.5697,"stackingAccuracy":0.616799},{"month":"202604","manualAccuracy":0.6566,"lgbAccuracy":0.5196,"featureAccuracy":0.5706,"stackingAccuracy":0.59939}],"CA":[{"month":"202504","manualAccuracy":0.5128,"lgbAccuracy":null,"featureAccuracy":0.5857,"stackingAccuracy":0.585672},{"month":"202505","manualAccuracy":0.5582,"lgbAccuracy":null,"featureAccuracy":0.5674,"stackingAccuracy":0.567429},{"month":"202506","manualAccuracy":0.5432,"lgbAccuracy":null,"featureAccuracy":0.5683,"stackingAccuracy":0.568277},{"month":"202507","manualAccuracy":0.5728,"lgbAccuracy":null,"featureAccuracy":0.5663,"stackingAccuracy":0.566316},{"month":"202508","manualAccuracy":0.5377,"lgbAccuracy":null,"featureAccuracy":0.571,"stackingAccuracy":0.572472},{"month":"202509","manualAccuracy":0.5712,"lgbAccuracy":null,"featureAccuracy":0.5673,"stackingAccuracy":0.572346},{"month":"202510","manualAccuracy":0.6036,"lgbAccuracy":null,"featureAccuracy":0.5703,"stackingAccuracy":0.580725},{"month":"202511","manualAccuracy":0.5897,"lgbAccuracy":null,"featureAccuracy":0.5273,"stackingAccuracy":0.537882},{"month":"202512","manualAccuracy":0.5839,"lgbAccuracy":null,"featureAccuracy":0.475,"stackingAccuracy":0.488196},{"month":"202601","manualAccuracy":0.5283,"lgbAccuracy":null,"featureAccuracy":0.5003,"stackingAccuracy":0.513903},{"month":"202602","manualAccuracy":0.5082,"lgbAccuracy":null,"featureAccuracy":0.5085,"stackingAccuracy":0.516609},{"month":"202603","manualAccuracy":0.5831,"lgbAccuracy":null,"featureAccuracy":0.5179,"stackingAccuracy":0.559944},{"month":"202604","manualAccuracy":0.601,"lgbAccuracy":null,"featureAccuracy":0.5211,"stackingAccuracy":0.544759}],"MX":[{"month":"202504","manualAccuracy":0.4993,"lgbAccuracy":null,"featureAccuracy":0.5463,"stackingAccuracy":0.546347},{"month":"202505","manualAccuracy":0.5071,"lgbAccuracy":null,"featureAccuracy":0.5241,"stackingAccuracy":0.5241},{"month":"202506","manualAccuracy":0.5318,"lgbAccuracy":null,"featureAccuracy":0.5449,"stackingAccuracy":0.5449},{"month":"202507","manualAccuracy":0.5201,"lgbAccuracy":null,"featureAccuracy":0.5256,"stackingAccuracy":0.525638},{"month":"202508","manualAccuracy":0.4727,"lgbAccuracy":null,"featureAccuracy":0.5679,"stackingAccuracy":0.5679},{"month":"202509","manualAccuracy":0.4653,"lgbAccuracy":null,"featureAccuracy":0.5514,"stackingAccuracy":0.551397},{"month":"202510","manualAccuracy":0.474,"lgbAccuracy":null,"featureAccuracy":0.5515,"stackingAccuracy":0.551451},{"month":"202511","manualAccuracy":0.4483,"lgbAccuracy":null,"featureAccuracy":0.5532,"stackingAccuracy":0.553155},{"month":"202512","manualAccuracy":0.5196,"lgbAccuracy":null,"featureAccuracy":0.5466,"stackingAccuracy":0.546614},{"month":"202601","manualAccuracy":0.5104,"lgbAccuracy":null,"featureAccuracy":0.5477,"stackingAccuracy":0.547694},{"month":"202602","manualAccuracy":0.471,"lgbAccuracy":null,"featureAccuracy":0.5546,"stackingAccuracy":0.554621},{"month":"202603","manualAccuracy":0.5096,"lgbAccuracy":null,"featureAccuracy":0.5517,"stackingAccuracy":0.551732},{"month":"202604","manualAccuracy":0.5169,"lgbAccuracy":null,"featureAccuracy":0.5598,"stackingAccuracy":0.559822}],"GB":[{"month":"202504","manualAccuracy":0.4676,"lgbAccuracy":null,"featureAccuracy":0.5581,"stackingAccuracy":0.558099},{"month":"202505","manualAccuracy":0.5058,"lgbAccuracy":null,"featureAccuracy":0.4973,"stackingAccuracy":0.497308},{"month":"202506","manualAccuracy":0.5343,"lgbAccuracy":null,"featureAccuracy":0.5027,"stackingAccuracy":0.502673},{"month":"202507","manualAccuracy":0.4701,"lgbAccuracy":null,"featureAccuracy":0.5288,"stackingAccuracy":0.52881},{"month":"202508","manualAccuracy":0.4671,"lgbAccuracy":null,"featureAccuracy":0.5264,"stackingAccuracy":0.5264},{"month":"202509","manualAccuracy":0.4854,"lgbAccuracy":null,"featureAccuracy":0.5298,"stackingAccuracy":0.52982},{"month":"202510","manualAccuracy":0.4666,"lgbAccuracy":null,"featureAccuracy":0.5176,"stackingAccuracy":0.517576},{"month":"202511","manualAccuracy":0.4746,"lgbAccuracy":null,"featureAccuracy":0.5084,"stackingAccuracy":0.508398},{"month":"202512","manualAccuracy":0.4926,"lgbAccuracy":null,"featureAccuracy":0.4807,"stackingAccuracy":0.481375},{"month":"202601","manualAccuracy":0.4837,"lgbAccuracy":null,"featureAccuracy":0.5503,"stackingAccuracy":0.549415},{"month":"202602","manualAccuracy":0.4861,"lgbAccuracy":null,"featureAccuracy":0.5489,"stackingAccuracy":0.548064},{"month":"202603","manualAccuracy":0.5134,"lgbAccuracy":null,"featureAccuracy":0.5294,"stackingAccuracy":0.528866},{"month":"202604","manualAccuracy":0.5313,"lgbAccuracy":null,"featureAccuracy":0.5314,"stackingAccuracy":0.530678}],"EU":[{"month":"202504","manualAccuracy":0.4689,"lgbAccuracy":null,"featureAccuracy":0.5258,"stackingAccuracy":0.52583},{"month":"202505","manualAccuracy":0.5549,"lgbAccuracy":null,"featureAccuracy":0.4207,"stackingAccuracy":0.420707},{"month":"202506","manualAccuracy":0.5048,"lgbAccuracy":null,"featureAccuracy":0.4488,"stackingAccuracy":0.448772},{"month":"202507","manualAccuracy":0.5045,"lgbAccuracy":null,"featureAccuracy":0.4806,"stackingAccuracy":0.480975},{"month":"202508","manualAccuracy":0.4909,"lgbAccuracy":null,"featureAccuracy":0.4814,"stackingAccuracy":0.482785},{"month":"202509","manualAccuracy":0.5752,"lgbAccuracy":null,"featureAccuracy":0.3615,"stackingAccuracy":0.36157},{"month":"202510","manualAccuracy":0.5664,"lgbAccuracy":null,"featureAccuracy":0.45,"stackingAccuracy":0.449852},{"month":"202511","manualAccuracy":0.5559,"lgbAccuracy":null,"featureAccuracy":0.5426,"stackingAccuracy":0.541301},{"month":"202512","manualAccuracy":0.521,"lgbAccuracy":null,"featureAccuracy":0.5086,"stackingAccuracy":0.503773},{"month":"202601","manualAccuracy":0.5222,"lgbAccuracy":null,"featureAccuracy":0.5041,"stackingAccuracy":0.504333},{"month":"202602","manualAccuracy":0.5031,"lgbAccuracy":null,"featureAccuracy":0.4922,"stackingAccuracy":0.48618},{"month":"202603","manualAccuracy":0.5182,"lgbAccuracy":null,"featureAccuracy":0.4684,"stackingAccuracy":0.468047},{"month":"202604","manualAccuracy":0.5424,"lgbAccuracy":null,"featureAccuracy":0.4183,"stackingAccuracy":0.412658}]}};
     const biasTopData = [{"skc":"GRAND-01_BLACK","share":0.0265,"rows":169,"actual":69981,"weightedForecast":55497,"direction":"低估"},{"skc":"SBWO2302M_BLACK","share":0.0199,"rows":143,"actual":58245,"weightedForecast":48821,"direction":"低估"},{"skc":"SDFA2407W_BLACK","share":0.0185,"rows":130,"actual":54695,"weightedForecast":43489,"direction":"低估"},{"skc":"SBOX225K_BLACK","share":0.0172,"rows":169,"actual":32982,"weightedForecast":22306,"direction":"低估"},{"skc":"SDKB224W_BLACK/PU","share":0.016,"rows":156,"actual":25095,"weightedForecast":34334,"direction":"高估"},{"skc":"SDFA2409W_BLACK","share":0.0157,"rows":130,"actual":43742,"weightedForecast":34994,"direction":"低估"},{"skc":"SBOX2336M_BROWN","share":0.0155,"rows":117,"actual":54849,"weightedForecast":45428,"direction":"低估"},{"skc":"PRINCE-6_BROWN","share":0.0154,"rows":182,"actual":42834,"weightedForecast":34964,"direction":"低估"},{"skc":"CHUNK_WHITE/PU","share":0.0145,"rows":169,"actual":34375,"weightedForecast":29583,"direction":"低估"},{"skc":"DOWNING-02_BLACK","share":0.0145,"rows":182,"actual":35016,"weightedForecast":25121,"direction":"低估"}];
     const grandChartHost = document.querySelector("[data-grand-chart]");
     const modelAccuracyChartHosts = Array.from(document.querySelectorAll("[data-quadrant-accuracy-chart]"));
@@ -2431,11 +2484,25 @@
         { key: "featureAccuracy", label: "特征增强模型准确率", color: "#16c8c7" },
         { key: "stackingAccuracy", label: "堆叠模型准确率", color: "#f5a524" }
       ];
+      const quadrantSites = [
+        { key: "US", label: "US", dash: "" },
+        { key: "CA", label: "CA", dash: "6 5" },
+        { key: "MX", label: "MX", dash: "2 5" },
+        { key: "GB", label: "GB", dash: "9 4 2 4" },
+        { key: "EU", label: "EU", dash: "1 5" }
+      ];
       const quadrantVisibleSeries = quadrantSeries.reduce((acc, series) => {
         acc[series.key] = true;
         return acc;
       }, {});
+      const quadrantVisibleSites = quadrantSites.reduce((acc, site) => {
+        acc[site.key] = site.key === "US";
+        return acc;
+      }, {});
       const quadrantLegendButtons = Array.from(document.querySelectorAll("[data-quadrant-series]"));
+      const quadrantSiteButtons = Array.from(document.querySelectorAll("[data-quadrant-site]"));
+      const quadrantRateMin = 0.4;
+      const quadrantRateMax = 0.8;
 
       function svgElement(name, attrs = {}) {
         const element = document.createElementNS(svgNs, name);
@@ -2452,7 +2519,7 @@
         let current = [];
 
         points.forEach((point) => {
-          if (point.value === null || point.value === undefined) {
+          if (point.value === null || point.value === undefined || point.y === null || point.y === undefined) {
             if (current.length) segments.push(current);
             current = [];
             return;
@@ -2466,9 +2533,8 @@
 
       function showModelAccuracyTooltip(host, point) {
         const chartTooltip = host.querySelector("[data-quadrant-tooltip]");
-        const rows = quadrantSeries
-          .filter((series) => quadrantVisibleSeries[series.key] && point[series.key] !== null && point[series.key] !== undefined)
-          .map((series) => `<div class="tooltip-row"><span>${series.label}</span><strong>${percentFormat.format(point[series.key])}</strong></div>`)
+        const rows = point.rows
+          .map((row) => `<div class="tooltip-row"><span>${row.site} ${row.label}</span><strong>${percentFormat.format(row.value)}</strong></div>`)
           .join("");
 
         if (!rows) {
@@ -2492,7 +2558,9 @@
 
       function renderQuadrantAccuracyChart(host) {
         const quadrant = host.dataset.quadrantAccuracyChart;
-        const data = quadrantAccuracyData[quadrant] || [];
+        const quadrantData = quadrantAccuracyData[quadrant] || {};
+        const data = quadrantSites.map((site) => quadrantData[site.key]).find((rows) => Array.isArray(rows) && rows.length) || [];
+        const visibleSites = quadrantSites.filter((site) => quadrantVisibleSites[site.key] && Array.isArray(quadrantData[site.key]));
         const chartSvg = host.querySelector(".forecast-chart");
         const width = Math.max(Math.round(host.clientWidth), 360);
         const height = Math.max(Math.round(host.clientHeight), 260);
@@ -2501,7 +2569,8 @@
         const plotHeight = height - margin.top - margin.bottom;
         const plotBottom = margin.top + plotHeight;
         const xStep = plotWidth / (data.length - 1);
-        const scaleY = (value) => margin.top + plotHeight - value * plotHeight;
+        const scaleY = (value) => margin.top + plotHeight - ((value - quadrantRateMin) / (quadrantRateMax - quadrantRateMin)) * plotHeight;
+        const isVisibleRate = (value) => value !== null && value !== undefined && value >= quadrantRateMin && value <= quadrantRateMax;
 
         chartSvg.setAttribute("viewBox", `0 0 ${width} ${height}`);
         chartSvg.setAttribute("width", width);
@@ -2513,7 +2582,7 @@
         for (let index = 0; index <= 4; index += 1) {
           const ratio = index / 4;
           const y = margin.top + plotHeight * ratio;
-          const value = 1 - ratio;
+          const value = quadrantRateMax - (quadrantRateMax - quadrantRateMin) * ratio;
 
           gridGroup.appendChild(svgElement("line", {
             x1: margin.left,
@@ -2569,34 +2638,46 @@
           x: margin.left + xStep * index
         }));
 
-        quadrantSeries.filter((series) => quadrantVisibleSeries[series.key]).forEach((series) => {
-          const seriesPoints = points.map((point) => ({
-            ...point,
-            value: point[series.key],
-            y: point[series.key] === null || point[series.key] === undefined ? null : scaleY(point[series.key])
-          }));
+        visibleSites.forEach((site) => {
+          const siteData = quadrantData[site.key] || [];
 
-          seriesSegments(seriesPoints).forEach((segment) => {
-            if (segment.length > 1) {
-              chartSvg.appendChild(svgElement("path", {
-                d: linePath(segment),
-                fill: "none",
-                stroke: series.color,
-                "stroke-width": "2.3",
-                "stroke-linecap": "round",
-                "stroke-linejoin": "round"
-              }));
-            }
+          quadrantSeries.filter((series) => quadrantVisibleSeries[series.key]).forEach((series) => {
+            const seriesPoints = points.map((point, index) => {
+              const value = siteData[index]?.[series.key];
+              return {
+                ...point,
+                site: site.key,
+                value,
+                y: isVisibleRate(value) ? scaleY(value) : null
+              };
+            });
 
-            segment.forEach((point) => {
-              chartSvg.appendChild(svgElement("circle", {
-                cx: point.x,
-                cy: point.y,
-                r: "3",
-                fill: "#ffffff",
-                stroke: series.color,
-                "stroke-width": "1.8"
-              }));
+            seriesSegments(seriesPoints).forEach((segment) => {
+              if (segment.length > 1) {
+                const pathAttrs = {
+                  d: linePath(segment),
+                  fill: "none",
+                  stroke: series.color,
+                  "stroke-width": "2.3",
+                  "stroke-linecap": "round",
+                  "stroke-linejoin": "round"
+                };
+                if (site.dash) {
+                  pathAttrs["stroke-dasharray"] = site.dash;
+                }
+                chartSvg.appendChild(svgElement("path", pathAttrs));
+              }
+
+              segment.forEach((point) => {
+                chartSvg.appendChild(svgElement("circle", {
+                  cx: point.x,
+                  cy: point.y,
+                  r: "2.8",
+                  fill: "#ffffff",
+                  stroke: series.color,
+                  "stroke-width": "1.7"
+                }));
+              });
             });
           });
         });
@@ -2624,14 +2705,28 @@
             fill: "transparent"
           });
           const tooltipX = Math.min(Math.max(point.x, 98), width - 98);
-          const visibleValues = quadrantSeries
-            .filter((series) => quadrantVisibleSeries[series.key] && point[series.key] !== null && point[series.key] !== undefined)
-            .map((series) => point[series.key]);
+          const rows = [];
+          const visibleValues = [];
+          visibleSites.forEach((site) => {
+            const item = (quadrantData[site.key] || [])[index];
+            quadrantSeries
+              .filter((series) => quadrantVisibleSeries[series.key] && item?.[series.key] !== null && item?.[series.key] !== undefined)
+              .forEach((series) => {
+                rows.push({
+                  site: site.label,
+                  label: series.label,
+                  value: item[series.key]
+                });
+                if (isVisibleRate(item[series.key])) {
+                  visibleValues.push(item[series.key]);
+                }
+              });
+          });
           const tooltipY = visibleValues.length
             ? Math.max(76, scaleY(Math.max(...visibleValues)) - 8)
             : 76;
-          hitArea.addEventListener("mouseenter", () => showModelAccuracyTooltip(host, { ...point, tooltipX, tooltipY }));
-          hitArea.addEventListener("mousemove", () => showModelAccuracyTooltip(host, { ...point, tooltipX, tooltipY }));
+          hitArea.addEventListener("mouseenter", () => showModelAccuracyTooltip(host, { ...point, rows, tooltipX, tooltipY }));
+          hitArea.addEventListener("mousemove", () => showModelAccuracyTooltip(host, { ...point, rows, tooltipX, tooltipY }));
           hitArea.addEventListener("mouseleave", () => hideModelAccuracyTooltip(host));
           chartSvg.appendChild(hitArea);
         });
@@ -2648,6 +2743,15 @@
           quadrantVisibleSeries[key] = !quadrantVisibleSeries[key];
           button.classList.toggle("is-muted", !quadrantVisibleSeries[key]);
           button.setAttribute("aria-pressed", String(quadrantVisibleSeries[key]));
+          renderModelAccuracyChart();
+        });
+      });
+      quadrantSiteButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          const key = button.dataset.quadrantSite;
+          quadrantVisibleSites[key] = !quadrantVisibleSites[key];
+          button.classList.toggle("is-muted", !quadrantVisibleSites[key]);
+          button.setAttribute("aria-pressed", String(quadrantVisibleSites[key]));
           renderModelAccuracyChart();
         });
       });
