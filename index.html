@@ -909,8 +909,9 @@
     }
 
     .bias-chart-shell {
+      --bias-grid: minmax(108px, 0.95fr) 58px minmax(118px, 1.05fr);
       display: grid;
-      gap: 9px;
+      gap: 0;
       flex: 1;
       min-height: 0;
       margin-top: 14px;
@@ -918,32 +919,52 @@
       overflow-y: auto;
     }
 
+    .bias-table-head {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: var(--bias-grid);
+      align-items: end;
+      gap: 8px;
+      padding: 0 0 7px;
+      border-bottom: 1px solid #dde5ed;
+      background: var(--surface);
+      color: #66717e;
+      font-size: 9px;
+      font-weight: 900;
+      line-height: 1.15;
+    }
+
+    .bias-table-head span:nth-child(2) {
+      text-align: right;
+    }
+
     .bias-row {
       display: grid;
+      grid-template-columns: var(--bias-grid);
+      align-items: center;
       gap: 6px;
-      padding: 8px 0;
+      min-height: 54px;
+      padding: 7px 0;
       border-top: 1px solid #e8edf2;
     }
 
-    .bias-row:first-child {
-      border-top: 0;
-      padding-top: 0;
-    }
-
-    .bias-row-head {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) auto;
-      align-items: start;
-      gap: 8px;
+    .bias-identity {
+      display: flex;
+      min-width: 0;
+      align-items: center;
+      gap: 5px;
     }
 
     .bias-skc {
+      flex: 1;
       min-width: 0;
       overflow: hidden;
       color: #111827;
-      font-size: 12px;
+      font-size: 10px;
       font-weight: 900;
-      line-height: 1.2;
+      line-height: 1;
       text-overflow: ellipsis;
       white-space: nowrap;
     }
@@ -957,12 +978,13 @@
     }
 
     .bias-direction {
-      height: 20px;
-      padding: 0 6px;
+      flex: none;
+      height: 18px;
+      padding: 0 5px;
       border-radius: 5px;
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 900;
-      line-height: 20px;
+      line-height: 18px;
     }
 
     .bias-direction.low {
@@ -977,20 +999,23 @@
 
     .bias-share {
       color: #4f5965;
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 900;
+      text-align: right;
+      white-space: nowrap;
     }
 
     .bias-bars {
       display: grid;
       gap: 4px;
+      min-width: 0;
     }
 
     .bias-bar-line {
       display: grid;
-      grid-template-columns: 34px minmax(0, 1fr) 48px;
+      grid-template-columns: 24px minmax(0, 1fr) 42px;
       align-items: center;
-      gap: 7px;
+      gap: 5px;
     }
 
     .bias-bar-label,
@@ -2689,20 +2714,18 @@
       renderBiasTopChart = () => {
         const maxValue = Math.max(...biasTopData.flatMap((item) => [item.actual, item.weightedForecast]));
 
-        biasTopHost.innerHTML = biasTopData.map((item) => {
+        const rows = biasTopData.map((item) => {
           const actualWidth = `${(item.actual / maxValue * 100).toFixed(2)}%`;
           const forecastWidth = `${(item.weightedForecast / maxValue * 100).toFixed(2)}%`;
           const directionClass = item.direction === "高估" ? "high" : "low";
 
           return `
             <div class="bias-row" title="${item.skc} | ${item.direction} | 贡献 ${percentFormat.format(item.share)} | 行数 ${numberFormat.format(item.rows)}">
-              <div class="bias-row-head">
+              <div class="bias-identity">
                 <div class="bias-skc">${item.skc}</div>
-                <div class="bias-meta">
-                  <span class="bias-direction ${directionClass}">${item.direction}</span>
-                  <span class="bias-share">${percentFormat.format(item.share)}</span>
-                </div>
+                <span class="bias-direction ${directionClass}">${item.direction}</span>
               </div>
+              <div class="bias-share">${percentFormat.format(item.share)}</div>
               <div class="bias-bars">
                 <div class="bias-bar-line">
                   <span class="bias-bar-label">实际</span>
@@ -2718,6 +2741,15 @@
             </div>
           `;
         }).join("");
+
+        biasTopHost.innerHTML = `
+          <div class="bias-table-head" aria-hidden="true">
+            <span>SKC / 偏差类型</span>
+            <span>偏差贡献占比</span>
+            <span>实际销量 / 预测销量</span>
+          </div>
+          ${rows}
+        `;
       };
 
       renderBiasTopChart();
