@@ -197,12 +197,22 @@
 
     #smart-panel .forecast-analysis-card {
       order: 3;
-      grid-column: span 7;
+      grid-column: span 8;
+    }
+
+    #smart-panel .forecast-analysis-note-card {
+      order: 4;
+      grid-column: span 2;
     }
 
     #smart-panel .forecast-accuracy-card {
-      order: 4;
-      grid-column: span 7;
+      order: 5;
+      grid-column: span 8;
+    }
+
+    #smart-panel .forecast-accuracy-note-card {
+      order: 6;
+      grid-column: span 2;
     }
 
     #smart-panel .forecast-bias-card {
@@ -216,7 +226,7 @@
     }
 
     #smart-panel .smart-integration-card {
-      order: 5;
+      order: 7;
       grid-column: 1 / -1;
     }
 
@@ -783,6 +793,38 @@
       min-height: 500px;
     }
 
+    .forecast-note-card {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      min-height: 500px;
+      overflow: hidden;
+    }
+
+    .forecast-note-body {
+      display: grid;
+      gap: 14px;
+      min-height: 0;
+      overflow-y: auto;
+      color: #2f3947;
+      font-size: 11px;
+      font-weight: 650;
+      line-height: 1.58;
+    }
+
+    .forecast-note-block {
+      margin: 0;
+    }
+
+    .forecast-note-label {
+      display: block;
+      margin-bottom: 4px;
+      color: #111827;
+      font-size: 12px;
+      font-weight: 900;
+      line-height: 1.2;
+    }
+
     .forecast-legend {
       display: flex;
       align-items: center;
@@ -1209,11 +1251,17 @@
       }
 
       #smart-panel .forecast-analysis-card,
+      #smart-panel .forecast-analysis-note-card,
       #smart-panel .forecast-accuracy-card,
+      #smart-panel .forecast-accuracy-note-card,
       #smart-panel .forecast-bias-card,
       #smart-panel .model-accuracy-card,
       #smart-panel .smart-integration-card {
         grid-column: 1 / -1;
+      }
+
+      .forecast-note-card {
+        min-height: auto;
       }
 
       .content-grid {
@@ -1692,6 +1740,32 @@
         </div>
       </article>
 
+      <article class="card panel compact forecast-note-card forecast-analysis-note-card">
+        <div class="card-header">
+          <div class="title-row">
+            <span class="icon-box" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 6h16"></path>
+                <path d="M4 12h16"></path>
+                <path d="M4 18h10"></path>
+              </svg>
+            </span>
+            <h2 class="card-title">分析说明</h2>
+          </div>
+        </div>
+
+        <div class="forecast-note-body">
+          <p class="forecast-note-block">
+            <span class="forecast-note-label">归因</span>
+            2025年公司战略从专注GMV，调整为GMV+利润，广销比受到严格控制，2024年广告花费YOY增长41.8%，2025年广告花费YOY增长仅3.8%，从图中可看出23、24年销量趋势follow广销比趋势，但25年截然不同。——算法模型挑战：无法预知战略调整对后续的影响、无法获得未来广告计划
+          </p>
+          <p class="forecast-note-block">
+            <span class="forecast-note-label">方案</span>
+            通过与中台搭建的销售预测检测Agent，及时发现广告投放异常，动态调整预测。
+          </p>
+        </div>
+      </article>
+
       <article class="card panel compact forecast-bias-card">
         <div class="card-header">
           <div class="title-row">
@@ -1762,6 +1836,32 @@
         <div class="forecast-chart-wrap" data-accuracy-chart>
           <svg class="forecast-chart" role="img" aria-label="GRAND-01BLACK 202401至202604实际销量、人工预测、模型预测、人工预测准确率和模型预测准确率曲线图"></svg>
           <div class="forecast-tooltip" data-accuracy-tooltip></div>
+        </div>
+      </article>
+
+      <article class="card panel compact forecast-note-card forecast-accuracy-note-card">
+        <div class="card-header">
+          <div class="title-row">
+            <span class="icon-box" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 19V5"></path>
+                <path d="M4 19h16"></path>
+                <path d="m7 14 3-3 3 2 5-7"></path>
+              </svg>
+            </span>
+            <h2 class="card-title">准确率分析说明</h2>
+          </div>
+        </div>
+
+        <div class="forecast-note-body">
+          <p class="forecast-note-block">
+            <span class="forecast-note-label">归因</span>
+            Style负责人的更换，会带来运营策略和习惯的变化，最终影响实际销量，左侧skc所属style202301~202601均是S负责，202602-03为L负责，202604为F负责，从图中可明显看出模型准确率在202602后持续下滑，偏离原有走势。
+          </p>
+          <p class="forecast-note-block">
+            <span class="forecast-note-label">方案</span>
+            style负责人变更后，需排除历史负责人的历史数据影响，进行冷启动，待新负责人操盘2-3个月后，再考虑负责人的特征影响权重。
+          </p>
         </div>
       </article>
 
