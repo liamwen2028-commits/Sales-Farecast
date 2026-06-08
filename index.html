@@ -788,24 +788,59 @@
 
     .model-accuracy-stack {
       display: grid;
-      grid-template-rows: minmax(0, 1fr) auto;
-      gap: 18px;
-      min-height: 500px;
+      grid-template-rows: minmax(0, 1fr) 78px;
+      gap: 8px;
+      height: 250px;
+      min-height: 250px;
     }
 
     .model-accuracy-stack .model-accuracy-card {
       display: flex;
       flex-direction: column;
-      min-height: 330px;
+      min-height: 0;
+      padding: 10px 14px;
+      overflow: hidden;
+    }
+
+    .model-accuracy-stack .card-header {
+      gap: 10px;
+    }
+
+    .model-accuracy-stack .icon-box {
+      width: 24px;
+      height: 24px;
+    }
+
+    .model-accuracy-stack .icon-box svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    .model-accuracy-stack .card-title {
+      font-size: 15px;
+    }
+
+    .model-accuracy-stack .forecast-legend {
+      gap: 8px;
+      font-size: 10px;
+      row-gap: 4px;
+    }
+
+    .model-accuracy-stack .legend-swatch {
+      width: 14px;
+    }
+
+    .model-accuracy-stack .legend-item {
+      gap: 4px;
     }
 
     .model-accuracy-charts {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 14px;
+      gap: 6px;
       flex: 1;
       min-height: 0;
-      margin-top: 14px;
+      margin-top: 6px;
     }
 
     .quadrant-chart-panel {
@@ -813,33 +848,39 @@
       min-width: 0;
       min-height: 0;
       flex-direction: column;
-      gap: 8px;
+      gap: 3px;
     }
 
     .quadrant-chart-title {
       margin: 0;
       color: #2f3947;
-      font-size: 12px;
+      font-size: 10px;
       font-weight: 900;
       line-height: 1.2;
     }
 
     .quadrant-chart-panel .forecast-chart-wrap {
       flex: 1;
-      min-height: 228px;
+      height: 34px;
+      min-height: 0;
+      margin-top: 0;
     }
 
     .model-accuracy-legends {
       display: grid;
-      gap: 8px;
-      margin-top: 14px;
+      gap: 5px;
+      margin-top: 6px;
     }
 
     .model-accuracy-site-legend {
       flex-wrap: wrap;
       justify-content: flex-start;
-      gap: 10px;
-      font-size: 12px;
+      gap: 8px;
+      font-size: 10px;
+    }
+
+    .model-accuracy-site-legend .site-swatch {
+      width: 18px;
     }
 
     .site-swatch {
@@ -866,22 +907,36 @@
     }
 
     .model-progress-card {
-      min-height: 152px;
-      padding: 16px 18px;
+      height: 78px;
+      min-height: 0;
+      padding: 10px 14px;
+      overflow: hidden;
     }
 
     .model-progress-body {
-      margin-top: 12px;
+      display: -webkit-box;
+      margin-top: 5px;
+      overflow: hidden;
       color: #2f3947;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 650;
-      line-height: 1.55;
+      line-height: 1.35;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
     }
 
     .forecast-bias-card {
       display: flex;
       flex-direction: column;
-      min-height: 500px;
+      height: 250px;
+      min-height: 250px;
+      padding: 12px 14px;
+      overflow: hidden;
+    }
+
+    #smart-panel .panel.compact.forecast-bias-card {
+      height: 250px;
+      min-height: 250px;
     }
 
     .forecast-note-card {
@@ -1048,6 +1103,12 @@
       cursor: default;
     }
 
+    .forecast-bias-card .bias-legend {
+      gap: 8px;
+      margin-top: 8px;
+      font-size: 10px;
+    }
+
     .bias-chart-shell {
       --bias-grid: minmax(72px, 0.9fr) 38px 66px minmax(76px, 1fr);
       --bias-gap: 6px;
@@ -1058,6 +1119,10 @@
       margin-top: 14px;
       padding-right: 2px;
       overflow-y: auto;
+    }
+
+    .forecast-bias-card .bias-chart-shell {
+      margin-top: 8px;
     }
 
     .bias-table-head {
@@ -1078,6 +1143,11 @@
       white-space: nowrap;
     }
 
+    .forecast-bias-card .bias-table-head {
+      padding-bottom: 5px;
+      font-size: 8px;
+    }
+
     .bias-table-head span:nth-child(2) {
       text-align: left;
     }
@@ -1094,6 +1164,11 @@
       min-height: 54px;
       padding: 7px 0;
       border-top: 1px solid #e8edf2;
+    }
+
+    .forecast-bias-card .bias-row {
+      min-height: 40px;
+      padding: 5px 0;
     }
 
     .bias-skc {
@@ -1147,6 +1222,10 @@
       display: grid;
       gap: 4px;
       min-width: 0;
+    }
+
+    .forecast-bias-card .bias-bars {
+      gap: 3px;
     }
 
     .bias-bar-line {
@@ -2563,8 +2642,8 @@
         const visibleSites = quadrantSites.filter((site) => quadrantVisibleSites[site.key] && Array.isArray(quadrantData[site.key]));
         const chartSvg = host.querySelector(".forecast-chart");
         const width = Math.max(Math.round(host.clientWidth), 360);
-        const height = Math.max(Math.round(host.clientHeight), 260);
-        const margin = { top: 28, right: 18, bottom: 72, left: 52 };
+        const height = Math.max(Math.round(host.clientHeight), 150);
+        const margin = { top: 20, right: 14, bottom: 48, left: 44 };
         const plotWidth = width - margin.left - margin.right;
         const plotHeight = height - margin.top - margin.bottom;
         const plotBottom = margin.top + plotHeight;
@@ -2625,9 +2704,9 @@
 
         const yTitle = svgElement("text", {
           x: margin.left,
-          y: 18,
+          y: 14,
           fill: "#2f3947",
-          "font-size": "12",
+          "font-size": "10",
           "font-weight": "900"
         });
         yTitle.textContent = "准确率";
@@ -2682,7 +2761,7 @@
           });
         });
 
-        const monthLabelY = plotBottom + 48;
+        const monthLabelY = plotBottom + 34;
 
         points.forEach((point, index) => {
           const label = svgElement("text", {
@@ -2723,8 +2802,8 @@
               });
           });
           const tooltipY = visibleValues.length
-            ? Math.max(76, scaleY(Math.max(...visibleValues)) - 8)
-            : 76;
+            ? Math.max(54, scaleY(Math.max(...visibleValues)) - 8)
+            : 54;
           hitArea.addEventListener("mouseenter", () => showModelAccuracyTooltip(host, { ...point, rows, tooltipX, tooltipY }));
           hitArea.addEventListener("mousemove", () => showModelAccuracyTooltip(host, { ...point, rows, tooltipX, tooltipY }));
           hitArea.addEventListener("mouseleave", () => hideModelAccuracyTooltip(host));
