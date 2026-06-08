@@ -195,38 +195,48 @@
       grid-template-columns: repeat(10, minmax(0, 1fr));
     }
 
-    #smart-panel .forecast-analysis-card {
-      order: 3;
-      grid-column: span 8;
-    }
-
-    #smart-panel .forecast-analysis-note-card {
-      order: 4;
-      grid-column: span 2;
-    }
-
-    #smart-panel .forecast-accuracy-card {
-      order: 5;
-      grid-column: span 8;
-    }
-
-    #smart-panel .forecast-accuracy-note-card {
-      order: 6;
-      grid-column: span 2;
-    }
-
-    #smart-panel .forecast-bias-card {
-      order: 2;
-      grid-column: span 3;
-    }
-
-    #smart-panel .model-accuracy-stack {
+    #smart-panel .quadrant-comparison-card {
       order: 1;
       grid-column: span 7;
     }
 
-    #smart-panel .smart-integration-card {
+    #smart-panel .quadrant-note-card {
+      order: 2;
+      grid-column: span 3;
+    }
+
+    #smart-panel .forecast-analysis-card {
+      order: 5;
+      grid-column: span 8;
+    }
+
+    #smart-panel .forecast-analysis-note-card {
+      order: 6;
+      grid-column: span 2;
+    }
+
+    #smart-panel .forecast-accuracy-card {
       order: 7;
+      grid-column: span 8;
+    }
+
+    #smart-panel .forecast-accuracy-note-card {
+      order: 8;
+      grid-column: span 2;
+    }
+
+    #smart-panel .forecast-bias-card {
+      order: 4;
+      grid-column: span 3;
+    }
+
+    #smart-panel .model-accuracy-stack {
+      order: 3;
+      grid-column: span 7;
+    }
+
+    #smart-panel .smart-integration-card {
+      order: 9;
       grid-column: 1 / -1;
     }
 
@@ -786,6 +796,62 @@
       min-height: 500px;
     }
 
+    .quadrant-comparison-card {
+      min-height: 560px;
+    }
+
+    .quadrant-comparison-card .forecast-chart-wrap {
+      height: 452px;
+      margin-top: 14px;
+    }
+
+    .cluster-compare-legends {
+      display: grid;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .cluster-legend-row {
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      gap: 12px;
+    }
+
+    .cluster-legend-row .legend-item {
+      font-size: 12px;
+    }
+
+    .legend-swatch.bar {
+      width: 12px;
+      height: 8px;
+      border-radius: 2px;
+      opacity: 0.72;
+    }
+
+    .legend-swatch.dashed {
+      background: repeating-linear-gradient(90deg, var(--legend-color) 0 5px, transparent 5px 9px);
+    }
+
+    .quadrant-note-card {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .quadrant-note-body {
+      display: grid;
+      gap: 12px;
+      margin-top: 4px;
+      color: #2f3947;
+      font-size: 14px;
+      font-weight: 650;
+      line-height: 1.45;
+    }
+
+    .quadrant-note-body p {
+      margin: 0;
+    }
+
     .model-accuracy-stack {
       display: grid;
       grid-template-rows: minmax(0, 1fr) 220px;
@@ -1011,13 +1077,6 @@
       height: 3px;
       border-radius: 999px;
       background: var(--legend-color);
-    }
-
-    .legend-swatch.bar {
-      width: 12px;
-      height: 8px;
-      border-radius: 2px;
-      opacity: 0.72;
     }
 
     .legend-caption {
@@ -1460,6 +1519,8 @@
         grid-template-columns: 1fr;
       }
 
+      #smart-panel .quadrant-comparison-card,
+      #smart-panel .quadrant-note-card,
       #smart-panel .forecast-analysis-card,
       #smart-panel .forecast-analysis-note-card,
       #smart-panel .forecast-accuracy-card,
@@ -1930,6 +1991,64 @@
 
       <section class="tab-panel" id="smart-panel" role="tabpanel" aria-labelledby="tab-smart" hidden>
     <section class="bottom-grid">
+      <article class="card panel compact quadrant-comparison-card">
+        <div class="card-header">
+          <div class="title-row">
+            <span class="icon-box" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 19V5"></path>
+                <path d="M4 19h16"></path>
+                <path d="M7 15h3"></path>
+                <path d="M12 11h3"></path>
+                <path d="M17 8h3"></path>
+              </svg>
+            </span>
+            <h2 class="card-title">象限对比分析</h2>
+          </div>
+        </div>
+
+        <div class="cluster-compare-legends">
+          <div class="forecast-legend cluster-legend-row" aria-label="指标图例">
+            <span class="legend-caption">指标</span>
+            <button class="legend-item" type="button" aria-pressed="true" data-cluster-comparison-metric="quantity"><span class="legend-swatch bar" style="--legend-color: #5347ce"></span>汇总销量</button>
+            <button class="legend-item" type="button" aria-pressed="true" data-cluster-comparison-metric="rate"><span class="legend-swatch" style="--legend-color: #16c8c7"></span>利润率</button>
+            <button class="legend-item" type="button" aria-pressed="true" data-cluster-comparison-metric="averageRate"><span class="legend-swatch dashed" style="--legend-color: #f5a524"></span>全年平均利润率</button>
+          </div>
+          <div class="forecast-legend cluster-legend-row" aria-label="cluster图例">
+            <span class="legend-caption">Cluster</span>
+            <button class="legend-item" type="button" aria-pressed="true" data-cluster-comparison-cluster="cluster1"><span class="legend-swatch" style="--legend-color: #5347ce"></span>Cluster1</button>
+            <button class="legend-item" type="button" aria-pressed="true" data-cluster-comparison-cluster="cluster2"><span class="legend-swatch" style="--legend-color: #4896fe"></span>Cluster2</button>
+            <button class="legend-item" type="button" aria-pressed="true" data-cluster-comparison-cluster="cluster3"><span class="legend-swatch" style="--legend-color: #16c8c7"></span>Cluster3</button>
+            <button class="legend-item" type="button" aria-pressed="true" data-cluster-comparison-cluster="cluster4"><span class="legend-swatch" style="--legend-color: #f5a524"></span>Cluster4</button>
+          </div>
+        </div>
+
+        <div class="forecast-chart-wrap" data-cluster-comparison-chart>
+          <svg class="forecast-chart" role="img" aria-label="202401至202604象限销量与利润率综合图表"></svg>
+          <div class="forecast-tooltip" data-cluster-comparison-tooltip></div>
+        </div>
+      </article>
+
+      <article class="card panel compact quadrant-note-card">
+        <div class="card-header">
+          <div class="title-row">
+            <span class="icon-box" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 6h16"></path>
+                <path d="M4 12h16"></path>
+                <path d="M4 18h10"></path>
+              </svg>
+            </span>
+            <h2 class="card-title">象限说明</h2>
+          </div>
+        </div>
+        <div class="quadrant-note-body">
+          <p>柱状图按附件口径展示各 Cluster 的月度汇总销量，便于对比不同象限的销量规模变化。</p>
+          <p>利润率实线展示月度表现，全年平均利润率虚线按年度汇总利润 / 汇总GMV 计算，用于观察月度利润率相对年度均值的偏离。</p>
+          <p>图例可分别控制指标类型和 Cluster 显隐，支持聚焦单个象限或单类指标。</p>
+        </div>
+      </article>
+
       <article class="card panel compact forecast-analysis-card">
         <div class="card-header">
           <div class="title-row">
@@ -2178,6 +2297,7 @@
     const tabButtons = document.querySelectorAll(".tab-button[data-tab-target]");
     const tabPanels = document.querySelectorAll(".tab-panel");
     let renderGrandChart = () => {};
+    let renderClusterComparisonChart = () => {};
     let renderModelAccuracyChart = () => {};
     let renderAccuracyChart = () => {};
     let renderBiasTopChart = () => {};
@@ -2198,6 +2318,7 @@
 
       if (activePanelId === "smart-panel") {
         window.requestAnimationFrame(() => {
+          renderClusterComparisonChart();
           renderGrandChart();
           renderModelAccuracyChart();
           renderAccuracyChart();
@@ -2265,12 +2386,14 @@
       });
     }
 
+    const clusterComparisonData = {"clusters":[{"key":"cluster1","label":"Cluster1","color":"#5347ce"},{"key":"cluster2","label":"Cluster2","color":"#4896fe"},{"key":"cluster3","label":"Cluster3","color":"#16c8c7"},{"key":"cluster4","label":"Cluster4","color":"#f5a524"}],"rows":[{"month":"202401","cluster1":{"quantity":94938,"rate":0.148018,"averageRate":0.14266},"cluster2":{"quantity":230614,"rate":0.122013,"averageRate":0.112703},"cluster3":{"quantity":34621,"rate":0.085636,"averageRate":0.09857},"cluster4":{"quantity":15421,"rate":0.154699,"averageRate":0.154149}},{"month":"202402","cluster1":{"quantity":101634,"rate":0.164098,"averageRate":0.14266},"cluster2":{"quantity":264119,"rate":0.133308,"averageRate":0.112703},"cluster3":{"quantity":43722,"rate":0.103853,"averageRate":0.09857},"cluster4":{"quantity":15880,"rate":0.164287,"averageRate":0.154149}},{"month":"202403","cluster1":{"quantity":141187,"rate":0.170178,"averageRate":0.14266},"cluster2":{"quantity":359304,"rate":0.152556,"averageRate":0.112703},"cluster3":{"quantity":67179,"rate":0.146761,"averageRate":0.09857},"cluster4":{"quantity":19744,"rate":0.187097,"averageRate":0.154149}},{"month":"202404","cluster1":{"quantity":158063,"rate":0.173387,"averageRate":0.14266},"cluster2":{"quantity":399696,"rate":0.147858,"averageRate":0.112703},"cluster3":{"quantity":73358,"rate":0.139723,"averageRate":0.09857},"cluster4":{"quantity":26320,"rate":0.184243,"averageRate":0.154149}},{"month":"202405","cluster1":{"quantity":181574,"rate":0.151653,"averageRate":0.14266},"cluster2":{"quantity":406582,"rate":0.1211,"averageRate":0.112703},"cluster3":{"quantity":66797,"rate":0.104542,"averageRate":0.09857},"cluster4":{"quantity":25099,"rate":0.142521,"averageRate":0.154149}},{"month":"202406","cluster1":{"quantity":152692,"rate":0.128174,"averageRate":0.14266},"cluster2":{"quantity":330958,"rate":0.104452,"averageRate":0.112703},"cluster3":{"quantity":53078,"rate":0.077808,"averageRate":0.09857},"cluster4":{"quantity":18282,"rate":0.105868,"averageRate":0.154149}},{"month":"202407","cluster1":{"quantity":162398,"rate":0.135627,"averageRate":0.14266},"cluster2":{"quantity":345436,"rate":0.114425,"averageRate":0.112703},"cluster3":{"quantity":53973,"rate":0.095936,"averageRate":0.09857},"cluster4":{"quantity":21194,"rate":0.15154,"averageRate":0.154149}},{"month":"202408","cluster1":{"quantity":163920,"rate":0.144994,"averageRate":0.14266},"cluster2":{"quantity":388595,"rate":0.114708,"averageRate":0.112703},"cluster3":{"quantity":61900,"rate":0.087167,"averageRate":0.09857},"cluster4":{"quantity":26723,"rate":0.155421,"averageRate":0.154149}},{"month":"202409","cluster1":{"quantity":212480,"rate":0.159802,"averageRate":0.14266},"cluster2":{"quantity":478037,"rate":0.126924,"averageRate":0.112703},"cluster3":{"quantity":79341,"rate":0.111924,"averageRate":0.09857},"cluster4":{"quantity":44189,"rate":0.191663,"averageRate":0.154149}},{"month":"202410","cluster1":{"quantity":227989,"rate":0.115925,"averageRate":0.14266},"cluster2":{"quantity":506707,"rate":0.084051,"averageRate":0.112703},"cluster3":{"quantity":96049,"rate":0.099664,"averageRate":0.09857},"cluster4":{"quantity":55485,"rate":0.15978,"averageRate":0.154149}},{"month":"202411","cluster1":{"quantity":189950,"rate":0.099659,"averageRate":0.14266},"cluster2":{"quantity":389513,"rate":0.046315,"averageRate":0.112703},"cluster3":{"quantity":65168,"rate":0.013788,"averageRate":0.09857},"cluster4":{"quantity":33918,"rate":0.077978,"averageRate":0.154149}},{"month":"202412","cluster1":{"quantity":190649,"rate":0.145078,"averageRate":0.14266},"cluster2":{"quantity":384561,"rate":0.1005,"averageRate":0.112703},"cluster3":{"quantity":64725,"rate":0.097603,"averageRate":0.09857},"cluster4":{"quantity":36933,"rate":0.158375,"averageRate":0.154149}},{"month":"202501","cluster1":{"quantity":143623,"rate":0.156255,"averageRate":0.15709},"cluster2":{"quantity":311971,"rate":0.101233,"averageRate":0.114264},"cluster3":{"quantity":50122,"rate":0.069245,"averageRate":0.08394},"cluster4":{"quantity":24656,"rate":0.124811,"averageRate":0.158891}},{"month":"202502","cluster1":{"quantity":140165,"rate":0.186941,"averageRate":0.15709},"cluster2":{"quantity":344975,"rate":0.134906,"averageRate":0.114264},"cluster3":{"quantity":50809,"rate":0.109594,"averageRate":0.08394},"cluster4":{"quantity":24024,"rate":0.165902,"averageRate":0.158891}},{"month":"202503","cluster1":{"quantity":178358,"rate":0.186066,"averageRate":0.15709},"cluster2":{"quantity":463716,"rate":0.143595,"averageRate":0.114264},"cluster3":{"quantity":64230,"rate":0.122283,"averageRate":0.08394},"cluster4":{"quantity":31163,"rate":0.19021,"averageRate":0.158891}},{"month":"202504","cluster1":{"quantity":196383,"rate":0.195363,"averageRate":0.15709},"cluster2":{"quantity":478795,"rate":0.14886,"averageRate":0.114264},"cluster3":{"quantity":76387,"rate":0.140361,"averageRate":0.08394},"cluster4":{"quantity":31522,"rate":0.187467,"averageRate":0.158891}},{"month":"202505","cluster1":{"quantity":186637,"rate":0.167526,"averageRate":0.15709},"cluster2":{"quantity":458445,"rate":0.131224,"averageRate":0.114264},"cluster3":{"quantity":60978,"rate":0.071499,"averageRate":0.08394},"cluster4":{"quantity":30023,"rate":0.178846,"averageRate":0.158891}},{"month":"202506","cluster1":{"quantity":148183,"rate":0.146527,"averageRate":0.15709},"cluster2":{"quantity":344106,"rate":0.096638,"averageRate":0.114264},"cluster3":{"quantity":40854,"rate":0.035758,"averageRate":0.08394},"cluster4":{"quantity":18192,"rate":0.132864,"averageRate":0.158891}},{"month":"202507","cluster1":{"quantity":164379,"rate":0.141955,"averageRate":0.15709},"cluster2":{"quantity":388625,"rate":0.10479,"averageRate":0.114264},"cluster3":{"quantity":49460,"rate":0.051093,"averageRate":0.08394},"cluster4":{"quantity":28869,"rate":0.177203,"averageRate":0.158891}},{"month":"202508","cluster1":{"quantity":198365,"rate":0.158361,"averageRate":0.15709},"cluster2":{"quantity":440914,"rate":0.111679,"averageRate":0.114264},"cluster3":{"quantity":64005,"rate":0.05546,"averageRate":0.08394},"cluster4":{"quantity":41161,"rate":0.169699,"averageRate":0.158891}},{"month":"202509","cluster1":{"quantity":254882,"rate":0.170068,"averageRate":0.15709},"cluster2":{"quantity":543694,"rate":0.130575,"averageRate":0.114264},"cluster3":{"quantity":86256,"rate":0.084723,"averageRate":0.08394},"cluster4":{"quantity":56749,"rate":0.18912,"averageRate":0.158891}},{"month":"202510","cluster1":{"quantity":277576,"rate":0.13596,"averageRate":0.15709},"cluster2":{"quantity":589603,"rate":0.098499,"averageRate":0.114264},"cluster3":{"quantity":134318,"rate":0.123818,"averageRate":0.08394},"cluster4":{"quantity":86812,"rate":0.180057,"averageRate":0.158891}},{"month":"202511","cluster1":{"quantity":203821,"rate":0.100781,"averageRate":0.15709},"cluster2":{"quantity":429055,"rate":0.048587,"averageRate":0.114264},"cluster3":{"quantity":85549,"rate":-0.007494,"averageRate":0.08394},"cluster4":{"quantity":47354,"rate":0.044767,"averageRate":0.158891}},{"month":"202512","cluster1":{"quantity":206339,"rate":0.149903,"averageRate":0.15709},"cluster2":{"quantity":413138,"rate":0.109193,"averageRate":0.114264},"cluster3":{"quantity":84338,"rate":0.095863,"averageRate":0.08394},"cluster4":{"quantity":48152,"rate":0.14589,"averageRate":0.158891}},{"month":"202601","cluster1":{"quantity":163126,"rate":0.129814,"averageRate":0.149457},"cluster2":{"quantity":325117,"rate":0.094631,"averageRate":0.119499},"cluster3":{"quantity":58646,"rate":0.072244,"averageRate":0.106159},"cluster4":{"quantity":31566,"rate":0.088225,"averageRate":0.1301}},{"month":"202602","cluster1":{"quantity":175262,"rate":0.152624,"averageRate":0.149457},"cluster2":{"quantity":376027,"rate":0.125021,"averageRate":0.119499},"cluster3":{"quantity":69746,"rate":0.11578,"averageRate":0.106159},"cluster4":{"quantity":33758,"rate":0.139572,"averageRate":0.1301}},{"month":"202603","cluster1":{"quantity":222384,"rate":0.155794,"averageRate":0.149457},"cluster2":{"quantity":522874,"rate":0.132806,"averageRate":0.119499},"cluster3":{"quantity":99273,"rate":0.120939,"averageRate":0.106159},"cluster4":{"quantity":41887,"rate":0.146644,"averageRate":0.1301}},{"month":"202604","cluster1":{"quantity":247635,"rate":0.154783,"averageRate":0.149457},"cluster2":{"quantity":515998,"rate":0.11824,"averageRate":0.119499},"cluster3":{"quantity":97830,"rate":0.105344,"averageRate":0.106159},"cluster4":{"quantity":44965,"rate":0.137622,"averageRate":0.1301}}]};
     const grandForecastData = [{"month":"202301","quantity":1383,"ratio":0.021723},{"month":"202302","quantity":1165,"ratio":0.028612},{"month":"202303","quantity":2440,"ratio":0.021708},{"month":"202304","quantity":1530,"ratio":0.053368},{"month":"202305","quantity":2158,"ratio":0.082709},{"month":"202306","quantity":1632,"ratio":0.084928},{"month":"202307","quantity":2268,"ratio":0.079161},{"month":"202308","quantity":1727,"ratio":0.042492},{"month":"202309","quantity":1820,"ratio":0.077194},{"month":"202310","quantity":2991,"ratio":0.070375},{"month":"202311","quantity":3337,"ratio":0.058435},{"month":"202312","quantity":4067,"ratio":0.05824},{"month":"202401","quantity":1955,"ratio":0.096787},{"month":"202402","quantity":1615,"ratio":0.103541},{"month":"202403","quantity":2345,"ratio":0.103742},{"month":"202404","quantity":2839,"ratio":0.159801},{"month":"202405","quantity":4124,"ratio":0.159836},{"month":"202406","quantity":3700,"ratio":0.200623},{"month":"202407","quantity":4569,"ratio":0.226955},{"month":"202408","quantity":3434,"ratio":0.233412},{"month":"202409","quantity":3010,"ratio":0.195929},{"month":"202410","quantity":4100,"ratio":0.218356},{"month":"202411","quantity":5791,"ratio":0.099034},{"month":"202412","quantity":6452,"ratio":0.061407},{"month":"202501","quantity":2790,"ratio":0.109999},{"month":"202502","quantity":3848,"ratio":0.076982},{"month":"202503","quantity":4401,"ratio":0.069005},{"month":"202504","quantity":4102,"ratio":0.064438},{"month":"202505","quantity":3729,"ratio":0.072668},{"month":"202506","quantity":2929,"ratio":0.068155},{"month":"202507","quantity":4215,"ratio":0.082875},{"month":"202508","quantity":4176,"ratio":0.081557},{"month":"202509","quantity":5685,"ratio":0.079201},{"month":"202510","quantity":6847,"ratio":0.074227},{"month":"202511","quantity":6083,"ratio":0.089028},{"month":"202512","quantity":6156,"ratio":0.079195},{"month":"202601","quantity":5507,"ratio":0.101857},{"month":"202602","quantity":6324,"ratio":0.089013},{"month":"202603","quantity":6867,"ratio":0.087954},{"month":"202604","quantity":7361,"ratio":0.080891}];
     const grandAccuracyData = [{"month":"202401","actual":1955,"manualForecast":null,"manualAccuracy":null,"modelForecast":1908.45,"modelAccuracy":0.975608},{"month":"202402","actual":1615,"manualForecast":null,"manualAccuracy":null,"modelForecast":1921.05,"modelAccuracy":0.840686},{"month":"202403","actual":2345,"manualForecast":null,"manualAccuracy":null,"modelForecast":2704.75,"modelAccuracy":0.866993},{"month":"202404","actual":2839,"manualForecast":null,"manualAccuracy":null,"modelForecast":2701.65,"modelAccuracy":0.949161},{"month":"202405","actual":4124,"manualForecast":null,"manualAccuracy":null,"modelForecast":3317.3,"modelAccuracy":0.75682},{"month":"202406","actual":3700,"manualForecast":null,"manualAccuracy":null,"modelForecast":3090.45,"modelAccuracy":0.802763},{"month":"202407","actual":4569,"manualForecast":null,"manualAccuracy":null,"modelForecast":3597.05,"modelAccuracy":0.729792},{"month":"202408","actual":3434,"manualForecast":null,"manualAccuracy":null,"modelForecast":2871.4,"modelAccuracy":0.804068},{"month":"202409","actual":3010,"manualForecast":null,"manualAccuracy":null,"modelForecast":3108.45,"modelAccuracy":0.968328},{"month":"202410","actual":4100,"manualForecast":null,"manualAccuracy":null,"modelForecast":3972.15,"modelAccuracy":0.967813},{"month":"202411","actual":5791,"manualForecast":null,"manualAccuracy":null,"modelForecast":4364.7,"modelAccuracy":0.673219},{"month":"202412","actual":6452,"manualForecast":null,"manualAccuracy":null,"modelForecast":4842.95,"modelAccuracy":0.667754},{"month":"202501","actual":2790,"manualForecast":2896,"manualAccuracy":0.963398,"modelForecast":2807.45,"modelAccuracy":0.993784},{"month":"202502","actual":3848,"manualForecast":2864.05,"manualAccuracy":0.656448,"modelForecast":2609.05,"modelAccuracy":0.525134},{"month":"202503","actual":4401,"manualForecast":3136,"manualAccuracy":0.59662,"modelForecast":3315.35,"modelAccuracy":0.672538},{"month":"202504","actual":4102,"manualForecast":2865.9,"manualAccuracy":0.568687,"modelForecast":3702.25,"modelAccuracy":0.892025},{"month":"202505","actual":3729,"manualForecast":3361,"manualAccuracy":0.890509,"modelForecast":4311.7,"modelAccuracy":0.864856},{"month":"202506","actual":2929,"manualForecast":3402.95,"manualAccuracy":0.860724,"modelForecast":4217.75,"modelAccuracy":0.694446},{"month":"202507","actual":4215,"manualForecast":3323.2,"manualAccuracy":0.731644,"modelForecast":4688.3,"modelAccuracy":0.899047},{"month":"202508","actual":4176,"manualForecast":2536.6,"manualAccuracy":0.353702,"modelForecast":4150.25,"modelAccuracy":0.993796},{"month":"202509","actual":5685,"manualForecast":2743.55,"manualAccuracy":-0.072133,"modelForecast":4045.45,"modelAccuracy":0.594718},{"month":"202510","actual":6847,"manualForecast":4181.35,"manualAccuracy":0.362491,"modelForecast":4649.45,"modelAccuracy":0.527353},{"month":"202511","actual":6083,"manualForecast":6071.35,"manualAccuracy":0.998081,"modelForecast":5086.4,"modelAccuracy":0.804066},{"month":"202512","actual":6156,"manualForecast":4811.2,"manualAccuracy":0.720486,"modelForecast":5099.65,"modelAccuracy":0.792858},{"month":"202601","actual":5507,"manualForecast":3539.85,"manualAccuracy":0.444284,"modelForecast":3720.15,"modelAccuracy":0.519683},{"month":"202602","actual":6324,"manualForecast":4080,"manualAccuracy":0.45,"modelForecast":4055.3,"modelAccuracy":0.440559},{"month":"202603","actual":6867,"manualForecast":5400,"manualAccuracy":0.728333,"modelForecast":4481.2,"modelAccuracy":0.467598},{"month":"202604","actual":7361,"manualForecast":5676.4,"manualAccuracy":0.703227,"modelForecast":4268.75,"modelAccuracy":0.275608}];
     const quadrantAccuracyData = {"1":{"US":[{"month":"202504","manualAccuracy":0.7244,"lgbAccuracy":0.6244,"featureAccuracy":0.7638,"stackingAccuracy":0.7505},{"month":"202505","manualAccuracy":0.7471,"lgbAccuracy":0.6234,"featureAccuracy":0.7286,"stackingAccuracy":0.7422},{"month":"202506","manualAccuracy":0.7495,"lgbAccuracy":0.6287,"featureAccuracy":0.6963,"stackingAccuracy":0.6991},{"month":"202507","manualAccuracy":0.7255,"lgbAccuracy":0.6213,"featureAccuracy":0.6962,"stackingAccuracy":0.7058},{"month":"202508","manualAccuracy":0.6834,"lgbAccuracy":0.6283,"featureAccuracy":0.7591,"stackingAccuracy":0.7516},{"month":"202509","manualAccuracy":0.7588,"lgbAccuracy":0.584,"featureAccuracy":0.7311,"stackingAccuracy":0.7105},{"month":"202510","manualAccuracy":0.7571,"lgbAccuracy":0.5917,"featureAccuracy":0.7382,"stackingAccuracy":0.7161},{"month":"202511","manualAccuracy":0.7803,"lgbAccuracy":0.5947,"featureAccuracy":0.7113,"stackingAccuracy":0.7219},{"month":"202512","manualAccuracy":0.7088,"lgbAccuracy":0.5909,"featureAccuracy":0.7122,"stackingAccuracy":0.7174},{"month":"202601","manualAccuracy":0.7377,"lgbAccuracy":0.6092,"featureAccuracy":0.7504,"stackingAccuracy":0.751},{"month":"202602","manualAccuracy":0.754,"lgbAccuracy":0.6071,"featureAccuracy":0.7515,"stackingAccuracy":0.7669},{"month":"202603","manualAccuracy":0.7548,"lgbAccuracy":0.5129,"featureAccuracy":0.7084,"stackingAccuracy":0.7497},{"month":"202604","manualAccuracy":0.7575,"lgbAccuracy":0.5196,"featureAccuracy":0.6844,"stackingAccuracy":0.7194}],"CA":[{"month":"202504","manualAccuracy":0.6215,"lgbAccuracy":null,"featureAccuracy":0.6747,"stackingAccuracy":0.67416},{"month":"202505","manualAccuracy":0.6282,"lgbAccuracy":null,"featureAccuracy":0.6301,"stackingAccuracy":0.628545},{"month":"202506","manualAccuracy":0.6492,"lgbAccuracy":null,"featureAccuracy":0.6005,"stackingAccuracy":0.600513},{"month":"202507","manualAccuracy":0.7009,"lgbAccuracy":null,"featureAccuracy":0.6087,"stackingAccuracy":0.608587},{"month":"202508","manualAccuracy":0.6685,"lgbAccuracy":null,"featureAccuracy":0.6894,"stackingAccuracy":0.693688},{"month":"202509","manualAccuracy":0.7351,"lgbAccuracy":null,"featureAccuracy":0.6517,"stackingAccuracy":0.669925},{"month":"202510","manualAccuracy":0.7351,"lgbAccuracy":null,"featureAccuracy":0.6285,"stackingAccuracy":0.660812},{"month":"202511","manualAccuracy":0.6737,"lgbAccuracy":null,"featureAccuracy":0.5772,"stackingAccuracy":0.605193},{"month":"202512","manualAccuracy":0.6805,"lgbAccuracy":null,"featureAccuracy":0.5942,"stackingAccuracy":0.628084},{"month":"202601","manualAccuracy":0.6546,"lgbAccuracy":null,"featureAccuracy":0.639,"stackingAccuracy":0.642979},{"month":"202602","manualAccuracy":0.6833,"lgbAccuracy":null,"featureAccuracy":0.634,"stackingAccuracy":0.643846},{"month":"202603","manualAccuracy":0.6956,"lgbAccuracy":null,"featureAccuracy":0.6216,"stackingAccuracy":0.682332},{"month":"202604","manualAccuracy":0.7096,"lgbAccuracy":null,"featureAccuracy":0.6503,"stackingAccuracy":0.692769}],"MX":[{"month":"202504","manualAccuracy":0.5948,"lgbAccuracy":null,"featureAccuracy":0.6238,"stackingAccuracy":0.62517},{"month":"202505","manualAccuracy":0.5429,"lgbAccuracy":null,"featureAccuracy":0.5925,"stackingAccuracy":0.592952},{"month":"202506","manualAccuracy":0.6257,"lgbAccuracy":null,"featureAccuracy":0.6063,"stackingAccuracy":0.607354},{"month":"202507","manualAccuracy":0.5755,"lgbAccuracy":null,"featureAccuracy":0.5616,"stackingAccuracy":0.562784},{"month":"202508","manualAccuracy":0.5347,"lgbAccuracy":null,"featureAccuracy":0.5711,"stackingAccuracy":0.571755},{"month":"202509","manualAccuracy":0.5344,"lgbAccuracy":null,"featureAccuracy":0.5972,"stackingAccuracy":0.599138},{"month":"202510","manualAccuracy":0.5103,"lgbAccuracy":null,"featureAccuracy":0.6021,"stackingAccuracy":0.604019},{"month":"202511","manualAccuracy":0.5627,"lgbAccuracy":null,"featureAccuracy":0.5502,"stackingAccuracy":0.552528},{"month":"202512","manualAccuracy":0.6701,"lgbAccuracy":null,"featureAccuracy":0.5705,"stackingAccuracy":0.57251},{"month":"202601","manualAccuracy":0.5728,"lgbAccuracy":null,"featureAccuracy":0.5574,"stackingAccuracy":0.576725},{"month":"202602","manualAccuracy":0.5495,"lgbAccuracy":null,"featureAccuracy":0.5587,"stackingAccuracy":0.563522},{"month":"202603","manualAccuracy":0.542,"lgbAccuracy":null,"featureAccuracy":0.5613,"stackingAccuracy":0.569421},{"month":"202604","manualAccuracy":0.575,"lgbAccuracy":null,"featureAccuracy":0.5748,"stackingAccuracy":0.583279}],"GB":[{"month":"202504","manualAccuracy":0.5448,"lgbAccuracy":null,"featureAccuracy":0.6121,"stackingAccuracy":0.612133},{"month":"202505","manualAccuracy":0.5621,"lgbAccuracy":null,"featureAccuracy":0.5067,"stackingAccuracy":0.5067},{"month":"202506","manualAccuracy":0.6068,"lgbAccuracy":null,"featureAccuracy":0.5002,"stackingAccuracy":0.5002},{"month":"202507","manualAccuracy":0.5565,"lgbAccuracy":null,"featureAccuracy":0.5878,"stackingAccuracy":0.589012},{"month":"202508","manualAccuracy":0.5449,"lgbAccuracy":null,"featureAccuracy":0.5155,"stackingAccuracy":0.520106},{"month":"202509","manualAccuracy":0.577,"lgbAccuracy":null,"featureAccuracy":0.5167,"stackingAccuracy":0.524544},{"month":"202510","manualAccuracy":0.5867,"lgbAccuracy":null,"featureAccuracy":0.5616,"stackingAccuracy":0.574202},{"month":"202511","manualAccuracy":0.5788,"lgbAccuracy":null,"featureAccuracy":0.4537,"stackingAccuracy":0.496254},{"month":"202512","manualAccuracy":0.5416,"lgbAccuracy":null,"featureAccuracy":0.4214,"stackingAccuracy":0.462979},{"month":"202601","manualAccuracy":0.5536,"lgbAccuracy":null,"featureAccuracy":0.5056,"stackingAccuracy":0.511414},{"month":"202602","manualAccuracy":0.5635,"lgbAccuracy":null,"featureAccuracy":0.4873,"stackingAccuracy":0.524861},{"month":"202603","manualAccuracy":0.5985,"lgbAccuracy":null,"featureAccuracy":0.5056,"stackingAccuracy":0.593546},{"month":"202604","manualAccuracy":0.6231,"lgbAccuracy":null,"featureAccuracy":0.5175,"stackingAccuracy":0.619646}],"EU":[{"month":"202504","manualAccuracy":0.5932,"lgbAccuracy":null,"featureAccuracy":0.6484,"stackingAccuracy":0.647977},{"month":"202505","manualAccuracy":0.6254,"lgbAccuracy":null,"featureAccuracy":0.4207,"stackingAccuracy":0.421002},{"month":"202506","manualAccuracy":0.602,"lgbAccuracy":null,"featureAccuracy":0.4939,"stackingAccuracy":0.495645},{"month":"202507","manualAccuracy":0.607,"lgbAccuracy":null,"featureAccuracy":0.5973,"stackingAccuracy":0.597742},{"month":"202508","manualAccuracy":0.5742,"lgbAccuracy":null,"featureAccuracy":0.6017,"stackingAccuracy":0.60236},{"month":"202509","manualAccuracy":0.6639,"lgbAccuracy":null,"featureAccuracy":0.5152,"stackingAccuracy":0.520907},{"month":"202510","manualAccuracy":0.665,"lgbAccuracy":null,"featureAccuracy":0.6276,"stackingAccuracy":0.632102},{"month":"202511","manualAccuracy":0.6392,"lgbAccuracy":null,"featureAccuracy":0.6443,"stackingAccuracy":0.640241},{"month":"202512","manualAccuracy":0.6408,"lgbAccuracy":null,"featureAccuracy":0.6293,"stackingAccuracy":0.628975},{"month":"202601","manualAccuracy":0.5952,"lgbAccuracy":null,"featureAccuracy":0.6193,"stackingAccuracy":0.618231},{"month":"202602","manualAccuracy":0.5366,"lgbAccuracy":null,"featureAccuracy":0.5989,"stackingAccuracy":0.607906},{"month":"202603","manualAccuracy":0.6251,"lgbAccuracy":null,"featureAccuracy":0.5963,"stackingAccuracy":0.591445},{"month":"202604","manualAccuracy":0.6596,"lgbAccuracy":null,"featureAccuracy":0.6321,"stackingAccuracy":0.642372}]},"2":{"US":[{"month":"202504","manualAccuracy":0.5995,"lgbAccuracy":0.6244,"featureAccuracy":0.615,"stackingAccuracy":0.612329},{"month":"202505","manualAccuracy":0.6197,"lgbAccuracy":0.6234,"featureAccuracy":0.6126,"stackingAccuracy":0.615016},{"month":"202506","manualAccuracy":0.6061,"lgbAccuracy":0.6287,"featureAccuracy":0.59,"stackingAccuracy":0.598793},{"month":"202507","manualAccuracy":0.6175,"lgbAccuracy":0.6213,"featureAccuracy":0.5916,"stackingAccuracy":0.599139},{"month":"202508","manualAccuracy":0.6409,"lgbAccuracy":0.6283,"featureAccuracy":0.6124,"stackingAccuracy":0.618801},{"month":"202509","manualAccuracy":0.6606,"lgbAccuracy":0.584,"featureAccuracy":0.5927,"stackingAccuracy":0.613969},{"month":"202510","manualAccuracy":0.6699,"lgbAccuracy":0.5917,"featureAccuracy":0.6085,"stackingAccuracy":0.598109},{"month":"202511","manualAccuracy":0.6448,"lgbAccuracy":0.5947,"featureAccuracy":0.5934,"stackingAccuracy":0.59285},{"month":"202512","manualAccuracy":0.6614,"lgbAccuracy":0.5909,"featureAccuracy":0.5897,"stackingAccuracy":0.593745},{"month":"202601","manualAccuracy":0.6156,"lgbAccuracy":0.6092,"featureAccuracy":0.6095,"stackingAccuracy":0.610632},{"month":"202602","manualAccuracy":0.6418,"lgbAccuracy":0.6071,"featureAccuracy":0.6251,"stackingAccuracy":0.641925},{"month":"202603","manualAccuracy":0.6525,"lgbAccuracy":0.5129,"featureAccuracy":0.5697,"stackingAccuracy":0.616799},{"month":"202604","manualAccuracy":0.6566,"lgbAccuracy":0.5196,"featureAccuracy":0.5706,"stackingAccuracy":0.59939}],"CA":[{"month":"202504","manualAccuracy":0.5128,"lgbAccuracy":null,"featureAccuracy":0.5857,"stackingAccuracy":0.585672},{"month":"202505","manualAccuracy":0.5582,"lgbAccuracy":null,"featureAccuracy":0.5674,"stackingAccuracy":0.567429},{"month":"202506","manualAccuracy":0.5432,"lgbAccuracy":null,"featureAccuracy":0.5683,"stackingAccuracy":0.568277},{"month":"202507","manualAccuracy":0.5728,"lgbAccuracy":null,"featureAccuracy":0.5663,"stackingAccuracy":0.566316},{"month":"202508","manualAccuracy":0.5377,"lgbAccuracy":null,"featureAccuracy":0.571,"stackingAccuracy":0.572472},{"month":"202509","manualAccuracy":0.5712,"lgbAccuracy":null,"featureAccuracy":0.5673,"stackingAccuracy":0.572346},{"month":"202510","manualAccuracy":0.6036,"lgbAccuracy":null,"featureAccuracy":0.5703,"stackingAccuracy":0.580725},{"month":"202511","manualAccuracy":0.5897,"lgbAccuracy":null,"featureAccuracy":0.5273,"stackingAccuracy":0.537882},{"month":"202512","manualAccuracy":0.5839,"lgbAccuracy":null,"featureAccuracy":0.475,"stackingAccuracy":0.488196},{"month":"202601","manualAccuracy":0.5283,"lgbAccuracy":null,"featureAccuracy":0.5003,"stackingAccuracy":0.513903},{"month":"202602","manualAccuracy":0.5082,"lgbAccuracy":null,"featureAccuracy":0.5085,"stackingAccuracy":0.516609},{"month":"202603","manualAccuracy":0.5831,"lgbAccuracy":null,"featureAccuracy":0.5179,"stackingAccuracy":0.559944},{"month":"202604","manualAccuracy":0.601,"lgbAccuracy":null,"featureAccuracy":0.5211,"stackingAccuracy":0.544759}],"MX":[{"month":"202504","manualAccuracy":0.4993,"lgbAccuracy":null,"featureAccuracy":0.5463,"stackingAccuracy":0.546347},{"month":"202505","manualAccuracy":0.5071,"lgbAccuracy":null,"featureAccuracy":0.5241,"stackingAccuracy":0.5241},{"month":"202506","manualAccuracy":0.5318,"lgbAccuracy":null,"featureAccuracy":0.5449,"stackingAccuracy":0.5449},{"month":"202507","manualAccuracy":0.5201,"lgbAccuracy":null,"featureAccuracy":0.5256,"stackingAccuracy":0.525638},{"month":"202508","manualAccuracy":0.4727,"lgbAccuracy":null,"featureAccuracy":0.5679,"stackingAccuracy":0.5679},{"month":"202509","manualAccuracy":0.4653,"lgbAccuracy":null,"featureAccuracy":0.5514,"stackingAccuracy":0.551397},{"month":"202510","manualAccuracy":0.474,"lgbAccuracy":null,"featureAccuracy":0.5515,"stackingAccuracy":0.551451},{"month":"202511","manualAccuracy":0.4483,"lgbAccuracy":null,"featureAccuracy":0.5532,"stackingAccuracy":0.553155},{"month":"202512","manualAccuracy":0.5196,"lgbAccuracy":null,"featureAccuracy":0.5466,"stackingAccuracy":0.546614},{"month":"202601","manualAccuracy":0.5104,"lgbAccuracy":null,"featureAccuracy":0.5477,"stackingAccuracy":0.547694},{"month":"202602","manualAccuracy":0.471,"lgbAccuracy":null,"featureAccuracy":0.5546,"stackingAccuracy":0.554621},{"month":"202603","manualAccuracy":0.5096,"lgbAccuracy":null,"featureAccuracy":0.5517,"stackingAccuracy":0.551732},{"month":"202604","manualAccuracy":0.5169,"lgbAccuracy":null,"featureAccuracy":0.5598,"stackingAccuracy":0.559822}],"GB":[{"month":"202504","manualAccuracy":0.4676,"lgbAccuracy":null,"featureAccuracy":0.5581,"stackingAccuracy":0.558099},{"month":"202505","manualAccuracy":0.5058,"lgbAccuracy":null,"featureAccuracy":0.4973,"stackingAccuracy":0.497308},{"month":"202506","manualAccuracy":0.5343,"lgbAccuracy":null,"featureAccuracy":0.5027,"stackingAccuracy":0.502673},{"month":"202507","manualAccuracy":0.4701,"lgbAccuracy":null,"featureAccuracy":0.5288,"stackingAccuracy":0.52881},{"month":"202508","manualAccuracy":0.4671,"lgbAccuracy":null,"featureAccuracy":0.5264,"stackingAccuracy":0.5264},{"month":"202509","manualAccuracy":0.4854,"lgbAccuracy":null,"featureAccuracy":0.5298,"stackingAccuracy":0.52982},{"month":"202510","manualAccuracy":0.4666,"lgbAccuracy":null,"featureAccuracy":0.5176,"stackingAccuracy":0.517576},{"month":"202511","manualAccuracy":0.4746,"lgbAccuracy":null,"featureAccuracy":0.5084,"stackingAccuracy":0.508398},{"month":"202512","manualAccuracy":0.4926,"lgbAccuracy":null,"featureAccuracy":0.4807,"stackingAccuracy":0.481375},{"month":"202601","manualAccuracy":0.4837,"lgbAccuracy":null,"featureAccuracy":0.5503,"stackingAccuracy":0.549415},{"month":"202602","manualAccuracy":0.4861,"lgbAccuracy":null,"featureAccuracy":0.5489,"stackingAccuracy":0.548064},{"month":"202603","manualAccuracy":0.5134,"lgbAccuracy":null,"featureAccuracy":0.5294,"stackingAccuracy":0.528866},{"month":"202604","manualAccuracy":0.5313,"lgbAccuracy":null,"featureAccuracy":0.5314,"stackingAccuracy":0.530678}],"EU":[{"month":"202504","manualAccuracy":0.4689,"lgbAccuracy":null,"featureAccuracy":0.5258,"stackingAccuracy":0.52583},{"month":"202505","manualAccuracy":0.5549,"lgbAccuracy":null,"featureAccuracy":0.4207,"stackingAccuracy":0.420707},{"month":"202506","manualAccuracy":0.5048,"lgbAccuracy":null,"featureAccuracy":0.4488,"stackingAccuracy":0.448772},{"month":"202507","manualAccuracy":0.5045,"lgbAccuracy":null,"featureAccuracy":0.4806,"stackingAccuracy":0.480975},{"month":"202508","manualAccuracy":0.4909,"lgbAccuracy":null,"featureAccuracy":0.4814,"stackingAccuracy":0.482785},{"month":"202509","manualAccuracy":0.5752,"lgbAccuracy":null,"featureAccuracy":0.3615,"stackingAccuracy":0.36157},{"month":"202510","manualAccuracy":0.5664,"lgbAccuracy":null,"featureAccuracy":0.45,"stackingAccuracy":0.449852},{"month":"202511","manualAccuracy":0.5559,"lgbAccuracy":null,"featureAccuracy":0.5426,"stackingAccuracy":0.541301},{"month":"202512","manualAccuracy":0.521,"lgbAccuracy":null,"featureAccuracy":0.5086,"stackingAccuracy":0.503773},{"month":"202601","manualAccuracy":0.5222,"lgbAccuracy":null,"featureAccuracy":0.5041,"stackingAccuracy":0.504333},{"month":"202602","manualAccuracy":0.5031,"lgbAccuracy":null,"featureAccuracy":0.4922,"stackingAccuracy":0.48618},{"month":"202603","manualAccuracy":0.5182,"lgbAccuracy":null,"featureAccuracy":0.4684,"stackingAccuracy":0.468047},{"month":"202604","manualAccuracy":0.5424,"lgbAccuracy":null,"featureAccuracy":0.4183,"stackingAccuracy":0.412658}]}};
     const detailColumns = [{"key":"platform","label":"平台","className":"text"},{"key":"site","label":"站点","className":"text"},{"key":"skc","label":"SKC","className":"text"},{"key":"month","label":"月份","className":"text"},{"key":"owner","label":"负责人","className":"text"},{"key":"price","label":"售价","className":"numeric"},{"key":"plan_price","label":"计划价","className":"numeric"},{"key":"价格差","label":"价格差","className":"numeric"},{"key":"quantity","label":"销量","className":"numeric"},{"key":"income","label":"销售额","className":"numeric"},{"key":"ad_cost","label":"广告成本","className":"numeric"},{"key":"guangxiaobi","label":"广销比(利润)","className":"numeric"},{"key":"profit","label":"利润","className":"numeric"},{"key":"profit_rate","label":"利润率","className":"numeric"},{"key":"PV","label":"PV","className":"numeric"},{"key":"Click","label":"Click","className":"numeric"},{"key":"CTR","label":"CTR","className":"numeric"},{"key":"ad_cost.1","label":"广告花费","className":"numeric"},{"key":"CPC","label":"CPC","className":"numeric"},{"key":"ad_quantity","label":"广告销量","className":"numeric"},{"key":"广销比","label":"广销比","className":"numeric"}];
     const detailRows = [{"platform":"Amazon","site":"US","skc":"GRAND-01BLACK","month":"202301","owner":"Subi.Su","price":"50.72","plan_price":"48.99","价格差":"-1.73","quantity":"1,383","income":"70,146.29","ad_cost":"-1,523.77","guangxiaobi":"-2.17%","profit":"20,333.16","profit_rate":"28.99%","PV":"0","Click":"2,946","CTR":"","ad_cost.1":"1,545.28","CPC":"0.5245","ad_quantity":"243","广销比":"1.1117"},{"platform":"Amazon","site":"US","skc":"GRAND-01BLACK","month":"202302","owner":"Subi.Su","price":"50.48","plan_price":"48.99","价格差":"-1.49","quantity":"1,165","income":"58,813.52","ad_cost":"-1,682.77","guangxiaobi":"-2.86%","profit":"18,873.86","profit_rate":"32.09%","PV":"0","Click":"2,669","CTR":"","ad_cost.1":"1,522.74","CPC":"0.5705","ad_quantity":"254","广销比":"1.3082"},{"platform":"Amazon","site":"US","skc":"GRAND-01BLACK","month":"202303","owner":"Subi.Su","price":"45.55","plan_price":"48.99","价格差":"3.44","quantity":"2,440","income":"111,133.31","ad_cost":"-2,412.50","guangxiaobi":"-2.17%","profit":"32,855.53","profit_rate":"29.56%","PV":"0","Click":"3,575","CTR":"","ad_cost.1":"1,956.87","CPC":"0.5474","ad_quantity":"324","广销比":"0.8103"},{"platform":"Amazon","site":"US","skc":"GRAND-01BLACK","month":"202304","owner":"Subi.Su","price":"45.56","plan_price":"43.99","价格差":"-1.57","quantity":"1,530","income":"69,706.10","ad_cost":"-3,720.05","guangxiaobi":"-5.34%","profit":"18,037.26","profit_rate":"25.88%","PV":"0","Click":"5,088","CTR":"","ad_cost.1":"3,259.99","CPC":"0.6407","ad_quantity":"551","广销比":"2.0452"},{"platform":"Amazon","site":"US","skc":"GRAND-01BLACK","month":"202305","owner":"Subi.Su","price":"43.09","plan_price":"43.99","价格差":"0.90","quantity":"2,158","income":"92,987.25","ad_cost":"-7,690.85","guangxiaobi":"-8.27%","profit":"20,382.92","profit_rate":"21.92%","PV":"0","Click":"9,110","CTR":"","ad_cost.1":"6,858.88","CPC":"0.7529","ad_quantity":"867","广销比":"3.2818"},{"platform":"Amazon","site":"US","skc":"GRAND-01BLACK","month":"202306","owner":"Subi.Su","price":"43.18","plan_price":"43.99","价格差":"0.81","quantity":"1,632","income":"70,469.12","ad_cost":"-5,984.81","guangxiaobi":"-8.49%","profit":"11,751.15","profit_rate":"16.68%","PV":"0","Click":"7,954","CTR":"","ad_cost.1":"5,263.57","CPC":"0.6618","ad_quantity":"851","广销比":"3.2551"},{"platform":"Amazon","site":"US","skc":"GRAND-01BLACK","month":"202307","owner":"Subi.Su","price":"40.54","plan_price":"40.99","价格差":"0.45","quantity":"2,268","income":"91,950.65","ad_cost":"-7,278.87","guangxiaobi":"-7.92%","profit":"16,850.13","profit_rate":"18.33%","PV":"0","Click":"9,559","CTR":"","ad_cost.1":"6,526.57","CPC":"0.6828","ad_quantity":"1,039","广销比":"2.8463"},{"platform":"Amazon","site":"US","skc":"GRAND-01BLACK","month":"202308","owner":"Subi.Su","price":"42.26","plan_price":"41.99","价格差":"-0.27","quantity":"1,727","income":"72,985.86","ad_cost":"-3,101.30","guangxiaobi":"-4.25%","profit":"16,336.20","profit_rate":"22.38%","PV":"0","Click":"4,322","CTR":"","ad_cost.1":"2,514.98","CPC":"0.5819","ad_quantity":"389","广销比":"1.4529"},{"platform":"Amazon","site":"US","skc":"GRAND-01BLACK","month":"202309","owner":"Subi.Su","price":"40.86","plan_price":"40.99","价格差":"0.13","quantity":"1,820","income":"74,364.33","ad_cost":"-5,740.52","guangxiaobi":"-7.72%","profit":"13,171.57","profit_rate":"17.71%","PV":"0","Click":"6,090","CTR":"","ad_cost.1":"5,032.54","CPC":"0.8264","ad_quantity":"743","广销比":"2.7485"},{"platform":"Amazon","site":"US","skc":"GRAND-01BLACK","month":"202310","owner":"Subi.Su","price":"39.05","plan_price":"40.00","价格差":"0.95","quantity":"2,991","income":"116,805.83","ad_cost":"-8,220.23","guangxiaobi":"-7.04%","profit":"18,363.95","profit_rate":"15.72%","PV":"74,033","Click":"9,263","CTR":"12.51%","ad_cost.1":"7,160.36","CPC":"0.7730","ad_quantity":"1,216","广销比":"2.3860"},{"platform":"Amazon","site":"US","skc":"GRAND-01BLACK","month":"202311","owner":"Subi.Su","price":"38.14","plan_price":"37.99","价格差":"-0.15","quantity":"3,337","income":"127,282.04","ad_cost":"-7,437.79","guangxiaobi":"-5.84%","profit":"23,038.74","profit_rate":"18.10%","PV":"100,620","Click":"8,991","CTR":"8.94%","ad_cost.1":"6,496.67","CPC":"0.7226","ad_quantity":"1,130","广销比":"1.8347"},{"platform":"Amazon","site":"US","skc":"GRAND-01BLACK","month":"202312","owner":"Subi.Su","price":"38.09","plan_price":"37.99","价格差":"-0.10","quantity":"4,067","income":"154,931.31","ad_cost":"-9,023.27","guangxiaobi":"-5.82%","profit":"30,340.43","profit_rate":"19.58%","PV":"128,136","Click":"11,287","CTR":"8.81%","ad_cost.1":"8,192.46","CPC":"0.7258","ad_quantity":"1,162","广销比":"2.0610"},{"platform":"Amazon","site":"US","skc":"GRAND-01BLACK","month":"202401","owner":"Subi.Su","price":"39.60","plan_price":"36.99","价格差":"-2.61","quantity":"1,955","income":"77,418.87","ad_cost":"-7,493.13","guangxiaobi":"-9.68%","profit":"9,755.17","profit_rate":"12.60%","PV":"65,296","Click":"8,350","CTR":"12.79%","ad_cost.1":"7,069.92","CPC":"0.8467","ad_quantity":"1,004","广销比":"3.8382"},{"platform":"Amazon","site":"US","skc":"GRAND-01BLACK","month":"202402","owner":"Subi.Su","price":"40.30","plan_price":"36.99","价格差":"-3.31","quantity":"1,615","income":"65,083.30","ad_cost":"-6,738.77","guangxiaobi":"-10.35%","profit":"10,565.82","profit_rate":"16.23%","PV":"57,814","Click":"7,811","CTR":"13.51%","ad_cost.1":"6,615.61","CPC":"0.8470","ad_quantity":"851","广销比":"4.0192"},{"platform":"Amazon","site":"US","skc":"GRAND-01BLACK","month":"202403","owner":"Subi.Su","price":"35.33","plan_price":"36.99","价格差":"1.66","quantity":"2,345","income":"82,852.86","ad_cost":"-8,595.32","guangxiaobi":"-10.37%","profit":"9,382.84","profit_rate":"11.32%","PV":"65,481","Click":"10,406","CTR":"15.89%","ad_cost.1":"8,782.16","CPC":"0.8440","ad_quantity":"1,239","广销比":"3.7339"},{"platform":"Amazon","site":"US","skc":"GRAND-01BLACK","month":"202404","owner":"Subi.Su","price":"35.91","plan_price":"36.99","价格差":"1.08","quantity":"2,839","income":"101,962.10","ad_cost":"-16,293.60","guangxiaobi":"-15.98%","profit":"5,819.13","profit_rate":"5.71%","PV":"93,068","Click":"22,932","CTR":"24.64%","ad_cost.1":"21,627.85","CPC":"0.9431","ad_quantity":"1,988","广销比":"7.6235"},{"platform":"Amazon","site":"US","skc":"GRAND-01BLACK","month":"202405","owner":"Subi.Su","price":"34.89","plan_price":"35.49","价格差":"0.60","quantity":"4,124","income":"143,876.28","ad_cost":"-22,996.66","guangxiaobi":"-15.98%","profit":"5,829.58","profit_rate":"4.05%","PV":"171,822","Click":"31,702","CTR":"18.45%","ad_cost.1":"29,772.99","CPC":"0.9392","ad_quantity":"2,927","广销比":"7.1708"},{"platform":"Amazon","site":"US","skc":"GRAND-01BLACK","month":"202406","owner":"Subi.Su","price":"36.41","plan_price":"36.99","价格差":"0.58","quantity":"3,700","income":"134,734.15","ad_cost":"-27,030.79","guangxiaobi":"-20.06%","profit":"674.86","profit_rate":"0.50%","PV":"138,393","Click":"39,698","CTR":"28.68%","ad_cost.1":"38,896.79","CPC":"0.9798","ad_quantity":"3,228","广销比":"10.5727"},{"platform":"Amazon","site":"US","skc":"GRAND-01BLACK","month":"202407","owner":"Subi.Su","price":"35.01","plan_price":"34.99","价格差":"-0.02","quantity":"4,569","income":"159,965.56","ad_cost":"-36,305.00","guangxiaobi":"-22.70%","profit":"-4,584.80","profit_rate":"-2.87%","PV":"157,568","Click":"44,406","CTR":"28.18%","ad_cost.1":"45,632.84","CPC":"1.0276","ad_quantity":"4,392","广销比":"9.9418"},{"platform":"Amazon","site":"US","skc":"GRAND-01BLACK","month":"202408","owner":"Subi.Su","price":"36.56","plan_price":"36.99","价格差":"0.43","quantity":"3,434","income":"125,542.96","ad_cost":"-29,303.19","guangxiaobi":"-23.34%","profit":"-5,104.63","profit_rate":"-4.07%","PV":"122,476","Click":"29,565","CTR":"24.14%","ad_cost.1":"29,014.31","CPC":"0.9814","ad_quantity":"3,818","广销比":"8.4639"},{"platform":"Amazon","site":"US","skc":"GRAND-01BLACK","month":"202409","owner":"Subi.Su","price":"37.24","plan_price":"36.99","价格差":"-0.25","quantity":"3,010","income":"112,095.62","ad_cost":"-21,962.79","guangxiaobi":"-19.59%","profit":"833.42","profit_rate":"0.74%","PV":"98,947","Click":"23,929","CTR":"24.18%","ad_cost.1":"21,451.13","CPC":"0.8964","ad_quantity":"3,217","广销比":"7.0679"},{"platform":"Amazon","site":"US","skc":"GRAND-01BLACK","month":"202410","owner":"Subi.Su","price":"35.56","plan_price":"36.99","价格差":"1.43","quantity":"4,100","income":"145,794.42","ad_cost":"-31,835.13","guangxiaobi":"-21.84%","profit":"-10,462.04","profit_rate":"-7.18%","PV":"122,203","Click":"29,602","CTR":"24.22%","ad_cost.1":"29,211.38","CPC":"0.9868","ad_quantity":"4,099","广销比":"7.0644"},{"platform":"Amazon","site":"US","skc":"GRAND-01BLACK","month":"202411","owner":"Subi.Su","price":"35.28","plan_price":"36.99","价格差":"1.71","quantity":"5,791","income":"204,313.05","ad_cost":"-20,233.99","guangxiaobi":"-9.90%","profit":"18,619.25","profit_rate":"9.11%","PV":"145,529","Click":"20,994","CTR":"14.43%","ad_cost.1":"19,138.29","CPC":"0.9116","ad_quantity":"2,954","广销比":"2.8286"},{"platform":"Amazon","site":"US","skc":"GRAND-01BLACK","month":"202412","owner":"Subi.Su","price":"38.55","plan_price":"36.99","价格差":"-1.56","quantity":"6,452","income":"248,734.17","ad_cost":"-15,274.05","guangxiaobi":"-6.14%","profit":"47,952.92","profit_rate":"19.28%","PV":"108,962","Click":"16,880","CTR":"15.49%","ad_cost.1":"14,418.68","CPC":"0.8542","ad_quantity":"2,086","广销比":"2.5381"},{"platform":"Amazon","site":"US","skc":"GRAND-01BLACK","month":"202501","owner":"Subi.Su","price":"40.06","plan_price":"36.99","价格差":"-3.07","quantity":"2,790","income":"111,779.83","ad_cost":"-12,295.70","guangxiaobi":"-11.00%","profit":"16,391.46","profit_rate":"14.66%","PV":"67,143","Click":"13,761","CTR":"20.50%","ad_cost.1":"12,134.89","CPC":"0.8818","ad_quantity":"1,796","广销比":"4.6745"},{"platform":"Amazon","site":"US","skc":"GRAND-01BLACK","month":"202502","owner":"Subi.Su","price":"39.72","plan_price":"36.99","价格差":"-2.73","quantity":"3,848","income":"152,853.28","ad_cost":"-11,767.01","guangxiaobi":"-7.70%","profit":"32,748.53","profit_rate":"21.42%","PV":"76,359","Click":"12,107","CTR":"15.86%","ad_cost.1":"10,851.14","CPC":"0.8963","ad_quantity":"1,908","广销比":"2.7838"},{"platform":"Amazon","site":"US","skc":"GRAND-01BLACK","month":"202503","owner":"Subi.Su","price":"39.61","plan_price":"36.99","价格差":"-2.62","quantity":"4,401","income":"174,318.30","ad_cost":"-12,028.87","guangxiaobi":"-6.90%","profit":"34,625.43","profit_rate":"19.86%","PV":"91,624","Click":"12,768","CTR":"13.94%","ad_cost.1":"11,643.74","CPC":"0.9119","ad_quantity":"2,085","广销比":"2.5395"},{"platform":"Amazon","site":"US","skc":"GRAND-01BLACK","month":"202504","owner":"Subi.Su","price":"41.25","plan_price":"38.00","价格差":"-3.25","quantity":"4,102","income":"169,202.68","ad_cost":"-10,903.09","guangxiaobi":"-6.44%","profit":"37,119.80","profit_rate":"21.94%","PV":"95,161","Click":"11,991","CTR":"12.60%","ad_cost.1":"10,464.72","CPC":"0.8727","ad_quantity":"1,932","广销比":"2.5580"},{"platform":"Amazon","site":"US","skc":"GRAND-01BLACK","month":"202505","owner":"Subi.Su","price":"40.52","plan_price":"38.00","价格差":"-2.52","quantity":"3,729","income":"151,086.21","ad_cost":"-10,979.17","guangxiaobi":"-7.27%","profit":"25,715.56","profit_rate":"17.02%","PV":"97,557","Click":"11,506","CTR":"11.79%","ad_cost.1":"10,119.35","CPC":"0.8795","ad_quantity":"1,835","广销比":"2.5522"},{"platform":"Amazon","site":"US","skc":"GRAND-01BLACK","month":"202506","owner":"Subi.Su","price":"40.68","plan_price":"38.00","价格差":"-2.68","quantity":"2,929","income":"119,139.43","ad_cost":"-8,119.97","guangxiaobi":"-6.82%","profit":"24,556.84","profit_rate":"20.61%","PV":"64,060","Click":"8,993","CTR":"14.04%","ad_cost.1":"7,460.43","CPC":"0.8296","ad_quantity":"1,255","广销比":"2.9120"},{"platform":"Amazon","site":"US","skc":"GRAND-01BLACK","month":"202507","owner":"Subi.Su","price":"38.56","plan_price":"38.00","价格差":"-0.56","quantity":"4,215","income":"162,520.90","ad_cost":"-13,468.93","guangxiaobi":"-8.29%","profit":"27,041.40","profit_rate":"16.64%","PV":"89,567","Click":"14,301","CTR":"15.97%","ad_cost.1":"12,876.10","CPC":"0.9004","ad_quantity":"2,015","广销比":"3.0290"},{"platform":"Amazon","site":"US","skc":"GRAND-01BLACK","month":"202508","owner":"Subi.Su","price":"38.74","plan_price":"38.00","价格差":"-0.74","quantity":"4,176","income":"161,788.64","ad_cost":"-13,195.05","guangxiaobi":"-8.16%","profit":"27,008.33","profit_rate":"16.69%","PV":"90,466","Click":"14,089","CTR":"15.57%","ad_cost.1":"12,645.25","CPC":"0.8975","ad_quantity":"2,262","广销比":"3.0324"},{"platform":"Amazon","site":"US","skc":"GRAND-01BLACK","month":"202509","owner":"Subi.Su","price":"38.33","plan_price":"38.00","价格差":"-0.33","quantity":"5,685","income":"217,892.32","ad_cost":"-17,257.26","guangxiaobi":"-7.92%","profit":"37,364.69","profit_rate":"17.15%","PV":"113,553","Click":"18,879","CTR":"16.63%","ad_cost.1":"16,513.98","CPC":"0.8747","ad_quantity":"3,392","广销比":"2.8720"},{"platform":"Amazon","site":"US","skc":"GRAND-01BLACK","month":"202510","owner":"Subi.Su","price":"37.60","plan_price":"37.00","价格差":"-0.60","quantity":"6,847","income":"257,473.16","ad_cost":"-19,111.44","guangxiaobi":"-7.42%","profit":"40,746.44","profit_rate":"15.83%","PV":"147,333","Click":"24,383","CTR":"16.55%","ad_cost.1":"20,309.23","CPC":"0.8329","ad_quantity":"4,195","广销比":"2.9871"},{"platform":"Amazon","site":"US","skc":"GRAND-01BLACK","month":"202511","owner":"Subi.Su","price":"38.25","plan_price":"36.00","价格差":"-2.25","quantity":"6,083","income":"232,649.71","ad_cost":"-20,712.28","guangxiaobi":"-8.90%","profit":"31,848.62","profit_rate":"13.69%","PV":"155,531","Click":"23,455","CTR":"15.08%","ad_cost.1":"18,962.95","CPC":"0.8085","ad_quantity":"4,126","广销比":"2.6566"},{"platform":"Amazon","site":"US","skc":"GRAND-01BLACK","month":"202512","owner":"Subi.Su","price":"38.67","plan_price":"38.00","价格差":"-0.67","quantity":"6,156","income":"238,068.59","ad_cost":"-18,853.79","guangxiaobi":"-7.92%","profit":"44,468.40","profit_rate":"18.68%","PV":"109,493","Click":"21,804","CTR":"19.91%","ad_cost.1":"17,695.06","CPC":"0.8116","ad_quantity":"3,231","广销比":"3.3724"},{"platform":"Amazon","site":"US","skc":"GRAND-01BLACK","month":"202601","owner":"Subi.Su","price":"38.87","plan_price":"38.50","价格差":"-0.37","quantity":"5,507","income":"214,046.72","ad_cost":"-21,802.18","guangxiaobi":"-10.19%","profit":"29,498.71","profit_rate":"13.78%","PV":"111,430","Click":"23,208","CTR":"20.83%","ad_cost.1":"20,755.62","CPC":"0.8943","ad_quantity":"3,880","广销比":"3.7628"},{"platform":"Amazon","site":"US","skc":"GRAND-01BLACK","month":"202602","owner":"Lynn","price":"38.79","plan_price":"38.50","价格差":"-0.29","quantity":"6,324","income":"245,329.73","ad_cost":"-21,837.53","guangxiaobi":"-8.90%","profit":"38,638.80","profit_rate":"15.75%","PV":"126,444","Click":"21,536","CTR":"17.03%","ad_cost.1":"19,154.61","CPC":"0.8894","ad_quantity":"4,166","广销比":"3.0313"},{"platform":"Amazon","site":"US","skc":"GRAND-01BLACK","month":"202603","owner":"Lynn","price":"39.53","plan_price":"38.50","价格差":"-1.03","quantity":"6,867","income":"271,421.68","ad_cost":"-23,872.58","guangxiaobi":"-8.80%","profit":"45,878.55","profit_rate":"16.90%","PV":"136,381","Click":"23,269","CTR":"17.06%","ad_cost.1":"21,027.94","CPC":"0.9037","ad_quantity":"4,577","广销比":"3.0265"},{"platform":"Amazon","site":"US","skc":"GRAND-01BLACK","month":"202604","owner":"Fannie.Peng","price":"39.32","plan_price":"39.00","价格差":"-0.32","quantity":"7,361","income":"289,446.60","ad_cost":"-23,413.72","guangxiaobi":"-8.09%","profit":"52,716.74","profit_rate":"18.21%","PV":"144,945","Click":"22,332","CTR":"15.41%","ad_cost.1":"19,792.57","CPC":"0.8863","ad_quantity":"4,456","广销比":"2.7058"}];
     const biasTopData = [{"skc":"GRAND-01_BLACK","share":0.0265,"rows":169,"actual":69981,"weightedForecast":55497,"direction":"低估"},{"skc":"SBWO2302M_BLACK","share":0.0199,"rows":143,"actual":58245,"weightedForecast":48821,"direction":"低估"},{"skc":"SDFA2407W_BLACK","share":0.0185,"rows":130,"actual":54695,"weightedForecast":43489,"direction":"低估"},{"skc":"SBOX225K_BLACK","share":0.0172,"rows":169,"actual":32982,"weightedForecast":22306,"direction":"低估"},{"skc":"SDKB224W_BLACK/PU","share":0.016,"rows":156,"actual":25095,"weightedForecast":34334,"direction":"高估"},{"skc":"SDFA2409W_BLACK","share":0.0157,"rows":130,"actual":43742,"weightedForecast":34994,"direction":"低估"},{"skc":"SBOX2336M_BROWN","share":0.0155,"rows":117,"actual":54849,"weightedForecast":45428,"direction":"低估"},{"skc":"PRINCE-6_BROWN","share":0.0154,"rows":182,"actual":42834,"weightedForecast":34964,"direction":"低估"},{"skc":"CHUNK_WHITE/PU","share":0.0145,"rows":169,"actual":34375,"weightedForecast":29583,"direction":"低估"},{"skc":"DOWNING-02_BLACK","share":0.0145,"rows":182,"actual":35016,"weightedForecast":25121,"direction":"低估"}];
+    const clusterComparisonHost = document.querySelector("[data-cluster-comparison-chart]");
     const grandChartHost = document.querySelector("[data-grand-chart]");
     const modelAccuracyChartHosts = Array.from(document.querySelectorAll("[data-quadrant-accuracy-chart]"));
     const accuracyChartHost = document.querySelector("[data-accuracy-chart]");
@@ -2300,6 +2423,330 @@
           ${detailColumns.map((column) => `<td class="${column.className}">${escapeHtml(row[column.key])}</td>`).join("")}
         </tr>
       `).join("");
+    }
+
+    if (clusterComparisonHost) {
+      const chartSvg = clusterComparisonHost.querySelector(".forecast-chart");
+      const chartTooltip = clusterComparisonHost.querySelector("[data-cluster-comparison-tooltip]");
+      const svgNs = "http://www.w3.org/2000/svg";
+      const numberFormat = new Intl.NumberFormat("zh-CN");
+      const percentFormat = new Intl.NumberFormat("zh-CN", {
+        style: "percent",
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      });
+      const visibleClusterMetrics = {
+        quantity: true,
+        rate: true,
+        averageRate: true
+      };
+      const visibleClusterKeys = clusterComparisonData.clusters.reduce((acc, cluster) => {
+        acc[cluster.key] = true;
+        return acc;
+      }, {});
+      const clusterMetricButtons = Array.from(document.querySelectorAll("[data-cluster-comparison-metric]"));
+      const clusterButtons = Array.from(document.querySelectorAll("[data-cluster-comparison-cluster]"));
+
+      function svgElement(name, attrs = {}) {
+        const element = document.createElementNS(svgNs, name);
+        Object.entries(attrs).forEach(([key, value]) => element.setAttribute(key, value));
+        return element;
+      }
+
+      function roundedMax(value, step) {
+        return Math.ceil(value / step) * step;
+      }
+
+      function linePath(points) {
+        return points.map((point, index) => `${index === 0 ? "M" : "L"} ${point.x.toFixed(2)} ${point.y.toFixed(2)}`).join(" ");
+      }
+
+      function getRateRange(clusters) {
+        const rates = clusterComparisonData.rows.flatMap((row) => (
+          clusters.flatMap((cluster) => [row[cluster.key]?.rate, row[cluster.key]?.averageRate])
+        )).filter((value) => Number.isFinite(value));
+        const min = Math.min(...rates, 0);
+        const max = Math.max(...rates, 0.05);
+        return {
+          min: Math.floor(min / 0.05) * 0.05,
+          max: Math.ceil(max / 0.05) * 0.05
+        };
+      }
+
+      function showClusterComparisonTooltip(point) {
+        const rows = point.rows.map((row) => `
+          <div class="tooltip-row"><span>${row.label}</span><strong>${row.value}</strong></div>
+        `).join("");
+
+        if (!rows) {
+          hideClusterComparisonTooltip();
+          return;
+        }
+
+        chartTooltip.innerHTML = `<div class="tooltip-title">${point.month}</div>${rows}`;
+        chartTooltip.style.left = `${point.tooltipX}px`;
+        chartTooltip.style.top = `${point.tooltipY}px`;
+        chartTooltip.classList.add("is-visible");
+      }
+
+      function hideClusterComparisonTooltip() {
+        chartTooltip.classList.remove("is-visible");
+      }
+
+      renderClusterComparisonChart = () => {
+        const visibleClusters = clusterComparisonData.clusters.filter((cluster) => visibleClusterKeys[cluster.key]);
+        const width = Math.max(Math.round(clusterComparisonHost.clientWidth), 520);
+        const height = Math.max(Math.round(clusterComparisonHost.clientHeight), 420);
+        const margin = { top: 34, right: 66, bottom: 90, left: 66 };
+        const plotWidth = width - margin.left - margin.right;
+        const plotHeight = height - margin.top - margin.bottom;
+        const plotBottom = margin.top + plotHeight;
+        const monthStep = plotWidth / clusterComparisonData.rows.length;
+        const quantityValues = clusterComparisonData.rows.flatMap((row) => visibleClusters.map((cluster) => row[cluster.key]?.quantity || 0));
+        const quantityMax = roundedMax(Math.max(...quantityValues, 1), 100000);
+        const rateRange = getRateRange(visibleClusters);
+        const scaleQuantityY = (value) => margin.top + plotHeight - (value / quantityMax) * plotHeight;
+        const scaleRateY = (value) => margin.top + plotHeight - ((value - rateRange.min) / (rateRange.max - rateRange.min)) * plotHeight;
+        const monthX = (index) => margin.left + monthStep * (index + 0.5);
+
+        chartSvg.setAttribute("viewBox", `0 0 ${width} ${height}`);
+        chartSvg.setAttribute("width", width);
+        chartSvg.setAttribute("height", height);
+        chartSvg.innerHTML = "";
+        hideClusterComparisonTooltip();
+
+        const gridGroup = svgElement("g");
+        for (let index = 0; index <= 4; index += 1) {
+          const ratio = index / 4;
+          const y = margin.top + plotHeight * ratio;
+          const quantityValue = quantityMax * (1 - ratio);
+          const rateValue = rateRange.max - (rateRange.max - rateRange.min) * ratio;
+
+          gridGroup.appendChild(svgElement("line", {
+            x1: margin.left,
+            x2: width - margin.right,
+            y1: y,
+            y2: y,
+            stroke: "#e7edf4",
+            "stroke-width": "1"
+          }));
+
+          const leftLabel = svgElement("text", {
+            x: margin.left - 10,
+            y: y + 4,
+            "text-anchor": "end",
+            fill: "#5f6874",
+            "font-size": "10",
+            "font-weight": "700"
+          });
+          leftLabel.textContent = numberFormat.format(Math.round(quantityValue));
+          gridGroup.appendChild(leftLabel);
+
+          const rightLabel = svgElement("text", {
+            x: width - margin.right + 10,
+            y: y + 4,
+            fill: "#5f6874",
+            "font-size": "10",
+            "font-weight": "700"
+          });
+          rightLabel.textContent = percentFormat.format(rateValue);
+          gridGroup.appendChild(rightLabel);
+        }
+        chartSvg.appendChild(gridGroup);
+
+        chartSvg.appendChild(svgElement("line", {
+          x1: margin.left,
+          x2: margin.left,
+          y1: margin.top,
+          y2: plotBottom,
+          stroke: "#cfd8e3",
+          "stroke-width": "1"
+        }));
+        chartSvg.appendChild(svgElement("line", {
+          x1: width - margin.right,
+          x2: width - margin.right,
+          y1: margin.top,
+          y2: plotBottom,
+          stroke: "#cfd8e3",
+          "stroke-width": "1"
+        }));
+        chartSvg.appendChild(svgElement("line", {
+          x1: margin.left,
+          x2: width - margin.right,
+          y1: plotBottom,
+          y2: plotBottom,
+          stroke: "#cfd8e3",
+          "stroke-width": "1"
+        }));
+
+        const y1Title = svgElement("text", {
+          x: margin.left,
+          y: 18,
+          fill: "#2f3947",
+          "font-size": "12",
+          "font-weight": "900"
+        });
+        y1Title.textContent = "销量";
+        chartSvg.appendChild(y1Title);
+
+        const y2Title = svgElement("text", {
+          x: width - margin.right,
+          y: 18,
+          "text-anchor": "end",
+          fill: "#2f3947",
+          "font-size": "12",
+          "font-weight": "900"
+        });
+        y2Title.textContent = "利润率";
+        chartSvg.appendChild(y2Title);
+
+        if (visibleClusterMetrics.quantity && visibleClusters.length) {
+          const gap = 1.5;
+          const groupWidth = Math.min(monthStep * 0.66, 30);
+          const barWidth = Math.max(Math.min((groupWidth - gap * (visibleClusters.length - 1)) / visibleClusters.length, 8), 2);
+
+          clusterComparisonData.rows.forEach((row, monthIndex) => {
+            const groupStart = monthX(monthIndex) - (barWidth * visibleClusters.length + gap * (visibleClusters.length - 1)) / 2;
+            visibleClusters.forEach((cluster, clusterIndex) => {
+              const value = row[cluster.key]?.quantity || 0;
+              const y = scaleQuantityY(value);
+              chartSvg.appendChild(svgElement("rect", {
+                x: groupStart + clusterIndex * (barWidth + gap),
+                y,
+                width: barWidth,
+                height: plotBottom - y,
+                rx: "2",
+                fill: cluster.color,
+                opacity: "0.52"
+              }));
+            });
+          });
+        }
+
+        visibleClusters.forEach((cluster) => {
+          const ratePoints = clusterComparisonData.rows.map((row, index) => ({
+            x: monthX(index),
+            y: scaleRateY(row[cluster.key].rate)
+          }));
+          const averagePoints = clusterComparisonData.rows.map((row, index) => ({
+            x: monthX(index),
+            y: scaleRateY(row[cluster.key].averageRate)
+          }));
+
+          if (visibleClusterMetrics.rate) {
+            chartSvg.appendChild(svgElement("path", {
+              d: linePath(ratePoints),
+              fill: "none",
+              stroke: cluster.color,
+              "stroke-width": "2.2",
+              "stroke-linecap": "round",
+              "stroke-linejoin": "round"
+            }));
+            ratePoints.forEach((point) => {
+              chartSvg.appendChild(svgElement("circle", {
+                cx: point.x,
+                cy: point.y,
+                r: "2.8",
+                fill: "#ffffff",
+                stroke: cluster.color,
+                "stroke-width": "1.7"
+              }));
+            });
+          }
+
+          if (visibleClusterMetrics.averageRate) {
+            chartSvg.appendChild(svgElement("path", {
+              d: linePath(averagePoints),
+              fill: "none",
+              stroke: cluster.color,
+              "stroke-width": "2",
+              "stroke-dasharray": "7 5",
+              "stroke-linecap": "round",
+              "stroke-linejoin": "round",
+              opacity: "0.78"
+            }));
+          }
+        });
+
+        const monthLabelY = plotBottom + 52;
+        clusterComparisonData.rows.forEach((row, index) => {
+          const x = monthX(index);
+          const label = svgElement("text", {
+            x,
+            y: monthLabelY,
+            transform: `rotate(-60 ${x} ${monthLabelY})`,
+            "text-anchor": "end",
+            fill: "#5f6874",
+            "font-size": "8",
+            "font-weight": "800"
+          });
+          label.textContent = row.month;
+          chartSvg.appendChild(label);
+
+          const tooltipRows = [];
+          const visibleRateValues = [];
+          visibleClusters.forEach((cluster) => {
+            const clusterItem = row[cluster.key];
+            if (visibleClusterMetrics.quantity) {
+              tooltipRows.push({
+                label: `${cluster.label} 销量`,
+                value: numberFormat.format(clusterItem.quantity)
+              });
+            }
+            if (visibleClusterMetrics.rate) {
+              tooltipRows.push({
+                label: `${cluster.label} 利润率`,
+                value: percentFormat.format(clusterItem.rate)
+              });
+              visibleRateValues.push(clusterItem.rate);
+            }
+            if (visibleClusterMetrics.averageRate) {
+              tooltipRows.push({
+                label: `${cluster.label} 年均利润率`,
+                value: percentFormat.format(clusterItem.averageRate)
+              });
+              visibleRateValues.push(clusterItem.averageRate);
+            }
+          });
+
+          const tooltipX = Math.min(Math.max(x, 120), width - 120);
+          const tooltipY = visibleRateValues.length
+            ? Math.max(76, scaleRateY(Math.max(...visibleRateValues)) - 8)
+            : 76;
+          const hitArea = svgElement("rect", {
+            x: margin.left + monthStep * index,
+            y: margin.top,
+            width: monthStep,
+            height: plotHeight,
+            fill: "transparent"
+          });
+          hitArea.addEventListener("mouseenter", () => showClusterComparisonTooltip({ month: row.month, rows: tooltipRows, tooltipX, tooltipY }));
+          hitArea.addEventListener("mousemove", () => showClusterComparisonTooltip({ month: row.month, rows: tooltipRows, tooltipX, tooltipY }));
+          hitArea.addEventListener("mouseleave", hideClusterComparisonTooltip);
+          chartSvg.appendChild(hitArea);
+        });
+      };
+
+      renderClusterComparisonChart();
+      clusterMetricButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          const key = button.dataset.clusterComparisonMetric;
+          visibleClusterMetrics[key] = !visibleClusterMetrics[key];
+          button.classList.toggle("is-muted", !visibleClusterMetrics[key]);
+          button.setAttribute("aria-pressed", String(visibleClusterMetrics[key]));
+          renderClusterComparisonChart();
+        });
+      });
+      clusterButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          const key = button.dataset.clusterComparisonCluster;
+          visibleClusterKeys[key] = !visibleClusterKeys[key];
+          button.classList.toggle("is-muted", !visibleClusterKeys[key]);
+          button.setAttribute("aria-pressed", String(visibleClusterKeys[key]));
+          renderClusterComparisonChart();
+        });
+      });
+      window.addEventListener("resize", () => window.requestAnimationFrame(renderClusterComparisonChart));
     }
 
     if (grandChartHost) {
