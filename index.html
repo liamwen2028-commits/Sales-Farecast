@@ -854,7 +854,7 @@
 
     .model-accuracy-stack {
       display: grid;
-      grid-template-rows: minmax(0, 1fr) 220px;
+      grid-template-rows: minmax(0, 1fr) max-content;
       gap: 12px;
       height: 750px;
       min-height: 750px;
@@ -903,6 +903,7 @@
     .model-accuracy-charts {
       display: grid;
       grid-template-columns: 1fr;
+      grid-template-rows: repeat(2, minmax(0, 1fr));
       gap: 6px;
       flex: 1;
       min-height: 0;
@@ -927,7 +928,7 @@
 
     .quadrant-chart-panel .forecast-chart-wrap {
       flex: 1;
-      height: 34px;
+      height: auto;
       min-height: 0;
       margin-top: 0;
     }
@@ -977,7 +978,7 @@
     }
 
     .model-progress-card {
-      height: 220px;
+      height: auto;
       min-height: 0;
       padding: 14px 16px;
       overflow: hidden;
@@ -3076,15 +3077,28 @@
           const baseRows = quadrantBaseSites
             .map((site) => siteMap[site.key])
             .find((rows) => Array.isArray(rows) && rows.length) || [];
-          const rows = baseRows.map((item, index) => {
+          const seriesAverages = Object.fromEntries(quadrantSeries.map((series) => {
+            const monthlyValues = baseRows
+              .map((item, index) => {
+                const values = quadrantBaseSites
+                  .map((site) => siteMap[site.key]?.[index]?.[series.key])
+                  .filter((value) => Number.isFinite(value));
+                return values.length
+                  ? values.reduce((sum, value) => sum + value, 0) / values.length
+                  : null;
+              })
+              .filter((value) => Number.isFinite(value));
+            return [
+              series.key,
+              monthlyValues.length
+                ? monthlyValues.reduce((sum, value) => sum + value, 0) / monthlyValues.length
+                : null
+            ];
+          }));
+          const rows = baseRows.map((item) => {
             const averageRow = { month: item.month };
             quadrantSeries.forEach((series) => {
-              const values = quadrantBaseSites
-                .map((site) => siteMap[site.key]?.[index]?.[series.key])
-                .filter((value) => Number.isFinite(value));
-              averageRow[series.key] = values.length
-                ? values.reduce((sum, value) => sum + value, 0) / values.length
-                : null;
+              averageRow[series.key] = seriesAverages[series.key];
             });
             return averageRow;
           });
@@ -3128,8 +3142,8 @@
         });
         const chartSvg = host.querySelector(".forecast-chart");
         const width = Math.max(Math.round(host.clientWidth), 360);
-        const height = Math.max(Math.round(host.clientHeight), 150);
-        const margin = { top: 20, right: 14, bottom: 48, left: 44 };
+        const height = Math.max(Math.round(host.clientHeight), 220);
+        const margin = { top: 24, right: 38, bottom: 78, left: 68 };
         const plotWidth = width - margin.left - margin.right;
         const plotHeight = height - margin.top - margin.bottom;
         const plotBottom = margin.top + plotHeight;
@@ -3249,7 +3263,7 @@
           });
         });
 
-        const monthLabelY = plotBottom + 34;
+        const monthLabelY = plotBottom + 44;
 
         points.forEach((point, index) => {
           const label = svgElement("text", {
