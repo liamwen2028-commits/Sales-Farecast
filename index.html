@@ -788,10 +788,10 @@
 
     .model-accuracy-stack {
       display: grid;
-      grid-template-rows: minmax(0, 1fr) 78px;
-      gap: 8px;
-      height: 250px;
-      min-height: 250px;
+      grid-template-rows: minmax(0, 1fr) 220px;
+      gap: 12px;
+      height: 750px;
+      min-height: 750px;
     }
 
     .model-accuracy-stack .model-accuracy-card {
@@ -911,36 +911,38 @@
     }
 
     .model-progress-card {
-      height: 78px;
+      height: 220px;
       min-height: 0;
-      padding: 10px 14px;
+      padding: 14px 16px;
       overflow: hidden;
     }
 
     .model-progress-body {
-      display: -webkit-box;
-      margin-top: 5px;
-      overflow: hidden;
+      display: grid;
+      gap: 8px;
+      margin-top: 10px;
       color: #2f3947;
-      font-size: 11px;
+      font-size: 12px;
       font-weight: 650;
-      line-height: 1.35;
-      -webkit-box-orient: vertical;
-      -webkit-line-clamp: 2;
+      line-height: 1.48;
+    }
+
+    .model-progress-body p {
+      margin: 0;
     }
 
     .forecast-bias-card {
       display: flex;
       flex-direction: column;
-      height: 250px;
-      min-height: 250px;
+      height: 750px;
+      min-height: 750px;
       padding: 12px 14px;
       overflow: hidden;
     }
 
     #smart-panel .panel.compact.forecast-bias-card {
-      height: 250px;
-      min-height: 250px;
+      height: 750px;
+      min-height: 750px;
     }
 
     .forecast-note-card {
@@ -2070,7 +2072,8 @@
           </div>
         </div>
         <div class="model-progress-body">
-          基于上传文件按月份统计象限1、象限2准确率，持续对比人工、LGB单体模型、特征增强模型与堆叠模型走势；空值月份自动跳过，用于跟踪模型迭代收益与稳定性。
+          <p>1. 经过LGB单体模型、特征增强混合模型、残差混合模型到当前相对比较稳定的堆叠混合模型，模型自身预测结果有较大提升，堆叠混合模型在几乎所有Amazon站点12月验证中，得到0.5-3%的提升，进一步验证基于：聚类+混合建模策略路线可行。</p>
+          <p>2. 相比人工预测，在部分象限(如象限1)和站点(如MX)，接近或超过人工，且稳定性较好，下方有针对模型偏差的部分归因分析，结论：模型预测+人工修正符合O9的设计思路，也符合当前归因分析的结论。</p>
         </div>
       </article>
       </div>
